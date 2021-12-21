@@ -1,0 +1,137 @@
+<html>
+
+<head>
+    <title>Uncle Tom's Terror</title>
+
+    <!-- Include Stylesheets -->
+    <link rel="stylesheet" href="css/uncle_toms_terror.css" />
+
+    <!-- Add JQuery Support -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+</head>
+
+<body>
+
+    <!-- Create Title -->
+    <div id="title">
+        <h1>Uncle Tom's Terror</h1>
+    </div>
+
+    <!-- Create Game Window -->
+    <div id="game_window" class="wrapper">
+
+        <!-- Create Menus -->
+        <div id="menu_block">
+
+            <!-- Main Menu -->
+            <div id="main_menu" class="menu">
+                <h1>Uncle Tom's Terror</h1>
+                <ul>
+                    <li><a href="javascript:void(0)" class="button play">Start Game</a></li>
+                    <li><a href="javascript:void(0)" id="audio_button" class="button">Toggle Audio</a></li>
+                    <li><a href="javascript:void(0)" class="button control">Control Menu</a></li>
+                    <li><a href="javascript:void(0)" class="button exit">Exit Game</a></li>
+                </ul>
+            </div>
+
+            <!-- Exit Menu -->
+            <div id="exit_menu" class="menu hidden">
+                <h1>Thanks for playing!</h1>
+            </div>
+
+            <!-- Control Menu -->
+            <div id="control_menu" class="menu hidden">
+                <h1>This is the control menu!</h1>
+            </div>
+
+            <!-- Add More Menu's Here -->
+
+            <!-- 
+                Check out the initialize function of MyMenuManager to see how menu's are
+                hidden when the game starts.
+            -->
+        </div>
+
+        <!-- Create Canvas -->
+        <canvas id="main_canvas"width="828" height="335"></canvas>
+    </div>
+
+    <!-- Load Sprite Assets -->
+    <img id="snailbait_background_1" class="sprite" src="assets/images/background/background-1.png" />
+    <img id="snailbait_background_2" class="sprite" src="assets/images/background/background-2.png" />
+    <img id="snailbait_background_3" class="sprite" src="assets/images/background/background-3.png" />
+    <img id="snailbait_background_4" class="sprite" src="assets/images/background/background-4.png" />
+    <img id="snailbait_background_5" class="sprite" src="assets/images/background/background-5.png" />
+    <img id="bar_background" class="sprite" src="assets/images/bar.png" />
+
+    <img id="snailbait_jungle_tileset" class="sprite" src="assets/images/platform/jungle-tileset.png" />
+    <img id="snailbait_sprite_sheet" class="sprite" src="assets/images/spritesheet.png" />
+    <img id="waiter_sprite_sheet" class="sprite" src="assets/images/waiter_sprite_sheet.png" />
+    <img id="beer_sprite_sheet" class="sprite" src="assets/images/beer_crop.png" />
+    <img id="puddle_sprite_sheet" class="sprite" src="assets/images/puddle.png" />
+    <img id="ui_sprite_sheet" class="sprite" src="assets/images/ui/ui-spritesheet.png" />
+
+    <!-- Load Audio Assets -->
+    <audio preload="auto" id="background" src="assets/sound/background/background.mp3"></audio>
+    <audio preload="auto" id="game_over" src="assets/sound/effects/game-over.mp3"></audio>
+    <audio preload="auto" id="splash" src="assets/sound/effects/splash.mp3"></audio>
+    <audio preload="auto" id="jump" src="assets/sound/effects/jump.mp3"></audio>
+    <audio preload="auto" id="boing" src="assets/sound/effects/boing.mp3"></audio>
+
+    <!-- Load Engine Scripts -->
+    <script src="../../Engine/Constants/Constants.js"></script>
+    <script src="../../Engine/Time/GameTime.js"></script>
+
+    <script src="../../Engine/Time/StopWatch.js"></script>
+    <script src="../../Engine/Time/AnimationTimer.js"></script>
+
+    <script src="../../Engine/Utilities/GDUtilities.js"></script>
+
+    <script src="../../Engine/Types/Vector2.js"></script>
+    <script src="../../Engine/Types/Transform2D.js"></script>
+    <script src="../../Engine/Types/Rect.js"></script>
+    <script src="../../Engine/Types/Circle.js"></script>
+
+    <script src="../../Engine/Physics/Body.js"></script>
+    <script src="../../Engine/Physics/Collision.js"></script>
+
+    <script src="../../Engine/Notification/NotificationCenter.js"></script>
+
+    <script src="../../Engine/Artists/Base/Artist.js"></script>
+    <script src="../../Engine/Artists/Images/SpriteArtist.js"></script>
+    <script src="../../Engine/Artists/Images/AnimatedSpriteArtist.js"></script>
+    <script src="../../Engine/Artists/Images/ScrollingSpriteArtist.js"></script>
+    <script src="../../Engine/Artists/Primitives/RectangleSpriteArtist.js"></script>
+    <script src="../../Engine/Artists/Primitives/TextSpriteArtist.js"></script>
+
+    <script src="../../Engine/Actors/Base/Actor2D.js"></script>
+    <script src="../../Engine/Actors/Sprites/Sprite.js"></script>
+    <script src="../../Engine/Actors/Sprites/MoveableSprite.js"></script>
+    <script src="../../Engine/Actors/Cameras/Camera2D.js"></script>
+
+    <script src="../../Engine/Managers/ObjectManager.js"></script>
+    <script src="../../Engine/Managers/KeyboardManager.js"></script>
+    <script src="../../Engine/Managers/MouseManager.js"></script>
+    <script src="../../Engine/Managers/SoundManager.js"></script>
+    <script src="../../Engine/Managers/CameraManager.js"></script>
+    <script src="../../Engine/Managers/GameStateManager.js"></script>
+    <script src="../../Engine/Managers/MenuManager.js"></script>
+    <script src="../../Engine/Managers/UIManager.js"></script>
+
+    <script src="../../Engine/Parameters/ContextParameters.js"></script>
+    <script src="../../Engine/Debug/DebugDrawer.js"></script>
+
+    <!-- Load Game Scripts -->
+    <script src="js/Constants/Constants.js"></script>
+    <script src="js/Controllers/Objects/ClickableObjectController.js"></script>
+    <script src="js/Controllers/Player/PlayerMoveController.js"></script>
+
+    <script src="js/Managers/MyGameStateManager.js"></script>
+    <script src="js/Managers/MyMenuManager.js"></script>
+    <script src="js/Managers/MyUIManager.js"></script>
+
+    <!-- Load Game -->
+    <script src="js/uncle_toms_terror.js"></script>
+</body>
+
+</html>

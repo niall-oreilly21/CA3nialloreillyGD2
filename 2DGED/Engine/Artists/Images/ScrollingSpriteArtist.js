@@ -6,8 +6,8 @@
  */
 class ScrollingSpriteArtist extends Artist {
 
-    get spritesheet() {
-        return this._spritesheet;
+    get spriteSheet() {
+        return this._spriteSheet;
     }
     get sourcePosition() {
         return this._sourcePosition;
@@ -16,8 +16,8 @@ class ScrollingSpriteArtist extends Artist {
         return this._sourceDimensions;
     }
 
-    set spritesheet(spritesheet) {
-        this._spritesheet = spritesheet;
+    set spriteSheet(spriteSheet) {
+        this._spriteSheet = spriteSheet;
     }
     set sourcePosition(sourcePosition) {
         this._sourcePosition = sourcePosition;
@@ -28,14 +28,16 @@ class ScrollingSpriteArtist extends Artist {
 
     constructor(
         context,
-        spriteSheet,
         alpha,
+        spriteSheet,
         sourcePosition,
         sourceDimensions,
         screenWidth,
         screenHeight,
     ) {
-        super(context, spriteSheet, alpha);
+        super(context, alpha);
+
+        this.spriteSheet = spriteSheet;
 
         this.sourcePosition = sourcePosition;
         this.sourceDimensions = sourceDimensions;
@@ -75,7 +77,23 @@ class ScrollingSpriteArtist extends Artist {
      */
     updateHorizontalScrolling(parent, activeCamera) {
 
-        // TO DO ...
+        let rightScrollPositionX = parent.transform.translation.x
+            + (parent.transform.dimensions.x * (1 - parent.scrollSpeedMultiplier));
+
+        let leftScrollPositionX = parent.transform.translation.x
+            - (parent.transform.dimensions.x * (1 - parent.scrollSpeedMultiplier));
+
+        if ((activeCamera.transform.translation.x + activeCamera.transform.origin.x) >= rightScrollPositionX) {
+
+            parent.transform.translation.x += parent.transform.dimensions.x;
+        }
+
+        if ((activeCamera.transform.translation.x + activeCamera.transform.origin.x) <= leftScrollPositionX) {
+
+            parent.transform.translation.x -= parent.transform.dimensions.x;
+        }
+
+        // This code is a WIP - if you find a better solution (that actually works!), please let me know
     }
 
     /**
@@ -170,8 +188,8 @@ class ScrollingSpriteArtist extends Artist {
     clone() {
         return new ScrollingSpriteArtist(
             this.context,
-            this.spriteSheet,
             this.alpha,
+            this.spriteSheet,
             this.sourcePosition.clone(),
             this.sourceDimensions.clone(),
             this.screenWidth,
@@ -180,10 +198,10 @@ class ScrollingSpriteArtist extends Artist {
     }
 
     toString() {
-        return "[" + 
-            this.spriteSheet + "," + 
-            this.sourcePosition + "," + 
-            this.sourceDimensions + 
-        "]";
+        return "[" +
+            this.spriteSheet + "," +
+            this.sourcePosition + "," +
+            this.sourceDimensions +
+            "]";
     }
 }

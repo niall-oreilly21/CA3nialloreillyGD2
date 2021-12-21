@@ -8,9 +8,4 @@
         "Engine/**/*",
         "Games/**/*",
     ],
-
-    /* We can also exclude folders from the current project */
-    "exclude": [
-        "Games/Pong"
-    ]
 }

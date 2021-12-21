@@ -4,71 +4,133 @@ const canvas = document.getElementById("main_canvas");
 // Get a handle to our canvas 2D context
 const context = canvas.getContext("2d");
 
-/* GAME VARIABLES HERE */
+/** CORE GAME LOOP CODE - DO NOT CHANGE */
 
+let gameTime;
+let notificationCenter;
 
-// Create a function that will load our game
-function loadGame() {
-    initializeGame();
+let cameraManager;
+let objectManager;
+let keyboardManager;
+let soundManager;
+
+// TO DO:
+// Add more managers as necessary
+
+function start() {
+
+    // Create a new gameTime object
+    // This will allow us to keep track of the time in our game
+    gameTime = new GameTime();
+
+    // Load game elements
+    load();
+
+    // Initialize game elements
+    initialize();
+
+    // TO DO: Publish an event to pause the object manager 
+    // and show the menu
+
+    // Start the game loop
     window.requestAnimationFrame(animate);
 }
 
-// Set up game values
-function initializeGame() {
+function animate(now) {
 
-}
+    // Update game time
+    gameTime.update(now);
 
-// Create a function that will run every time the browser updates
-function animate() {
-    // Update game state
-    update();
+    // Update game
+    update(gameTime);
 
-    // Re-draw updated game state
-    draw();
+    // Re-draw game
+    draw(gameTime);
 
     // Loop
     window.requestAnimationFrame(animate);
 }
 
-// Create a function that will update our game
-function update() {
+function update(gameTime) {
 
+    // Call the update method of the object manager class
+    // to update all sprites
+    objectManager.update(gameTime);
+
+    // Call the update method of the camera manager class
+    // to update all cameras
+    cameraManager.update(gameTime);
+
+    // TO DO: Update other managers
 }
 
-// Create a function that will re-draw our updated game
-function draw() {
+function draw(gameTime) {
+
+    // Clear previous draw
     clearCanvas();
+
+    // Call the draw method of the object manager class
+    // to draw all sprites
+    objectManager.draw(gameTime);
 }
 
 function clearCanvas() {
+
+    // Clear the canvas
     context.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
 }
 
-let keysDown = {};
+/** GAME SPECIFIC CODE BELOW - CHANGE AS NECESSARY */
 
-// Add an event listener that will be triggered when the
-// user presses (or holds) a button
+function initialize() {
 
-// In this example, we are using an anonymouse function
-// i.e. a function without a name
-window.addEventListener("keydown", function (event) {
+    initializeNotificationCenter();
+    initializeManagers();
+    
+    // TO DO: Call other initialize functions
+    
+    // It is important that you call initialize functions in the correct 
+    // order. Think about what elements of your game are dependant on other
+    // elements being initialized before they can be constructed. For 
+    // example, do your sprites require a camera in their constructor? If
+    // so, you should initialize your camera before attemptng to initialize
+    // your sprites...
+    
+    initializeSprites();
+}
 
-    // Add the button that the user has pressed to a 
-    // keysDown object
-    keysDown[event.key] = true;
-});
+function initializeNotificationCenter() {
 
-// Add an event listener that will be triggered when the 
-// user releases a button
+    // TO DO: Initialize notification center
+}
 
-// In this example, we are using an anonymouse function
-// i.e. a function without a name
-window.addEventListener("keyup", function (event) {
+function initializeManagers() {
 
-    // Remove the key that the user is no longer pressing
-    // from our keysDown object
-    delete keysDown[event.key];
-});
+    // TO DO: Initialize managers
 
-// Load our game when the webpage is loaded
-window.addEventListener("load", loadGame);
+    // Initialize camera manager?
+    // Initialize object manager?
+    // Initialize game manager?
+    // Initialize sound manager?
+    // Initialize keyboard manager?
+}
+
+function initializeSprites() {
+
+    // TO DO: Initialize sprites
+
+    // Initialize background?
+    // Initialize platforms?
+    // Initialize players?
+    // Initialize enemies?
+    // Initialize pickups?
+}
+
+function resetGame() {
+
+    clearCanvas();
+    startGame();
+}
+
+// Start the game once the page has loaded
+window.addEventListener("load", start);
