@@ -54,7 +54,7 @@ class PlayerMoveController {
 
     handleMove(gameTime, parent) {
 
-        //console.log(this.keyboardManager);
+        console.log(this.keyboardManager);
         // If the move left key is pressed
         if (this.keyboardManager.isKeyDown(this.moveKeys[0])) 
        {
