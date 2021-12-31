@@ -37,23 +37,23 @@ class GameData
       /****************** Screen 1 *******************/
 
       // Floor
-      new Vector2(0, 333),
-      new Vector2(50, 333),
-      new Vector2(100, 333),
-      new Vector2(150, 333),
-      new Vector2(200, 333),
-      new Vector2(250, 333),
-      new Vector2(300, 333),
-      new Vector2(350, 333),
-      new Vector2(400, 333),
-      new Vector2(450, 333),
-      new Vector2(500, 333),
-      new Vector2(550, 333),
-      new Vector2(600, 333),
-      new Vector2(650, 333),
-      new Vector2(700, 333),
-      new Vector2(750, 333),
-      new Vector2(800, 333),
+      new Vector2(0, 668),
+      new Vector2(50, 668),
+      new Vector2(100, 668),
+      new Vector2(150, 668),
+      new Vector2(200, 668),
+      new Vector2(250, 668),
+      new Vector2(300, 668),
+      new Vector2(350, 668),
+      new Vector2(400, 668),
+      new Vector2(450, 668),
+      new Vector2(500, 668),
+      new Vector2(550, 668),
+      new Vector2(600, 668),
+      new Vector2(650, 668),
+      new Vector2(700, 668),
+      new Vector2(750, 668),
+      new Vector2(800, 668),
 
       /****************** Screen 2 *******************/
 
@@ -81,10 +81,12 @@ class GameData
   };
 
 
-  static COLLECTIBLES_ANIMATION_DATA = 
+  static CONSUMABLE_VELOCITY = 0.3;
+
+  static COMSUMABLES_ANIMATION_DATA = 
   {
-    id: "Collectibles Animation Data",
-    spriteSheet: document.getElementById("beer_sprite_sheet"),
+    id: "Consumables Animation Data",
+    spriteSheet: document.getElementById("consumables_sprite_sheet"),
     
     // Animations
     takes: 
@@ -106,23 +108,44 @@ class GameData
 
         boundingBoxDimensions: new Vector2(280, 291),
 
-        frames: [
+        frames: 
+        [
           new Rect(5, 23, 280, 291)
+        ]
+      },
+
+      "Puddle": 
+      {
+
+        frameRatePerSec: 10,
+        
+        // -1 = Loop forever
+        //  0 = Run once (no loop)
+        //  N = Loop N times
+        maxLoopCount: -1,
+
+        startFrameIndex: 0,
+        endFrameIndex: 0,
+
+        boundingBoxDimensions: new Vector2(263, 114),
+
+        frames: 
+        [
+          new Rect(338, 177, 263, 114)
         ]
       }
     }
   };
 
 
-  static WAITER_START_POSITION = new Vector2(80, 200);
+  static WAITER_START_POSITION = new Vector2(80, 500);
   static WAITER_WIDTH = 132;
   static WAITER_HEIGHT = 138;
-  static WAITER_FALL_HEIGHT = 96;
-  static WAITER_HEIGHT = 138;
   static RUNNER_MOVE_KEYS = [Keys.ArrowLeft, Keys.ArrowRight, Keys.ArrowUp];
-  static WAITER_WALK_VELOCITY = 0.1;
-  static WAITER_JUMP_VELOCITY = 0.6;
+  static WAITER_WALK_VELOCITY = 0.3;
+  static WAITER_JUMP_VELOCITY = -1.0;
  
+
 
   static WAITER_ANIMATION_DATA = 
   {
@@ -135,7 +158,7 @@ class GameData
     {
 
       // Animation 1
-      "Idle": 
+      "Idle Right": 
       {
 
         frameRatePerSec: 8,
@@ -152,12 +175,40 @@ class GameData
         // array below
         boundingBoxDimensions: new Vector2(this.WAITER_WIDTH, this.WAITER_HEIGHT),
 
-        frames: [
+        frames: 
+        [
 
           // This list of rects just represent the positions
           // and dimension of each individual animation frame
           // on the sprite sheet
           new Rect(246, 342, this.WAITER_WIDTH, this.WAITER_HEIGHT),   // Animation frame 1
+        ]
+      },
+
+      "Idle Left": 
+      {
+
+        frameRatePerSec: 8,
+
+        // -1 = Loop forever
+        //  0 = Run once (no loop)
+        //  N = Loop N times
+        maxLoopCount: -1,
+
+        startFrameIndex: 0,
+        endFrameIndex: 0,
+
+        // Notice that I chose the largest of all the widths taken from the frames
+        // array below
+        boundingBoxDimensions: new Vector2(this.WAITER_WIDTH, this.WAITER_HEIGHT),
+
+        frames: 
+        [
+
+          // This list of rects just represent the positions
+          // and dimension of each individual animation frame
+          // on the sprite sheet
+          new Rect(1062, 342, this.WAITER_WIDTH, this.WAITER_HEIGHT),   // Animation frame 1
         ]
       },
 
@@ -273,7 +324,7 @@ class GameData
 
           new Rect(822, 102, this.WAITER_WIDTH, this.WAITER_HEIGHT),// Animation frame 1
           new Rect(1002, 0, this.WAITER_WIDTH, this.WAITER_HEIGHT),// Animation frame 2
-          new Rect(1200, -102, this.WAITER_WIDTH, this.WAITER_HEIGHT),// Animation frame 3
+          new Rect(1200, 102, this.WAITER_WIDTH, this.WAITER_HEIGHT),// Animation frame 3
         ]
       },
 
@@ -285,7 +336,7 @@ class GameData
         // -1 = Loop forever
         //  0 = Run once (no loop)
         //  N = Loop N times
-        maxLoopCount: 0,
+        maxLoopCount: 3,
 
         startFrameIndex: 0,
         endFrameIndex: 5,
@@ -303,8 +354,8 @@ class GameData
           new Rect(0, 582, this.WAITER_WIDTH, this.WAITER_HEIGHT),// Animation frame 1
           new Rect(240, 582, this.WAITER_WIDTH, this.WAITER_HEIGHT),// Animation frame 2
           new Rect(486, 624, this.WAITER_WIDTH, this.WAITER_HEIGHT),// Animation frame 3
-          new Rect(0, 582, this.WAITER_WIDTH, this.WAITER_FALL_HEIGHT),// Animation frame 1
-          new Rect(966, 624, this.WAITER_WIDTH, this.WAITER_FALL_HEIGHT),// Animation frame 2
+          new Rect(0, 582, this.WAITER_WIDTH, this.WAITER_HEIGHT),// Animation frame 1
+          new Rect(966, 624, this.WAITER_WIDTH, this.WAITER_HEIGHT),// Animation frame 2
           new Rect(1206, 582, this.WAITER_WIDTH, this.WAITER_HEIGHT),// Animation frame 3
         ]
       },
@@ -317,7 +368,7 @@ class GameData
         // -1 = Loop forever
         //  0 = Run once (no loop)
         //  N = Loop N times
-        maxLoopCount: 0,
+        maxLoopCount: 3,
 
         startFrameIndex: 0,
         endFrameIndex: 5,
@@ -335,9 +386,9 @@ class GameData
 
           new Rect(108, 822, this.WAITER_WIDTH, this.WAITER_HEIGHT),// Animation frame 1
           new Rect(342, -822, this.WAITER_WIDTH, this.WAITER_HEIGHT),// Animation frame 2
-          new Rect(576, 864, this.WAITER_WIDTH, this.WAITER_FALL_HEIGHT),// Animation frame 3
-          new Rect(816, 864, this.WAITER_WIDTH, this.WAITER_FALL_HEIGHT),// Animation frame 1
-          new Rect(1056, 864, this.WAITER_WIDTH, this.WAITER_FALL_HEIGHT),// Animation frame 2
+          new Rect(576, 864, this.WAITER_WIDTH, this.WAITER_HEIGHT),// Animation frame 3
+          new Rect(816, 864, this.WAITER_WIDTH, this.WAITER_HEIGHT),// Animation frame 1
+          new Rect(1056, 864, this.WAITER_WIDTH, this.WAITER_HEIGHT),// Animation frame 2
           new Rect(1302, 822, this.WAITER_WIDTH, this.WAITER_HEIGHT),// Animation frame 3
         ]
       },

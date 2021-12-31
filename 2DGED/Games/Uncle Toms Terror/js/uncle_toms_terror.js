@@ -257,11 +257,11 @@ function initializeCameras()
 function initializeSprites() 
 {
 
+    
     initializeBackground();
     initializePlatforms();
     initializeDrinksPickups();
     initializePlayer();
-    initializePuddle();
     initializeHUD();
     initializeOnScreenText();
 }
@@ -331,7 +331,7 @@ function initializeDrinksPickups()
     let artist;
     let transform;
 
-    let spriteArchetype = null;
+    let sprite;
     let spriteClone = null;
 
     artist = new AnimatedSpriteArtist
@@ -339,12 +339,16 @@ function initializeDrinksPickups()
         context,                                        // Context
         1,
 
-        GameData.COLLECTIBLES_ANIMATION_DATA            // Animation data
+        GameData.COMSUMABLES_ANIMATION_DATA            // Animation data
     );
 
     transform = new Transform2D
     (
-        new Vector2(200, 150),                          // Translation
+        new Vector2
+        (
+            0,
+            150
+        ),                                              // Translation
         0,                                              // Rotation
         new Vector2(0.2, 0.2),                                    // Scale
         Vector2.Zero,                                   // Origin
@@ -352,7 +356,7 @@ function initializeDrinksPickups()
         0
     );
 
-    spriteArchetype = new Sprite
+    sprite = new MoveableSprite
     (
         "Drink",
         transform,
@@ -364,27 +368,44 @@ function initializeDrinksPickups()
         1           // Layer depth
     );
 
+    sprite.body.maximumSpeed = 3;
+    sprite.body.friction = FrictionType.Low;
+    sprite.body.gravity = GravityType.Weak;
+    
     // Create 5 pickup sprites
     for (let i = 1; i <= 5; i++) 
     {
 
         // Clone sprite
-        spriteClone = spriteArchetype.clone();
+        spriteClone = sprite.clone();
 
         // Update ID
         spriteClone.id = spriteClone.id + " " + i;
 
         // Translate sprite
-        spriteClone.transform.translateBy(
-            new Vector2(
-                (i * 100),
-                0
+        spriteClone.transform.translateBy
+        (
+            new Vector2
+            (
+                Math.floor(Math.random() * (canvas.clientWidth - spriteClone.transform.boundingBox.width)),
+                -200
+            )
+        );
+
+        spriteClone.attachController
+        (
+            new ConsumableMoveController
+            (
+                notificationCenter,
+                keyboardManager,
+                objectManager,
+                GameData.CONSUMABLE_VELOCITY
             )
         );
 
         // Set sprite take
         spriteClone.artist.setTake("Drink");
-
+        console.log(spriteClone.transform.translation.x)
         // Add to object manager
         objectManager.add(spriteClone);
     }
@@ -405,14 +426,14 @@ function initializePlayer()
     );
 
     // Set animation
-    artist.setTake("Idle");
+    artist.setTake("Idle Right");
 
     transform = new Transform2D(
         GameData.WAITER_START_POSITION,                         // Translation
         0,                                                      // Rotation
         Vector2.One,                                              // Scale
         Vector2.Zero,                                           // Origin
-        artist.getBoundingBoxByTakeName("Idle"),                // Dimensions
+        artist.getBoundingBoxByTakeName("Idle Right"),                // Dimensions
         0                                                       // Explode By
     );
 
@@ -448,62 +469,12 @@ function initializePlayer()
 }
 
 
-function initializePuddle() 
-{
-
-    let transform;
-    let artist;
-    let sprite;
-
-    artist = new AnimatedSpriteArtist
-    (
-        context,
-        1,
-        GameData.PUDDLE_ANIMATION
-    );
-
-    artist.setTake("Puddle");
-
-    transform = new Transform2D
-    (
-        new Vector2(400, 310),
-        0,
-        new Vector2(0.25, 0.25),
-        Vector2.Zero,
-        artist.getBoundingBoxByTakeName("Puddle"),
-        0
-    );
-
-    sprite = new MoveableSprite(
-        "Puddle",
-        transform,
-        ActorType.Enemy,
-        CollisionType.Collidable,
-        StatusType.Updated | StatusType.Drawn,
-        artist,
-        1,
-        1
-    );
-
-    // Set performance characteristics of the physics body that is
-    // attached to the moveable sprite
-    sprite.body.maximumSpeed = 6;
-    sprite.body.friction = FrictionType.Normal;
-    sprite.body.gravity = GravityType.Normal;
-
-
-    // Add enemy to object manager
-    objectManager.add(sprite);
-}
-
-
 function initializeBackground() 
 {
 
     let transform;
     let artist;
     let backgroundSprite;
-
 
     transform = new Transform2D
     (
@@ -514,7 +485,7 @@ function initializeBackground()
         new Vector2
         (                   
             canvas.clientWidth,
-            canvas.clientHeight
+            canvas.clientHeight * 2
         ),
     );
 

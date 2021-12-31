@@ -47,6 +47,19 @@ class PlayerMoveController {
 
     handleInput(gameTime, parent) {
 
+        if(!this.keyboardManager.isAnyKeyPressed())
+        {
+            if(parent.artist.currentTakeName === "Run Right")
+            {
+                parent.artist.setTake("Idle Right");
+            }
+
+            else if( parent.artist.currentTakeName === "Run Left")
+            {
+                parent.artist.setTake("Idle Left");
+            }
+        }
+
         this.handleMove(gameTime, parent);
         this.handleJump(gameTime, parent);
     }
@@ -54,13 +67,13 @@ class PlayerMoveController {
 
     handleMove(gameTime, parent) {
 
-        console.log(this.keyboardManager);
+        
         // If the move left key is pressed
         if (this.keyboardManager.isKeyDown(this.moveKeys[0])) 
        {
 
             // Add velocity to begin moving player left
-            parent.body.addVelocityX(-this.runVelocity * gameTime.elapsedTimeInMs);
+            parent.body.setVelocityX(-this.runVelocity * gameTime.elapsedTimeInMs);
 
             // Update the player's animation
             parent.artist.setTake("Run Left");
@@ -71,8 +84,9 @@ class PlayerMoveController {
         {
 
             // Add velocity to begin moving the player right
-            parent.body.addVelocityX(this.runVelocity * gameTime.elapsedTimeInMs);
 
+            parent.body.setVelocityX(this.runVelocity * gameTime.elapsedTimeInMs);
+           
             // Update the player's animation
             parent.artist.setTake("Run Right");
         }
@@ -86,7 +100,8 @@ class PlayerMoveController {
         if (parent.body.jumping || !parent.body.onGround) return;
 
         // If the jump key is pressed
-        if (this.keyboardManager.isKeyDown(this.moveKeys[2])) {
+        if (this.keyboardManager.isKeyDown(this.moveKeys[2])) 
+        {
 
             // Update body variables
             parent.body.jumping = true;
@@ -94,12 +109,12 @@ class PlayerMoveController {
 
             // Apply velocity to begin moving the player up
             // This gives the effect of jumping 
-            parent.body.setVelocityY(-this.jumpVelocity * gameTime.elapsedTimeInMs);
-            
-
+            parent.body.setVelocityY(this.jumpVelocity * gameTime.elapsedTimeInMs);
+          
             if( parent.artist.currentTakeName === "Run Right")
             {
                 parent.artist.setTake("Jump Right");
+                
             }
 
             else if( parent.artist.currentTakeName === "Run Left")
@@ -128,10 +143,15 @@ class PlayerMoveController {
         // is below them (i.e., if they are on the ground)
         parent.body.onGround = false;
 
-        this.handleOutOfBoundsCollision(parent);
+       
+       this.handleOutOfBoundsCollision(parent);
+        
         this.handlePlatformCollision(parent);
+        
         this.handlePickupCollision(parent);
+        
         this.handleEnemyCollision(parent);
+       
     }
 
     handleOutOfBoundsCollision(parent) 
@@ -146,13 +166,11 @@ class PlayerMoveController {
         else if(parent.transform.translation.x <= 0)
         {
            parent.transform.translation.x = 1;
-            console.log(parent.body.velocityX );
         }
         
     }
 
     handlePlatformCollision(parent) {
-
         // Get a list of all the platform sprites that are stored
         // within the object manager
         const platforms = this.objectManager.get(ActorType.Platform);
@@ -183,16 +201,6 @@ class PlayerMoveController {
                 platform
             );
 
-            // If the player has ran into a platform that is to the
-            // left or to the right of them
-            if (
-                collisionLocationType === CollisionLocationType.Left ||
-                collisionLocationType === CollisionLocationType.Right
-            ) {
-                // Reduce their horizontal velocity to 0, to stop them
-                // from moving
-                parent.body.setVelocityX(0);
-            }
 
             // If the player has landed on a platform
             if (collisionLocationType === CollisionLocationType.Bottom) {
@@ -233,7 +241,8 @@ class PlayerMoveController {
 
             // We can use a simple collision check here to check if the player has collided
             // with the pickup sprite
-            if (parent.transform.boundingBox.intersects(pickup.transform.boundingBox)) {
+            if (parent.transform.boundingBox.intersects(pickup.transform.boundingBox)) 
+            {
 
                 // If the player has collided with a pickup, do something...
 
@@ -264,13 +273,6 @@ class PlayerMoveController {
                     )
                 );
 
-                notificationCenter.notify(
-                    new Notification(
-                        NotificationType.Sound,
-                        NotificationAction.Play,
-                        ["jump"]
-                    )
-                );
 
                 // Uncomment this code to see how we could remove the first platform that has an
                 // x position > 400
@@ -289,68 +291,67 @@ class PlayerMoveController {
 
         // Get a list of all the enemy sprites that are stored within
         // the object mananger
-        const enemies = this.objectManager.get(ActorType.Enemy);
+        const puddles = this.objectManager.get(ActorType.Puddle);
 
         // If enemies is null, exit the function
-        if (enemies == null) return;
+        if (puddles == null) return;
 
         // Loop through the list of enemy sprites
-        for (let i = 0; i < enemies.length; i++) 
+        for (let i = 0; i < puddles.length; i++) 
         {
 
             // Store a reference to the current enemy sprite
-            const enemy = enemies[i];
+            const puddle = puddles[i];
 
             // We can use a simple collision check here to check if the player has collided
             // with the enemy sprite
-            if (parent.transform.boundingBox.intersects(enemy.transform.boundingBox)) 
-            {
-
-                 if (parent.artist.currentTakeName === "Run Right" || parent.artist.currentTakeName === "Jump Right")
+                if (parent.transform.boundingBox.intersects(puddle.transform.boundingBox)) 
                 {
-                    parent.artist.setTake("Fall Right");
-                }
+                    if (parent.artist.currentTakeName === "Run Right" || parent.artist.currentTakeName === "Jump Right")
+                    {
+                        parent.artist.setTake("Fall Right");
+                    }
 
-                else if(parent.artist.currentTakeName === "Run Left" || parent.artist.currentTakeName === "Jump Left")
-                {
-                    parent.artist.setTake("Fall Left");
+                    else if(parent.artist.currentTakeName === "Run Left" || parent.artist.currentTakeName === "Jump Left")
+                    {
+                        parent.artist.setTake("Fall Left");
+                        
+                    }
+
+                
                     
+                        this.notificationCenter.notify
+                        (
+                            new Notification
+                            (
+                                NotificationType.Sprite,    // Type
+                                NotificationAction.RemoveFirst,  // Action
+                                [puddle]                    // Arguments
+                            )
+                        );
+                    
+                        notificationCenter.notify
+                        (
+                            new Notification
+                            (
+                                NotificationType.Sound,
+                                NotificationAction.Play,
+                                ["splash"]
+                            )
+                        );
+                    
+                    
+
+                    // notificationCenter.notify(
+                    //     new Notification(
+                    //         NotificationType.GameState,
+                    //         NotificationAction.Health,
+                    //         [-5]
+                    //     )
+                    // );
                 }
-
-              
-                   
-                    this.notificationCenter.notify
-                    (
-                        new Notification
-                        (
-                            NotificationType.Sprite,    // Type
-                            NotificationAction.RemoveFirst,  // Action
-                            [enemy]                    // Arguments
-                        )
-                    );
-                
-                    notificationCenter.notify
-                    (
-                        new Notification
-                        (
-                            NotificationType.Sound,
-                            NotificationAction.Play,
-                            ["splash"]
-                        )
-                    );
-                
-                
-
-                // notificationCenter.notify(
-                //     new Notification(
-                //         NotificationType.GameState,
-                //         NotificationAction.Health,
-                //         [-5]
-                //     )
-                // );
-            }
-            
         }
+        
     }
 
     applyInput(parent) {

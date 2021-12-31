@@ -19,7 +19,7 @@ body {
 #game_window {
     position: relative;
     width: 828;
-    height: 335;
+    height: 670;
     margin: 0 auto;
 
     background-color: #2B5754;
@@ -28,8 +28,8 @@ body {
 
 #menu_block {
     position: absolute;
-    width: 850;
-    height: 468;
+    width: 828;
+    height: 670;
     left: 0;
     top: 0;
 
@@ -45,7 +45,7 @@ body {
     justify-content: center;
     
     width: 828;
-    height: 335;
+    height: 670;
     left: 0;
     top: 0;
 }

@@ -14,7 +14,7 @@ const ActorType = {
     Pickup: 3,
     Interactable: 4,
     Projectile: 5,
-    Enemy: 6,
+    Puddle: 6,
     NPC: 7,
     Player: 8,
     Camera: 9,
