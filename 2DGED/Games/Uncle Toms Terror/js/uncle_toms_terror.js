@@ -372,10 +372,11 @@ function initializeDrinksPickups()
     sprite.body.friction = FrictionType.Low;
     sprite.body.gravity = GravityType.Weak;
     
+
     // Create 5 pickup sprites
     for (let i = 1; i <= 5; i++) 
     {
-
+        
         // Clone sprite
         spriteClone = sprite.clone();
 
@@ -388,10 +389,10 @@ function initializeDrinksPickups()
             new Vector2
             (
                 Math.floor(Math.random() * (canvas.clientWidth - spriteClone.transform.boundingBox.width)),
-                -200
+                Math.floor(-Math.random() * 1000)
             )
         );
-
+      
         spriteClone.attachController
         (
             new ConsumableMoveController
@@ -401,15 +402,48 @@ function initializeDrinksPickups()
                 objectManager,
                 GameData.CONSUMABLE_VELOCITY
             )
+            
         );
+       // startIntervalTimer()
 
         // Set sprite take
         spriteClone.artist.setTake("Drink");
-        console.log(spriteClone.transform.translation.x)
+
         // Add to object manager
         objectManager.add(spriteClone);
     }
 }
+
+
+    // Let's create a variable called intervalTimer - this will be used to store a handle to our interval timer
+    let intervalTimer;
+
+    // Let's also create a variable that will determine how much time must elapse between each expire
+    let intervalTime = 1000;
+
+    // Create a function that will start our interval timer when called
+    function startIntervalTimer() 
+    {
+        // Start a timer
+        // Store a handle to the timer that we create
+        intervalTimer = setInterval(intervalFunction, intervalTime);
+        console.log("Interval timer has started!");
+    }
+
+    // Create a function that will be called when our interval timer expires
+    function intervalFunction() 
+    {
+        console.log("Interval timer has elapsed!");
+    }
+
+    // Create a function that will stop our interval timer when called
+    function stopIntervalTimer() 
+    {
+
+        // Stop the interval timer
+        clearInterval(intervalTimer);
+        console.log("Interval timer has been stoppped!");
+    }
 
 
 function initializePlayer() 

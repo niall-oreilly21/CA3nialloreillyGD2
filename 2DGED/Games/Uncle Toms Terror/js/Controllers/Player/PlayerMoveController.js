@@ -5,8 +5,16 @@
  * @version 1.0
  * @class PlayerMoveController
  */
-class PlayerMoveController {
+ 
+let orderBeer = 0;
+let orderPizza = 0;
+let waiterBeer = 0;
+let waiterPizza = 0;
+let level = 0;
 
+class PlayerMoveController {
+ 
+    
     constructor(
         notificationCenter,
         keyboardManager,
@@ -22,10 +30,10 @@ class PlayerMoveController {
         this.moveKeys = moveKeys;
         this.runVelocity = runVelocity;
         this.jumpVelocity = jumpVelocity;
+        this.consumables = new Comsumables();
     }
 
     update(gameTime, parent) {
-
         this.applyForces(gameTime, parent);
         this.handleInput(gameTime, parent);
         this.checkCollisions(parent);
@@ -151,7 +159,31 @@ class PlayerMoveController {
         this.handlePickupCollision(parent);
         
         this.handleEnemyCollision(parent);
-       
+
+        this.checkEndLevel();
+        
+    }
+
+    checkEndLevel()
+    {
+
+        if((orderBeer === waiterBeer) && (orderPizza === waiterPizza))
+        {
+            level++;
+            waiterBeer = 0;
+            waiterPizza = 0;
+            for(let i = 0; i < level; i++)
+            {
+                if(Math.floor(Math.random() * 2))
+                {
+                    orderBeer++;
+                }
+                else
+                {
+                    orderPizza++;
+                }
+            }
+        }
     }
 
     handleOutOfBoundsCollision(parent) 
@@ -229,7 +261,7 @@ class PlayerMoveController {
         // Get a list of all the pickup sprites that are stored
         // within the object manager
         const pickups = this.objectManager.get(ActorType.Pickup);
-
+    
         // If pickups is null, exit the function
         if (pickups == null) return;
 
@@ -245,7 +277,15 @@ class PlayerMoveController {
             {
 
                 // If the player has collided with a pickup, do something...
-
+                if(parent.artist.currentTakeName === "Pizza")
+                {
+                    waiterPizza++;
+                }
+                else
+                {
+                    waiterBeer++;
+                }
+    
                 // Create a notification that will ultimately remove
                 // the pickup sprite
                 notificationCenter.notify(
@@ -273,16 +313,7 @@ class PlayerMoveController {
                     )
                 );
 
-
-                // Uncomment this code to see how we could remove the first platform that has an
-                // x position > 400
-                // notificationCenter.notify(
-                //     new Notification(
-                //         NotificationType.Sprite,
-                //         NotificationAction.RemoveFirstBy,
-                //         [ActorType.Platform, platform => platform.transform.translation.x > 400]
-                //     )
-                // );
+                this.consumables.initializeDrinksPickups();
             }
         }
     }

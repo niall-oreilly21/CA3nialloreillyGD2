@@ -7,6 +7,8 @@
  */
  class ConsumableMoveController {
 
+ 
+
     constructor(
         notificationCenter,
         keyboardManager,
@@ -17,6 +19,7 @@
         this.keyboardManager = keyboardManager;
         this.objectManager = objectManager;
         this.jumpVelocity = jumpVelocity;
+        this.consumables = new Comsumables();
     }
 
     update(gameTime, parent) 
@@ -130,7 +133,8 @@
                     )
                 );
 
-                this.initializePuddle(positionX, positionY, dimensionY, scale);
+            this.consumables.initializePuddle(positionX, positionY, dimensionY, scale);
+               this.consumables.initializeDrinksPickups(); 
                 
             }
 
@@ -144,55 +148,6 @@
                 parent.body.setVelocityY(this.jumpVelocity);
             }
         }
-    }
-
-    initializePuddle(positionX, positionY, dimensionY, scale)
-    {
-    
-        let transform;
-        let artist;
-        let sprite;
-    
-        artist = new AnimatedSpriteArtist
-        (
-            context,
-            1,
-            GameData.COMSUMABLES_ANIMATION_DATA
-        );
-    
-        artist.setTake("Puddle");
-        transform = new Transform2D
-        (
-          
-            new Vector2(positionX, positionY + (dimensionY - 114) * scale),
-            0,
-            new Vector2(0.2, 0.2),
-            Vector2.Zero,
-            artist.getBoundingBoxByTakeName("Puddle"),
-            0
-        );
-    
-        sprite = new MoveableSprite
-        (
-            "Puddle",
-            transform,
-            ActorType.Puddle,
-            CollisionType.Collidable,
-            StatusType.Updated | StatusType.Drawn,
-            artist,
-            1,
-            1
-        );
-    
-        // Set performance characteristics of the physics body that is
-        // attached to the moveable sprite
-        sprite.body.maximumSpeed = 6;
-        sprite.body.friction = FrictionType.Normal;
-        sprite.body.gravity = GravityType.Normal;
-    
-    
-        // Add enemy to object manager
-        objectManager.add(sprite);
     }
 
 

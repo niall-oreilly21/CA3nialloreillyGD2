@@ -131,7 +131,28 @@ class GameData
 
         frames: 
         [
-          new Rect(338, 177, 263, 114)
+          new Rect(305, 198, 263, 114)
+        ]
+      },
+
+      "Pizza": 
+      {
+
+        frameRatePerSec: 10,
+        
+        // -1 = Loop forever
+        //  0 = Run once (no loop)
+        //  N = Loop N times
+        maxLoopCount: -1,
+
+        startFrameIndex: 0,
+        endFrameIndex: 0,
+
+        boundingBoxDimensions: new Vector2(295, 309),
+
+        frames: 
+        [
+          new Rect(626, 12, 295, 309)
         ]
       }
     }
