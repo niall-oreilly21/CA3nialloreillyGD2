@@ -15,6 +15,7 @@ class GameData
   static BACKGROUND = document.getElementById("bar_background");
   static UI = document.getElementById("ui_sprite_sheet");
   
+  static PLATFORM_Y_DIMENSION = 668;
 
   static PLATFORM_DATA = 
   {
@@ -37,51 +38,64 @@ class GameData
       /****************** Screen 1 *******************/
 
       // Floor
-      new Vector2(0, 668),
-      new Vector2(50, 668),
-      new Vector2(100, 668),
-      new Vector2(150, 668),
-      new Vector2(200, 668),
-      new Vector2(250, 668),
-      new Vector2(300, 668),
-      new Vector2(350, 668),
-      new Vector2(400, 668),
-      new Vector2(450, 668),
-      new Vector2(500, 668),
-      new Vector2(550, 668),
-      new Vector2(600, 668),
-      new Vector2(650, 668),
-      new Vector2(700, 668),
-      new Vector2(750, 668),
-      new Vector2(800, 668),
-
-      /****************** Screen 2 *******************/
-
-      // Floor
-      new Vector2(850, 420),
-      new Vector2(900, 420),
-      new Vector2(950, 420),
-      new Vector2(1000, 420),
-      new Vector2(1050, 420),
-      new Vector2(1100, 420),
-      new Vector2(1150, 420),
-      new Vector2(1200, 420),
-
-      // GAP!
-
-      new Vector2(1400, 420),
-      new Vector2(1450, 420),
-      new Vector2(1500, 420),
-      new Vector2(1550, 420),
-      new Vector2(1600, 420),
-      new Vector2(1650, 420),
-      new Vector2(1700, 420),
-      new Vector2(1750, 420),
+      new Vector2(0, this.PLATFORM_Y_DIMENSION),
+      new Vector2(50, this.PLATFORM_Y_DIMENSION),
+      new Vector2(100, this.PLATFORM_Y_DIMENSION),
+      new Vector2(150, this.PLATFORM_Y_DIMENSION),
+      new Vector2(200, this.PLATFORM_Y_DIMENSION),
+      new Vector2(250, this.PLATFORM_Y_DIMENSION),
+      new Vector2(300, this.PLATFORM_Y_DIMENSION),
+      new Vector2(350, this.PLATFORM_Y_DIMENSION),
+      new Vector2(400, this.PLATFORM_Y_DIMENSION),
+      new Vector2(450, this.PLATFORM_Y_DIMENSION),
+      new Vector2(500, this.PLATFORM_Y_DIMENSION),
+      new Vector2(550, this.PLATFORM_Y_DIMENSION),
+      new Vector2(600, this.PLATFORM_Y_DIMENSION),
+      new Vector2(650, this.PLATFORM_Y_DIMENSION),
+      new Vector2(700, this.PLATFORM_Y_DIMENSION),
+      new Vector2(750, this.PLATFORM_Y_DIMENSION),
+      new Vector2(800, this.PLATFORM_Y_DIMENSION),
+      new Vector2(850, this.PLATFORM_Y_DIMENSION),
+      new Vector2(900, this.PLATFORM_Y_DIMENSION)
     ]
   };
 
 
-  static CONSUMABLE_VELOCITY = 0.3;
+  
+
+  static TABLE_ANIMATION_DATA = 
+  {
+    id: "Table Animation Data",
+    spriteSheet: document.getElementById("table_sprite_sheet"),
+    
+    // Animations
+    takes: 
+    {
+
+      // Animation 1
+      "Table": 
+      {
+
+        frameRatePerSec: 10,
+        
+        // -1 = Loop forever
+        //  0 = Run once (no loop)
+        //  N = Loop N times
+        maxLoopCount: -1,
+
+        startFrameIndex: 0,
+        endFrameIndex: 0,
+
+        boundingBoxDimensions: new Vector2(72, 48),
+
+        frames: 
+        [
+          new Rect(12, 24, 72, 48)
+        ]
+      }
+    }
+  }
+
 
   static COMSUMABLES_ANIMATION_DATA = 
   {
@@ -162,7 +176,7 @@ class GameData
   static WAITER_START_POSITION = new Vector2(80, 500);
   static WAITER_WIDTH = 132;
   static WAITER_HEIGHT = 138;
-  static RUNNER_MOVE_KEYS = [Keys.ArrowLeft, Keys.ArrowRight, Keys.ArrowUp];
+  static WAITER_MOVE_KEYS = [Keys.ArrowLeft, Keys.ArrowRight, Keys.ArrowUp];
   static WAITER_WALK_VELOCITY = 0.3;
   static WAITER_JUMP_VELOCITY = -1.0;
  

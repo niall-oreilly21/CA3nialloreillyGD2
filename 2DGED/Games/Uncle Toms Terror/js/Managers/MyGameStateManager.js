@@ -5,7 +5,7 @@
  * @class MyGameStateManager
  */
 class MyGameStateManager extends GameStateManager {
-
+    
     get playerHealth() {
         return this._playerHealth;
     }
@@ -26,18 +26,19 @@ class MyGameStateManager extends GameStateManager {
         this._inventory = value;
     }
 
-    constructor(id, notificationCenter, initialPlayerHealth, initialPlayerAmmo) {
+    constructor(id, notificationCenter, objectManager, initialPlayerHealth, initialPlayerAmmo) {
         
         super(id);
 
         this.notificationCenter = notificationCenter;
-
+        this.objectManager = objectManager;
         this.playerHealth = initialPlayerHealth;
         this.playerAmmo = initialPlayerAmmo;
 
         this.inventory = [];
         
         this.registerForNotifications();
+        this.consumables = new Consumables();
     }
 
     registerForNotifications() {
@@ -95,7 +96,19 @@ class MyGameStateManager extends GameStateManager {
         // Maybe update a UI element?
     }
 
-    update(gameTime) {
+    update(gameTime) 
+    {
+            this.handleOrderComplete();
+            this.isTableVisible();
+           
+        
+            
+        if(endLevel)
+        {           
+            this.handleEndLevel();
+        }
+        
+     
 
         // Add your code here...
         
@@ -111,4 +124,127 @@ class MyGameStateManager extends GameStateManager {
         // How could we have these events fire one after each other, rather
         // than all at the same time? Hint: use timers.
     }
+
+
+    handleOrderComplete()
+    {
+        if((orderBeer === 0) && (waiterBeer === 0) && (orderPizza === 0) && (waiterPizza === 0)) return;
+        
+        if((orderBeer === waiterBeer) && (orderPizza === waiterPizza))
+        {
+            if(!isTableVisible)
+            {
+                this.createTable();
+            }
+        }
+                
+    }
+
+    handleEndLevel()
+    {
+        level++;
+        waiterBeer = 0;
+        waiterPizza = 0;
+        orderBeer = 0;
+        orderPizza = 0;
+        isTableVisible = false;
+        consumablesVelocity = consumablesVelocity + 0.05;
+        endLevel = false;
+        this.consumables.initializeDrinksPickups();
+        this.getRandomOrder();
+    }
+    
+    getRandomOrder()
+    {    
+        for(let i = 0; i < level; i++)
+        {
+            if(Math.floor(Math.random() * 2))
+            {
+                orderBeer++;     
+            }
+            else
+            {
+                orderPizza++;     
+            }
+        }
+    }
+    
+    isTableVisible()
+    {
+        const tables = this.objectManager.get(ActorType.Interactable);
+        
+        if (tables == null) return;
+
+        if (tables.length === 0) 
+        { 
+            isTableVisible = false;
+        }
+        else
+        {    
+            isTableVisible = true;
+        }
+    }
+
+    createTable()
+    {
+
+            artist = new AnimatedSpriteArtist
+            (
+                context,                                        // Context
+                1,
+                GameData.TABLE_ANIMATION_DATA            // Animation data
+            );
+        
+            transform = new Transform2D
+            (
+                new Vector2
+                (
+                    this.setTablesPositonX(),
+                    574
+                ),                                              // Translation
+                0,                                              // Rotation
+                new Vector2(1.5, 2),                                    // Scale
+                Vector2.Zero,                                   // Origin
+                artist.getBoundingBoxByTakeName("Table"),  // Dimensions
+                0
+            );
+        
+            sprite = new MoveableSprite
+            (
+                "Table",
+                transform,
+                ActorType.Interactable,
+                CollisionType.Collidable,
+                StatusType.Updated | StatusType.Drawn,
+                artist,
+                1,          // Scroll speed multiplier
+                1           // Layer depth
+            );
+        
+            sprite.body.maximumSpeed = 0;
+            sprite.body.friction = FrictionType.Normal;
+            sprite.body.gravity = GravityType.Normal;
+        
+                // Set sprite take
+                artist.setTake("Table");
+
+                // Add to object manager
+                objectManager.add(sprite);          
+        }
+
+
+        setTablesPositonX()
+        {
+            if(playerCurrentPositionX < canvas.clientWidth / 2)
+            {
+                return canvas.clientWidth - 108;
+            }
+            else if(playerCurrentPositionX >= canvas.clientWidth / 2)
+            {
+                return 0;
+            }
+            
+        }
+    
+    
 }

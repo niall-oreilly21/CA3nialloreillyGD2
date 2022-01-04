@@ -106,6 +106,9 @@ function draw(gameTime)
     // to draw all sprites
     objectManager.draw(gameTime);
 
+
+  
+
     // If we are in debug mode
     if (debugMode) 
     {
@@ -114,6 +117,13 @@ function draw(gameTime)
         // to display debug info
         debugDrawer.draw(gameTime);
     }
+
+    var canvastemp = document.getElementById("main_canvas")
+    let ctxtemp = canvastemp.getContext("2d");
+    ctxtemp.font = "30px Arial";
+    ctxtemp.strokeStyle = "white"
+    ctxtemp.strokeText(`Level ${level} Pizza ${orderPizza}   Beer  ${orderBeer} `, 100, 100)
+    ctxtemp.strokeText(`Level ${level} WPizza ${waiterPizza}   WBeer  ${waiterBeer}`, 100, 200)
 }
 
 function clearCanvas() 
@@ -188,6 +198,7 @@ function initializeManagers()
     (
         "Game State Manager",
         notificationCenter,
+        objectManager,
         100,                            // Initial player health
         36                              // Initial player ammo
     )
@@ -256,8 +267,6 @@ function initializeCameras()
 
 function initializeSprites() 
 {
-
-    
     initializeBackground();
     initializePlatforms();
     initializeDrinksPickups();
@@ -326,92 +335,20 @@ function initializePlatforms()
 
 
 function initializeDrinksPickups() 
-{
-
-    let artist;
-    let transform;
-
-    let sprite;
-    let spriteClone = null;
-
-    artist = new AnimatedSpriteArtist
-    (
-        context,                                        // Context
-        1,
-
-        GameData.COMSUMABLES_ANIMATION_DATA            // Animation data
-    );
-
-    transform = new Transform2D
-    (
-        new Vector2
-        (
-            0,
-            150
-        ),                                              // Translation
-        0,                                              // Rotation
-        new Vector2(0.2, 0.2),                                    // Scale
-        Vector2.Zero,                                   // Origin
-        artist.getBoundingBoxByTakeName("Drink"),  // Dimensions
-        0
-    );
-
-    sprite = new MoveableSprite
-    (
-        "Drink",
-        transform,
-        ActorType.Pickup,
-        CollisionType.Collidable,
-        StatusType.Updated | StatusType.Drawn,
-        artist,
-        1,          // Scroll speed multiplier
-        1           // Layer depth
-    );
-
-    sprite.body.maximumSpeed = 3;
-    sprite.body.friction = FrictionType.Low;
-    sprite.body.gravity = GravityType.Weak;
+{   
+    //setTimeout(() => {alert("aha!")}, 5000)
+  
+    let timer = new Stopwatch();
+    //detachControllerByID
+    //console.log(time.getElapsedTime(gameTime))
+//console.log(timer)
+    //console.log(timer)
     
+    
+    // let consumables = new Consumables();
 
-    // Create 5 pickup sprites
-    for (let i = 1; i <= 5; i++) 
-    {
-        
-        // Clone sprite
-        spriteClone = sprite.clone();
+    // consumables.initializeConsumables();
 
-        // Update ID
-        spriteClone.id = spriteClone.id + " " + i;
-
-        // Translate sprite
-        spriteClone.transform.translateBy
-        (
-            new Vector2
-            (
-                Math.floor(Math.random() * (canvas.clientWidth - spriteClone.transform.boundingBox.width)),
-                Math.floor(-Math.random() * 1000)
-            )
-        );
-      
-        spriteClone.attachController
-        (
-            new ConsumableMoveController
-            (
-                notificationCenter,
-                keyboardManager,
-                objectManager,
-                GameData.CONSUMABLE_VELOCITY
-            )
-            
-        );
-       // startIntervalTimer()
-
-        // Set sprite take
-        spriteClone.artist.setTake("Drink");
-
-        // Add to object manager
-        objectManager.add(spriteClone);
-    }
 }
 
 
@@ -492,7 +429,7 @@ function initializePlayer()
             notificationCenter,
             keyboardManager,
             objectManager,
-            GameData.RUNNER_MOVE_KEYS,
+            GameData.WAITER_MOVE_KEYS,
             GameData.WAITER_WALK_VELOCITY,
             GameData.WAITER_JUMP_VELOCITY
         )
@@ -518,7 +455,7 @@ function initializeBackground()
         Vector2.Zero,                   // Origin
         new Vector2
         (                   
-            canvas.clientWidth,
+            canvas.clientWidth + 208 ,
             canvas.clientHeight * 2
         ),
     );
@@ -624,6 +561,112 @@ function initializeOnScreenText()
         context,                        // Context
         1,                              // Alpha
         "The Customers are Thirsty!",                  // Text
+        FontType.InformationMedium,     // Font Type
+        Color.White,                    // Color
+        TextAlignType.Left,             // Text Align
+        200,                            // Max Width
+        false                            // Fixed Position
+    );
+
+    sprite = new Sprite
+    (
+        "Text UI Info",
+        transform,
+        ActorType.HUD,
+        CollisionType.NotCollidable,
+        StatusType.Updated | StatusType.Drawn,
+        artist,
+        1,
+        1
+    );
+
+    // Add sprite to object manager
+    objectManager.add(sprite);
+}
+
+function initializeOnScreenTextOrder() 
+{
+
+    let transform;
+    let artist;
+    let sprite;
+
+    transform = new Transform2D
+    (
+        new Vector2
+        (
+            100, 
+            100
+        ),
+        0,
+        new Vector2
+        (
+            100,100
+        ),
+        Vector2.Zero,
+        Vector2.Zero,
+        0
+    );
+
+    artist = new TextSpriteArtist
+    (
+        context,                        // Context
+        1,                              // Alpha
+        `Level ${level} Pizza ${orderPizza}   Beer  ${orderBeer}   Positiion  ${playerCurrentPositionX}`,          // Text
+        FontType.InformationMedium,     // Font Type
+        Color.White,                    // Color
+        TextAlignType.Left,             // Text Align
+        200,                            // Max Width
+        false                            // Fixed Position
+    );
+
+    sprite = new Sprite
+    (
+        "Text UI Info",
+        transform,
+        ActorType.HUD,
+        CollisionType.NotCollidable,
+        StatusType.Updated | StatusType.Drawn,
+        artist,
+        1,
+        1
+    );
+
+    // Add sprite to object manager
+    objectManager.add(sprite);
+
+}
+
+
+function initializeOnScreenTexts() 
+{
+
+    let transform;
+    let artist;
+    let sprite;
+
+    transform = new Transform2D
+    (
+        new Vector2
+        (
+            100, 
+            200
+        ),
+        0,
+        new Vector2
+        (
+            100,100
+        ),
+        Vector2.Zero,
+        Vector2.Zero,
+        0
+    );
+
+    artist = new TextSpriteArtist
+    (
+        context,                        // Context
+        1,                              // Alpha
+        level + orderPizza + orderBeer,                  // Text
         FontType.InformationMedium,     // Font Type
         Color.White,                    // Color
         TextAlignType.Left,             // Text Align

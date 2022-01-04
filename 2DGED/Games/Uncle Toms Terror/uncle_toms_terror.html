@@ -53,8 +53,10 @@
         </div>
 
         <!-- Create Canvas -->
-        <canvas id="main_canvas"width="828" height="670"></canvas>
+        <canvas id="main_canvas"width="1000" height="670"></canvas>
     </div>
+
+    
 
     <!-- Load Sprite Assets -->
     <img id="bar_background" class="sprite" src="assets/images/bar.png" />
@@ -62,7 +64,7 @@
     <img id="snailbait_jungle_tileset" class="sprite" src="assets/images/platform/jungle-tileset.png" />
     <img id="waiter_sprite_sheet" class="sprite" src="assets/images/waiter_sprite_sheet.png" />
     <img id="consumables_sprite_sheet" class="sprite" src="assets/images/consumables_sprite_sheet.png" />
-    <img id="puddle_sprite_sheet" class="sprite" src="assets/images/puddle.png" />
+    <img id="table_sprite_sheet" class="sprite" src="assets/images/table.png" />
     <img id="ui_sprite_sheet" class="sprite" src="assets/images/ui/ui-spritesheet.png" />
 
     <!-- Load Audio Assets -->
@@ -71,6 +73,9 @@
     <audio preload="auto" id="splash" src="assets/sound/effects/splash.mp3"></audio>
     <audio preload="auto" id="jump" src="assets/sound/effects/jump.mp3"></audio>
     <audio preload="auto" id="boing" src="assets/sound/effects/boing.mp3"></audio>
+
+    <!-- Globals Declared First so that all other JavaScript files can see them-->
+    <script src="../Uncle Toms Terror/js/Globals/globals.js"></script>
 
     <!-- Load Engine Scripts -->
     <script src="../../Engine/Constants/Constants.js"></script>
@@ -115,8 +120,8 @@
     <script src="../../Engine/Parameters/ContextParameters.js"></script>
     <script src="../../Engine/Debug/DebugDrawer.js"></script>
 
-    <script src="../../Engine/Comsumables/Comsumables.js"></script>
-    <script src="../../Engine/Comsumables/Level.js"></script>
+    <script src="../../Engine/Consumables/Consumables.js"></script>
+    <script src="../../Engine/Consumables/Level.js"></script>
 
     <!-- Load Game Scripts -->
     <script src="js/Constants/Constants.js"></script>

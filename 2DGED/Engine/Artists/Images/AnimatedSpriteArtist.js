@@ -130,6 +130,23 @@ class AnimatedSpriteArtist extends Artist {
         }
     }
 
+    isCurrentTakeName(takeName)
+    {
+       // if (this.animationData.takes[takeName]) 
+        {
+            
+            if (this.currentTakeName === takeName) 
+            {
+                
+                return true;
+            }
+            else 
+            {
+                return false;
+            }
+        }
+    }
+    
     getBoundingBoxByTakeName(takeName) {
 
         // If the take exists

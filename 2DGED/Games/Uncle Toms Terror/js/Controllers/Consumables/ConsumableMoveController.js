@@ -19,7 +19,7 @@
         this.keyboardManager = keyboardManager;
         this.objectManager = objectManager;
         this.jumpVelocity = jumpVelocity;
-        this.consumables = new Comsumables();
+        this.consumables = new Consumables();
     }
 
     update(gameTime, parent) 
@@ -134,7 +134,8 @@
                 );
 
             this.consumables.initializePuddle(positionX, positionY, dimensionY, scale);
-               this.consumables.initializeDrinksPickups(); 
+            this.consumables.initializeDrinksPickups(); 
+            
                 
             }
 
@@ -149,6 +150,7 @@
             }
         }
     }
+
 
 
     applyInput(parent) {
