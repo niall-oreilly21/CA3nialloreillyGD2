@@ -13,12 +13,12 @@
         notificationCenter,
         keyboardManager,
         objectManager,
-        jumpVelocity
+        velocity
     ) {
         this.notificationCenter = notificationCenter;
         this.keyboardManager = keyboardManager;
         this.objectManager = objectManager;
-        this.jumpVelocity = jumpVelocity;
+        this.velocity = velocity;
         this.consumables = new Consumables();
     }
 
@@ -35,7 +35,7 @@
         // player sprite
 
         parent.body.applyGravity(gameTime);
-        parent.body.setVelocityY(this.jumpVelocity * gameTime.elapsedTimeInMs);
+        parent.body.setVelocityY(this.velocity * gameTime.elapsedTimeInMs);
         if (parent.body.onGround) {
             
             parent.body.applyFriction(gameTime);
@@ -62,9 +62,9 @@
     handleOutOfBoundsCollision(parent) 
     {
         // If the bullet has left the top bounds of our canvas
-        if (parent.transform.translation.x + GameData.WAITER_WIDTH >= canvas.clientWidth) 
+        if (parent.transform.translation.x + 60  >= canvas.clientWidth) 
         {
-            parent.transform.translation.x = canvas.clientWidth - GameData.WAITER_WIDTH;
+            parent.transform.translation.x = canvas.clientWidth - 60;
         
         }
 
@@ -132,22 +132,33 @@
                         [parent]                    // Arguments
                     )
                 );
+                this.consumables.initializeDrinksPickups(); 
+            const puddles = this.objectManager.get(ActorType.Puddle);
 
-            this.consumables.initializePuddle(positionX, positionY, dimensionY, scale);
-            this.consumables.initializeDrinksPickups(); 
+            if(puddles == null)
+            {
+                return this.consumables.initializeSpillage(positionX, positionY, dimensionY, scale);
+            }
+            
+            if(puddles.length < 3)
+            {
+                this.consumables.initializeSpillage(positionX, positionY, dimensionY, scale);
+            }
+            
+            
             
                 
             }
 
-            // If the player has collided with a platform that is above
-            // them
-            if (collisionLocationType === CollisionLocationType.Top) {
+            // // If the player has collided with a platform that is above
+            // // them
+            // if (collisionLocationType === CollisionLocationType.Top) {
 
-                // Update their velocity to move them downwards.
-                // This will create a bounce effect, where it will look 
-                // like the player is bouncing off the platform above
-                parent.body.setVelocityY(this.jumpVelocity);
-            }
+            //     // Update their velocity to move them downwards.
+            //     // This will create a bounce effect, where it will look 
+            //     // like the player is bouncing off the platform above
+            //     parent.body.setVelocityY(this.velocity);
+            // }
         }
     }
 

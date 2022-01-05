@@ -10,12 +10,12 @@ const ActorType = {
 
     Background: 0,
     Platform: 1,
-    Decorator: 2,
+    SideCharacter: 2,
     Pickup: 3,
     Interactable: 4,
-    Projectile: 5,
+    LevelMessage: 5,
     Puddle: 6,
-    NPC: 7,
+    OrderMenu: 7,
     Player: 8,
     Camera: 9,
     HUD: 11
@@ -107,6 +107,30 @@ const Color = {
     // for colors that you use in free 3rd party images/sprites that you find online
 };
 
+const FontType = 
+{
+    InformationSmall: "12px Arial",
+    InformationOrder: "30px Arial",
+    InformationWaiter: "20px Arial",
+    InformationLarge: "60px Arial"
+  };
+
+
+  const LevelName = 
+{
+    LevelOne: "Quiet January Afternoon",
+    LevelTwo: "Easter Monday",
+    LevelThree: "Christmas Eve",
+    LevelFour: "May Bank Holiday",
+    LevelFive: "Results Night",
+    LevelSix: "Heatwave July",
+    LevelSeven: "St.Patricks Day",
+    LevelEight: "Holloween",
+    LevelNine: "September Back to College",
+    LevelTen: "St.Stephens Day",
+    LevelEleven: "New Years Eve"
+
+  };
 // Used by any entity which listens for key input
 const Keys = {
     A: "KeyA",

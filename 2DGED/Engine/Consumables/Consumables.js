@@ -27,19 +27,20 @@ class Consumables
         (
             new Vector2
             (
-                Math.floor(Math.random() * (canvas.clientWidth - 5)),
+                Math.floor(Math.random() * (canvas.clientWidth)) + 250,
                 Math.floor(-Math.random() * 400)
             ),                                              // Translation
             0,                                              // Rotation
-            new Vector2(0.2, 0.2),                                    // Scale
+            new Vector2(0.2, 0.2),                          // Scale
             Vector2.Zero,                                   // Origin
-            artist.getBoundingBoxByTakeName("Drink"),  // Dimensions
+            artist.getBoundingBoxByTakeName("Pizza"),  // Dimensions
             0
         );
-    
+
         sprite = new MoveableSprite
         (
             "Consumable",
+    
             transform,
             ActorType.Pickup,
             CollisionType.Collidable,
@@ -52,7 +53,6 @@ class Consumables
         sprite.body.maximumSpeed = 3;
         sprite.body.friction = FrictionType.Low;
         sprite.body.gravity = GravityType.Weak;
-        
      
             sprite.attachController
             (
@@ -73,89 +73,89 @@ class Consumables
             objectManager.add(sprite);
     }
 
-    // initializeConsumables()
-    // {
-    //     artist = new AnimatedSpriteArtist
-    //     (
-    //         context,                                        // Context
-    //         1,
+    initializeConsumables()
+    {
+        artist = new AnimatedSpriteArtist
+        (
+            context,                                        // Context
+            1,
     
-    //         GameData.COMSUMABLES_ANIMATION_DATA            // Animation data
-    //     );
+            GameData.COMSUMABLES_ANIMATION_DATA            // Animation data
+        );
     
-    //     transform = new Transform2D
-    //     (
-    //         new Vector2
-    //         (
-    //             0,
-    //             0
-    //         ),                                              // Translation
-    //         0,                                              // Rotation
-    //         new Vector2(0.2, 0.2),                                    // Scale
-    //         Vector2.Zero,                                   // Origin
-    //         artist.getBoundingBoxByTakeName("Drink"),  // Dimensions
-    //         0
-    //     );
+        transform = new Transform2D
+        (
+            new Vector2
+            (
+                0,
+                0
+            ),                                              // Translation
+            0,                                              // Rotation
+            new Vector2(0.2, 0.2),                                    // Scale
+            Vector2.Zero,                                   // Origin
+            artist.getBoundingBoxByTakeName("Drink"),  // Dimensions
+            0
+        );
         
-    //     sprite = new MoveableSprite
-    //     (
-    //         "Consumables",
-    //         transform,
-    //         ActorType.Pickup,
-    //         CollisionType.Collidable,
-    //         StatusType.Updated | StatusType.Drawn,
-    //         artist,
-    //         1,          // Scroll speed multiplier
-    //         1           // Layer depth
-    //     );
+        sprite = new MoveableSprite
+        (
+            "Consumables",
+            transform,
+            ActorType.Pickup,
+            CollisionType.Collidable,
+            StatusType.Updated | StatusType.Drawn,
+            artist,
+            1,          // Scroll speed multiplier
+            1           // Layer depth
+        );
     
-    //     sprite.body.maximumSpeed = 3;
-    //     sprite.body.friction = FrictionType.Low;
-    //     sprite.body.gravity = GravityType.Weak;
+        sprite.body.maximumSpeed = 3;
+        sprite.body.friction = FrictionType.Low;
+        sprite.body.gravity = GravityType.Weak;
 
-    //     let spriteClone = null;
+        let spriteClone = null;
 
-    //     // Create 5 pickup sprites
-    //     for (let i = 0; i < 1; i++) 
-    //     {
+        // Create 5 pickup sprites
+        for (let i = 0; i < 2; i++) 
+        {
             
-    //         // Clone sprite
-    //         spriteClone = sprite.clone();
+            // Clone sprite
+            spriteClone = sprite.clone();
 
-    //         // Update ID
-    //         spriteClone.id = spriteClone.id + " " + i;
+            // Update ID
+            spriteClone.id = spriteClone.id + " " + i;
 
-    //         // Translate sprite
-    //         spriteClone.transform.translateBy
-    //         (
-    //             new Vector2
-    //             (
-    //                 Math.floor(Math.random() * (canvas.clientWidth - 5)),
-    //                 Math.floor(-Math.random() * 1000)
-    //             )
-    //         );
+            // Translate sprite
+            spriteClone.transform.translateBy
+            (
+                new Vector2
+                (
+                    Math.floor(Math.random() * (canvas.clientWidth)) + 250,
+                Math.floor(-Math.random() * 400)
+                )
+            );
             
-    //         spriteClone.attachController
-    //         (
-    //             new ConsumableMoveController
-    //             (
-    //                 notificationCenter,
-    //                 keyboardManager,
-    //                 objectManager,
-    //                 consumablesVelocity
-    //             )
+            spriteClone.attachController
+            (
+                new ConsumableMoveController
+                (
+                    notificationCenter,
+                    keyboardManager,
+                    objectManager,
+                    consumablesVelocity
+                )
                 
-    //         );
-    //         // startIntervalTimer()
+            );
+            // startIntervalTimer()
 
-    //         // Set sprite take
-    //         this.getRandomNextConsumableTake(spriteClone);
+            // Set sprite take
+            this.getRandomNextConsumableTake(spriteClone);
 
-    //         // Add to object manager
-    //         objectManager.add(spriteClone);
-    //         // console.log(spriteClone.transform.translation.y)
-    //     }
-    // }
+            // Add to object manager
+            objectManager.add(spriteClone);
+            // console.log(spriteClone.transform.translation.y)
+        }
+    }
     
     getRandomNextConsumableTake(sprite)
     {
@@ -170,7 +170,7 @@ class Consumables
         }
     }
 
-    initializePuddle(positionX, positionY, dimensionY, scale)
+    initializeSpillage(positionX, positionY, dimensionY, scale)
     {
     
         let transform;
@@ -193,13 +193,13 @@ class Consumables
             0,
             new Vector2(0.2, 0.2),
             Vector2.Zero,
-            artist.getBoundingBoxByTakeName("Puddle"),
+            artist.getBoundingBoxByTakeName("Spillage"),
             0
         );
     
         sprite = new MoveableSprite
         (
-            "Puddle",
+            "Spillage",
             transform,
             ActorType.Puddle,
             CollisionType.Collidable,
@@ -215,7 +215,7 @@ class Consumables
         sprite.body.friction = FrictionType.Normal;
         sprite.body.gravity = GravityType.Normal;
     
-        artist.setTake("Puddle");
+        artist.setTake("Spillage");
         // Add enemy to object manager
         objectManager.add(sprite);
 

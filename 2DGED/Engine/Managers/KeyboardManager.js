@@ -70,9 +70,13 @@
  
         if (codeArray) {
            
-            let result = true;
-            for (let i = 0; i < codeArray.length; i++) {
-                result = result & this.isKeyDown(codeArray[i]);
+            let result = false;
+            for (let i = 0; i < codeArray.length; i++) 
+            {
+                if(this.isKeyDown(codeArray[i]))
+                {
+                    result = true;
+                }
             }
  
             return result;

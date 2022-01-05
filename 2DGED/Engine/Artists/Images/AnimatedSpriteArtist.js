@@ -68,6 +68,7 @@ class AnimatedSpriteArtist extends Artist {
         this.endFrameIndex = 0;
         this.currentFrameIndex = 0;
         this.currentTakeName = "";
+        this.finishLoopCount = 0;
     }
 
     /**
@@ -233,19 +234,50 @@ class AnimatedSpriteArtist extends Artist {
      *
      * @memberof AnimatedSpriteArtist
      */
-    advance() {
-
+    advance() 
+    {
         // If not at the end frame, then advance frame by 1
-        if (this.currentFrameIndex < this.endFrameIndex) {
+        if (this.currentFrameIndex < this.endFrameIndex) 
+        {
 
             this.currentFrameIndex++;
         }
 
-        // If at the end frame, loop back to the start frame
-        else {
+       
+        else 
+        {
+               
+            if (this.maxLoopCount != -1)
+            {
+                if(this.finishLoopCount != this.maxLoopCount)
+                {
+                    this.currentFrameIndex = this.startFrameIndex;
+                    this.finishLoopCount++;                
+                }
+                else
+                {
+                    if (this.isCurrentTakeName("Fall Right"))
+                    {
+                        this.setTake("Idle Right");
+                    }
 
-            this.currentFrameIndex = this.startFrameIndex;
-
+                    else if(this.isCurrentTakeName("Fall Left"))
+                    {
+                        {
+                            this.setTake("Idle Left");
+                        }
+                    }   
+                    this.finishLoopCount = 0;
+                    
+                }
+            }
+             // If at the end frame, loop back to the start frame
+            else
+            {
+                this.currentFrameIndex = this.startFrameIndex;
+            }
+            
+            
             // TO DO: Modify this class to handle 0 loops, N loops, or infinite looping ...
         }
     }

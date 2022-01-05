@@ -17,7 +17,7 @@
     add()
      {
         this.level = this.level + 1;
-        console.log(this.level)
+        //console.log(this.level)
      }
      
  }   

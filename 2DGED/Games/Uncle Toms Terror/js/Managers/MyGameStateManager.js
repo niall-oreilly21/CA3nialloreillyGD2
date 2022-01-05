@@ -9,33 +9,20 @@ class MyGameStateManager extends GameStateManager {
     get playerHealth() {
         return this._playerHealth;
     }
-    get playerAmmo() {
-        return this._playerAmmo;
-    }
-    get inventory() {
-        return this._inventory;
-    }
 
     set playerHealth(value) {
         this._playerHealth = value;
     }
-    set playerAmmo(value) {
-        this._playerAmmo = value;
-    }
-    set inventory(value) {
-        this._inventory = value;
-    }
 
-    constructor(id, notificationCenter, objectManager, initialPlayerHealth, initialPlayerAmmo) {
+
+    constructor(id, notificationCenter, objectManager, initialPlayerHealth) {
         
         super(id);
 
         this.notificationCenter = notificationCenter;
         this.objectManager = objectManager;
         this.playerHealth = initialPlayerHealth;
-        this.playerAmmo = initialPlayerAmmo;
-
-        this.inventory = [];
+        //level = 0;
         
         this.registerForNotifications();
         this.consumables = new Consumables();
@@ -65,6 +52,10 @@ class MyGameStateManager extends GameStateManager {
                 this.handleAmmoStateChange(notification.notificationArguments);
                 break;
 
+            case NotificationAction.Level:
+                this.handlelevelStateChange(notification.notificationArguments);
+                break;
+
             // Add more cases here...
 
             default:
@@ -72,9 +63,11 @@ class MyGameStateManager extends GameStateManager {
         }
     }
 
-    handleHealthStateChange(argArray) {
-        console.log(argArray);
-
+    handleHealthStateChange(value) 
+    {
+        this.playerHealth = this.playerHealth  + value;
+        waiterPizza = 0;
+        waiterBeer = 0;
         // Add your own code here...
         // Maybe update a health variable?
         // Maybe update a UI element?
@@ -88,8 +81,9 @@ class MyGameStateManager extends GameStateManager {
         // Maybe update a UI element
     }
 
-    handleAmmoStateChange(argArray) {
-        console.log(argArray);
+    handleLevelStateChange(value) 
+    {
+        level + value;
 
         // Add your code here...
         // Maybe update an ammo variable?
@@ -99,16 +93,19 @@ class MyGameStateManager extends GameStateManager {
     update(gameTime) 
     {
             this.handleOrderComplete();
-            this.isTableVisible();
-           
-        
+            
+            this.isRemoveTable();
+            if(this.playerHealth === 0)
+            {
+                console.log("hello")
+                this.playerHealth = 0;
+            }
             
         if(endLevel)
         {           
             this.handleEndLevel();
         }
         
-     
 
         // Add your code here...
         
@@ -132,7 +129,7 @@ class MyGameStateManager extends GameStateManager {
         
         if((orderBeer === waiterBeer) && (orderPizza === waiterPizza))
         {
-            if(!isTableVisible)
+            if(!this.isTableVisible())
             {
                 this.createTable();
             }
@@ -142,15 +139,40 @@ class MyGameStateManager extends GameStateManager {
 
     handleEndLevel()
     {
+        // this.notificationCenter.notify
+        // (
+        //     new Notification
+        //     (
+        //         NotificationType.GameState,            
+        //         NotificationAction.handleLevelStateChange, 
+        //         [1]                
+        //     )
+        // );
         level++;
         waiterBeer = 0;
         waiterPizza = 0;
         orderBeer = 0;
         orderPizza = 0;
-        isTableVisible = false;
-        consumablesVelocity = consumablesVelocity + 0.05;
+        consumablesVelocity = consumablesVelocity + 0.02;
         endLevel = false;
-        this.consumables.initializeDrinksPickups();
+
+     
+
+        if(this.removeLevelMessage() || level === 1)
+        {
+            this.initializeLevelMessage();
+        }
+        
+
+        if(level === 1)
+        {
+            this.consumables.initializeConsumables();
+        }
+        if((level >=  3) && (level <= 5))
+        {
+            this.consumables.initializeDrinksPickups();
+        }
+        
         this.getRandomOrder();
     }
     
@@ -168,20 +190,48 @@ class MyGameStateManager extends GameStateManager {
             }
         }
     }
+
+    isRemoveTable()
+    {
+        const removeTables = this.objectManager.get(ActorType.Interactable);
+
+        if (removeTables == null) return;
+
+        if((waiterBeer === 0) && (waiterPizza === 0))
+        {
+            // Loop through the list of pickup sprites
+            for (let i = 0; i < removeTables.length; i++) 
+            {
+             const removeTable = removeTables[i];
+
+                this.notificationCenter.notify
+                (
+                    new Notification
+                    (
+                        NotificationType.Sprite,    // Type
+                        NotificationAction.RemoveFirst,  // Action
+                        [removeTable]                   
+                    )
+                );
+            }
+
+        }
+    }
+    
     
     isTableVisible()
     {
         const tables = this.objectManager.get(ActorType.Interactable);
         
-        if (tables == null) return;
+        if (tables == null) return false;
 
         if (tables.length === 0) 
         { 
-            isTableVisible = false;
+            return false;
         }
-        else
+        else 
         {    
-            isTableVisible = true;
+            return true;
         }
     }
 
@@ -229,22 +279,163 @@ class MyGameStateManager extends GameStateManager {
                 artist.setTake("Table");
 
                 // Add to object manager
-                objectManager.add(sprite);          
+                objectManager.add(sprite);    
+
+
+               
         }
 
 
         setTablesPositonX()
         {
-            if(playerCurrentPositionX < canvas.clientWidth / 2)
+            if(playerCurrentPositionX + GameData.WAITER_WIDTH < canvas.clientWidth / 2)
             {
                 return canvas.clientWidth - 108;
             }
-            else if(playerCurrentPositionX >= canvas.clientWidth / 2)
+            else if(playerCurrentPositionX  >= canvas.clientWidth / 2)
             {
-                return 0;
+                return 250;
             }
             
         }
     
+removeLevelMessage()
+{
+    const LevelMessages = this.objectManager.get(ActorType.LevelMessage);
+    
+    if (LevelMessages == null) return false;
+   
+    console.log(LevelMessages)
+        // Loop through the list of pickup sprites
+        for (let i = 0; i < LevelMessages.length; i++) 
+        {
+            const LevelMessage = LevelMessages[i];
+
+            this.notificationCenter.notify
+            (
+                new Notification
+                (
+                    NotificationType.Sprite,    // Type
+                    NotificationAction.RemoveFirst,  // Action
+                    [LevelMessage]                   
+                )
+            );
+        }
+
+        return true;
+}
+
+        
+
+initializeLevelMessage()
+{
+    let transform;
+    let artist;
+    let sprite;
+
+    transform = new Transform2D
+    (
+        new Vector2
+        (
+            canvas.clientWidth / 2, 
+            10
+        ),
+        0,
+        Vector2.One,
+        Vector2.Zero,
+        Vector2.Zero,
+        0
+    );
+
+    
+    artist = new TextSpriteArtist
+    (
+        context,                        // Context
+        1,                              // Alpha
+        this.getMessage(),                  // Text
+        FontType.InformationOrder,     // Font Type
+        Color.White,                    // Color
+        TextAlignType.Left,             // Text Align
+        250,                            // Max Width
+        true                            // Fixed Position
+    );
+
+    sprite = new Sprite
+    (
+        "Waiter Beer",
+        transform,
+        ActorType.LevelMessage,
+        CollisionType.NotCollidable,
+        StatusType.Updated | StatusType.Drawn,
+        artist,
+        1,
+        1
+    );
+
+    // Add sprite to object manager
+    objectManager.add(sprite);
+} 
+
+
+getMessage()
+{
+
+
+        switch (level) 
+        {
+
+            case 1:
+                message = LevelName.LevelOne;
+                break;
+
+            case 2:
+                message = LevelName.LevelTwo;
+                break;
+
+            case 3:
+                message = LevelName.LevelThree;
+                break;
+
+            case 4:
+                message = LevelName.LevelFour;
+                break;
+ 
+            case 5:
+                message = LevelName.LevelFive;
+                break;
+                
+            case 6:
+                message = LevelName.LevelSix;
+                break;
+                
+            case 7:
+                message = LevelName.LevelSeven;
+                break;
+                
+            case 8:
+                message = LevelName.LevelEight;
+                break;
+                
+            case 9:
+                message = LevelName.LevelNine;
+                break;
+            
+            case 10:
+                message = LevelName.LevelTen;
+            break;
+
+            case 11:
+                message = LevelName.LevelEleven;
+            break;
+        }
+
+        if(level > 11)
+        {
+            message = LevelName.LevelEleven;
+        }
+
+        return message;
+
+}
     
 }

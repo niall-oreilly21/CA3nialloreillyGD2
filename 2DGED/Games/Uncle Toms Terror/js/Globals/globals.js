@@ -4,9 +4,10 @@ let waiterBeer = 0;
 let waiterPizza = 0;
 let level = 0;
 let endLevel = true; 
-let isTableVisible = false;
 let consumablesVelocity = 0.05;
 let playerCurrentPositionX = 0;
+
+let message = "";
 
 
 

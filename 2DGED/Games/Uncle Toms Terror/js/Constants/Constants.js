@@ -11,7 +11,7 @@ class GameData
     new AudioCue("splash", AudioType.WinLose, 1, 1, 0, false),
   ];
 
-
+  static INITIAL_PLAYER_HEALTH = 5; 
   static BACKGROUND = document.getElementById("bar_background");
   static UI = document.getElementById("ui_sprite_sheet");
   
@@ -38,11 +38,6 @@ class GameData
       /****************** Screen 1 *******************/
 
       // Floor
-      new Vector2(0, this.PLATFORM_Y_DIMENSION),
-      new Vector2(50, this.PLATFORM_Y_DIMENSION),
-      new Vector2(100, this.PLATFORM_Y_DIMENSION),
-      new Vector2(150, this.PLATFORM_Y_DIMENSION),
-      new Vector2(200, this.PLATFORM_Y_DIMENSION),
       new Vector2(250, this.PLATFORM_Y_DIMENSION),
       new Vector2(300, this.PLATFORM_Y_DIMENSION),
       new Vector2(350, this.PLATFORM_Y_DIMENSION),
@@ -56,7 +51,12 @@ class GameData
       new Vector2(750, this.PLATFORM_Y_DIMENSION),
       new Vector2(800, this.PLATFORM_Y_DIMENSION),
       new Vector2(850, this.PLATFORM_Y_DIMENSION),
-      new Vector2(900, this.PLATFORM_Y_DIMENSION)
+      new Vector2(900, this.PLATFORM_Y_DIMENSION),
+      new Vector2(950, this.PLATFORM_Y_DIMENSION),
+      new Vector2(1000, this.PLATFORM_Y_DIMENSION),
+      new Vector2(1050, this.PLATFORM_Y_DIMENSION),
+      new Vector2(1100, this.PLATFORM_Y_DIMENSION),
+      new Vector2(1150, this.PLATFORM_Y_DIMENSION)
     ]
   };
 
@@ -128,7 +128,7 @@ class GameData
         ]
       },
 
-      "Puddle": 
+      "Spillage": 
       {
 
         frameRatePerSec: 10,
@@ -173,12 +173,14 @@ class GameData
   };
 
 
-  static WAITER_START_POSITION = new Vector2(80, 500);
+  static WAITER_START_POSITION = new Vector2(330, 500);
   static WAITER_WIDTH = 132;
   static WAITER_HEIGHT = 138;
+  static WAITER_FALL_RIGHT_Y_POSITION = 582;
+  static WAITER_FALL_LEFT_Y_POSITION = 822;
   static WAITER_MOVE_KEYS = [Keys.ArrowLeft, Keys.ArrowRight, Keys.ArrowUp];
   static WAITER_WALK_VELOCITY = 0.3;
-  static WAITER_JUMP_VELOCITY = -1.0;
+  static WAITER_JUMP_VELOCITY = -1.2;
  
 
 
@@ -313,7 +315,7 @@ class GameData
         // -1 = Loop forever
         //  0 = Run once (no loop)
         //  N = Loop N times
-        maxLoopCount: 0,
+        maxLoopCount: -1,
 
         startFrameIndex: 0,
         endFrameIndex: 2,
@@ -342,7 +344,7 @@ class GameData
         // -1 = Loop forever
         //  0 = Run once (no loop)
         //  N = Loop N times
-        maxLoopCount: 0,
+        maxLoopCount: -1,
 
         startFrameIndex: 0,
         endFrameIndex: 2,
@@ -357,8 +359,8 @@ class GameData
           // and dimension of each individual animation frame
           // on the sprite sheet
 
-          new Rect(822, 102, this.WAITER_WIDTH, this.WAITER_HEIGHT),// Animation frame 1
-          new Rect(1002, 0, this.WAITER_WIDTH, this.WAITER_HEIGHT),// Animation frame 2
+          new Rect(822, 102,    this.WAITER_WIDTH, this.WAITER_HEIGHT),// Animation frame 1
+          new Rect(1002, 0,   this.WAITER_WIDTH, this.WAITER_HEIGHT),// Animation frame 2
           new Rect(1200, 102, this.WAITER_WIDTH, this.WAITER_HEIGHT),// Animation frame 3
         ]
       },
@@ -371,27 +373,34 @@ class GameData
         // -1 = Loop forever
         //  0 = Run once (no loop)
         //  N = Loop N times
-        maxLoopCount: 3,
+        maxLoopCount: 0,
 
         startFrameIndex: 0,
-        endFrameIndex: 5,
+        endFrameIndex: 11,
 
         // Notice that I chose the largest of all the widths taken from the frames
         // array below
         boundingBoxDimensions: new Vector2(this.WAITER_WIDTH, this.WAITER_HEIGHT),
 
-        frames: [
+        frames: 
+        [
 
           // This list of rects just represent the positions
           // and dimension of each individual animation frame
           // on the sprite sheet
 
-          new Rect(0, 582, this.WAITER_WIDTH, this.WAITER_HEIGHT),// Animation frame 1
-          new Rect(240, 582, this.WAITER_WIDTH, this.WAITER_HEIGHT),// Animation frame 2
-          new Rect(486, 624, this.WAITER_WIDTH, this.WAITER_HEIGHT),// Animation frame 3
-          new Rect(0, 582, this.WAITER_WIDTH, this.WAITER_HEIGHT),// Animation frame 1
-          new Rect(966, 624, this.WAITER_WIDTH, this.WAITER_HEIGHT),// Animation frame 2
-          new Rect(1206, 582, this.WAITER_WIDTH, this.WAITER_HEIGHT),// Animation frame 3
+          new Rect(0,   this.WAITER_FALL_RIGHT_Y_POSITION, this.WAITER_WIDTH, this.WAITER_HEIGHT),// Animation frame 1
+          new Rect(240, this.WAITER_FALL_RIGHT_Y_POSITION, this.WAITER_WIDTH, this.WAITER_HEIGHT),// Animation frame 2
+          new Rect(486, this.WAITER_FALL_RIGHT_Y_POSITION, this.WAITER_WIDTH, this.WAITER_HEIGHT),// Animation frame 3
+          new Rect(726, this.WAITER_FALL_RIGHT_Y_POSITION, this.WAITER_WIDTH, this.WAITER_HEIGHT),// Animation frame 1
+          new Rect(966, this.WAITER_FALL_RIGHT_Y_POSITION, this.WAITER_WIDTH, this.WAITER_HEIGHT),// Animation frame 2
+          new Rect(486, this.WAITER_FALL_RIGHT_Y_POSITION, this.WAITER_WIDTH, this.WAITER_HEIGHT),// Animation frame 3
+          new Rect(726, this.WAITER_FALL_RIGHT_Y_POSITION, this.WAITER_WIDTH, this.WAITER_HEIGHT),// Animation frame 1
+          new Rect(966, this.WAITER_FALL_RIGHT_Y_POSITION, this.WAITER_WIDTH, this.WAITER_HEIGHT),// Animation frame 2
+          new Rect(486, this.WAITER_FALL_RIGHT_Y_POSITION, this.WAITER_WIDTH, this.WAITER_HEIGHT),// Animation frame 3
+          new Rect(726, this.WAITER_FALL_RIGHT_Y_POSITION, this.WAITER_WIDTH, this.WAITER_HEIGHT),// Animation frame 1
+          new Rect(966, this.WAITER_FALL_RIGHT_Y_POSITION, this.WAITER_WIDTH, this.WAITER_HEIGHT),// Animation frame 2
+          new Rect(1206,this.WAITER_FALL_RIGHT_Y_POSITION, this.WAITER_WIDTH, this.WAITER_HEIGHT),// Animation frame 3
         ]
       },
 
@@ -403,14 +412,14 @@ class GameData
         // -1 = Loop forever
         //  0 = Run once (no loop)
         //  N = Loop N times
-        maxLoopCount: 3,
+        maxLoopCount: 0,
 
         startFrameIndex: 0,
-        endFrameIndex: 5,
+        endFrameIndex: 11,
 
         // Notice that I chose the largest of all the widths taken from the frames
         // array below
-        boundingBoxDimensions: new Vector2(this.WALK_CYCLE_WIDTH, this.WAITER_HEIGHT),
+        boundingBoxDimensions: new Vector2(this.WAITER_WIDTH, this.WAITER_HEIGHT),
 
         frames: 
         [
@@ -419,30 +428,37 @@ class GameData
           // and dimension of each individual animation frame
           // on the sprite sheet
 
-          new Rect(108, 822, this.WAITER_WIDTH, this.WAITER_HEIGHT),// Animation frame 1
-          new Rect(342, -822, this.WAITER_WIDTH, this.WAITER_HEIGHT),// Animation frame 2
-          new Rect(576, 864, this.WAITER_WIDTH, this.WAITER_HEIGHT),// Animation frame 3
-          new Rect(816, 864, this.WAITER_WIDTH, this.WAITER_HEIGHT),// Animation frame 1
-          new Rect(1056, 864, this.WAITER_WIDTH, this.WAITER_HEIGHT),// Animation frame 2
-          new Rect(1302, 822, this.WAITER_WIDTH, this.WAITER_HEIGHT),// Animation frame 3
+          new Rect(108, this.WAITER_FALL_LEFT_Y_POSITION, this.WAITER_WIDTH, this.WAITER_HEIGHT),// Animation frame 1
+          new Rect(342, this.WAITER_FALL_LEFT_Y_POSITION, this.WAITER_WIDTH, this.WAITER_HEIGHT),// Animation frame 2
+          new Rect(576, this.WAITER_FALL_LEFT_Y_POSITION, this.WAITER_WIDTH, this.WAITER_HEIGHT),// Animation frame 3
+          new Rect(816, this.WAITER_FALL_LEFT_Y_POSITION, this.WAITER_WIDTH, this.WAITER_HEIGHT),// Animation frame 1
+          new Rect(1056,this.WAITER_FALL_LEFT_Y_POSITION, this.WAITER_WIDTH, this.WAITER_HEIGHT),// Animation frame 2
+          new Rect(576, this.WAITER_FALL_LEFT_Y_POSITION, this.WAITER_WIDTH, this.WAITER_HEIGHT),// Animation frame 3
+          new Rect(816, this.WAITER_FALL_LEFT_Y_POSITION, this.WAITER_WIDTH, this.WAITER_HEIGHT),// Animation frame 1
+          new Rect(1056,this.WAITER_FALL_LEFT_Y_POSITION, this.WAITER_WIDTH, this.WAITER_HEIGHT),// Animation frame 2
+          new Rect(576, this.WAITER_FALL_LEFT_Y_POSITION, this.WAITER_WIDTH, this.WAITER_HEIGHT),// Animation frame 3
+          new Rect(816, this.WAITER_FALL_LEFT_Y_POSITION, this.WAITER_WIDTH, this.WAITER_HEIGHT),// Animation frame 1
+          new Rect(1056,this.WAITER_FALL_LEFT_Y_POSITION, this.WAITER_WIDTH, this.WAITER_HEIGHT),// Animation frame 2
+          new Rect(1302,this.WAITER_FALL_LEFT_Y_POSITION, this.WAITER_WIDTH, this.WAITER_HEIGHT),// Animation frame 3
         ]
       },
 
     }
   };
 
-  static PUDDLE_ANIMATION = 
+  
+  static SIDE_CHARACTERS_ANIMATION = 
   {
 
-    id: "Runner Animation Data",
-    spriteSheet: document.getElementById("puddle_sprite_sheet"),
+    id: "Side Characters Animation Data",
+    spriteSheet: document.getElementById("side_characters_sprite_sheet"),
 
     // Animations
     takes: 
     {
 
       // Animation 1
-      "Puddle": 
+      "The Legend": 
       {
 
         frameRatePerSec: 8,
@@ -450,24 +466,88 @@ class GameData
         // -1 = Loop forever
         //  0 = Run once (no loop)
         //  N = Loop N times
-        maxLoopCount: 0,
+        maxLoopCount: -1,
 
         startFrameIndex: 0,
-        endFrameIndex: 0,
+        endFrameIndex: 1,
 
-        // Notice that I chose the largest of all the widths taken from the frames
-        // array below
-        boundingBoxDimensions: new Vector2(263, 114),
+        boundingBoxDimensions: new Vector2(60, 90),
      
         frames: 
         [
-
-          // This list of rects just represent the positions
-          // and dimension of each individual animation frame
-          // on the sprite sheet
-          new Rect(0, 1, 263, 114),   // Animation frame 1
+          new Rect(18, 6, 60, 90),
+          new Rect(126, 6, 60, 90)     // Animation frame 1
         ]
       },
+
+         // Animation 1
+         "Spud": 
+         {
+   
+           frameRatePerSec: 8,
+   
+           // -1 = Loop forever
+           //  0 = Run once (no loop)
+           //  N = Loop N times
+           maxLoopCount: -1,
+   
+           startFrameIndex: 0,
+           endFrameIndex: 1,
+   
+           boundingBoxDimensions: new Vector2(60, 72),
+        
+           frames: 
+           [
+             new Rect(234, 12, 60, 72),
+             new Rect(342, 12, 60, 72),     // Animation frame 1
+           ]
+         },
+
+        // Animation 1
+        "Cook": 
+        {
+  
+          frameRatePerSec: 8,
+  
+          // -1 = Loop forever
+          //  0 = Run once (no loop)
+          //  N = Loop N times
+          maxLoopCount: -1,
+  
+          startFrameIndex: 0,
+          endFrameIndex: 1,
+  
+          boundingBoxDimensions: new Vector2(84, 84),
+        
+          frames: 
+          [
+            new Rect(6, 114, 84, 84),
+            new Rect(114, 114, 84, 84),     // Animation frame 1
+          ]
+        },
+
+        // Animation 1
+        "Boss": 
+        {
+  
+          frameRatePerSec: 8,
+  
+          // -1 = Loop forever
+          //  0 = Run once (no loop)
+          //  N = Loop N times
+          maxLoopCount: -1,
+  
+          startFrameIndex: 0,
+          endFrameIndex: 1,
+  
+          boundingBoxDimensions: new Vector2(60, 72),
+        
+          frames: 
+          [
+            new Rect(234, 120, 60, 72),
+            new Rect(342, 120, 60, 72),     // Animation frame 1
+          ]
+        },
 
     }
   }
@@ -475,8 +555,5 @@ class GameData
 
 }
 
-const FontType = {
-  InformationSmall: "12px Arial",
-  InformationMedium: "18px Arial",
-  InformationLarge: "24px Arial"
-};
+
+

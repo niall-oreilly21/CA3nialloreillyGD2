@@ -183,6 +183,7 @@ class Rect {
      */
     contains(otherRect) {
 
+
         let enclosingRect = this.getEnclosingRect(otherRect);
 
         return (
@@ -199,7 +200,6 @@ class Rect {
      * @returns true if otherRect is currently intersecting this Rect. 
      */
     intersects(otherRect) {
-
         let enclosingRect = this.getEnclosingRect(otherRect);
 
         return (
