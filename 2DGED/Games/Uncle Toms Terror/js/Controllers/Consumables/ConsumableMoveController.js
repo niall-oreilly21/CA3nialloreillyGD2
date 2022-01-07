@@ -19,7 +19,12 @@
         this.keyboardManager = keyboardManager;
         this.objectManager = objectManager;
         this.velocity = velocity;
-        this.consumables = new Consumables();
+        this.consumables = new Consumables
+        (
+            notificationCenter,
+            keyboardManager,
+            objectManager
+        );
     }
 
     update(gameTime, parent) 
@@ -89,18 +94,6 @@
             // Store a reference to the current pickup sprite
             const platform = platforms[i];
 
-            // Determine what type of collision has occured (if any)
-            // Ultimately, if a collision has taken place, this function will 
-            // return the direction at which that collision took place, 
-            // otherwise, it will return null
-
-            // e.g.
-            // CollisionLocationType.Left       if the player has collided with a platform to the left
-            // CollisionLocationType.Right      if the player has collided with a platform to the right
-            // CollisionLocationType.Bottom     if the player has collided with a platform below
-            // CollisionLocationType.Top        if the player has collided with a platform above
-            // null                             if no collision has taken place
-
             let collisionLocationType = Collision.GetCollisionLocationType
             (
                 parent,
@@ -132,7 +125,7 @@
                         [parent]                    // Arguments
                     )
                 );
-                this.consumables.initializeDrinksPickups(); 
+                this.consumables.initializeConsumables(); 
             const puddles = this.objectManager.get(ActorType.Puddle);
 
             if(puddles == null)

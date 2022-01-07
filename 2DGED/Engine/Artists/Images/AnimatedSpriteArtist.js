@@ -309,8 +309,29 @@ class AnimatedSpriteArtist extends Artist {
         // Set transparency
         this.context.globalAlpha = this.alpha;
 
-        // Retrieve the current animation frame
+
+         // Retrieve the current animation frame
         let frame = this.frames[this.currentFrameIndex];
+
+        if (this.isCurrentTakeName("The Legend"))
+        {
+            this.context.translate
+            (
+                transform.translation.x - transform.origin.x + (frame.width * transform.scale.x) / 2,
+                transform.translation.y - transform.origin.y + (frame.height * transform.scale.y) / 2
+            )
+
+            this.context.rotate(90 * Math.PI/ 180)
+
+            this.context.translate
+            (
+                -(transform.translation.x - transform.origin.x + (frame.width * transform.scale.x) / 2), 
+                -(transform.translation.y - transform.origin.y + (frame.height * transform.scale.y) / 2)
+            )
+        }
+
+
+       
 
         // Draw current animation frame
         this.context.drawImage(

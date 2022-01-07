@@ -95,6 +95,20 @@ class TextSpriteArtist extends Artist {
     this.context.textBaseline = TextBaselineType.Top;
     this.context.globalAlpha = this.alpha;
 
+    // this.context.translate
+    // (
+    //   transform.translation.x - transform.origin.x / 2,
+    //   transform.translation.y - transform.origin.y / 2
+    // )
+
+    // this.context.rotate(90 * Math.PI/ 180)
+
+    // this.context.translate
+    // (
+    //   -(transform.translation.x - transform.origin.x / 2), 
+    //   -(transform.translation.y - transform.origin.y / 2)
+    // )
+
     // Draw text
     this.context.fillText(
       this.text,

@@ -87,6 +87,24 @@ class SpriteArtist extends Artist {
         // Set the objects transparency
         this.context.globalAlpha = this.alpha;
 
+        // if (parent.id === "Speech Bubble")
+        // {
+        //     this.context.translate
+        //     (
+        //         transform.translation.x - transform.origin.x + (transform.dimensions.x * transform.scale.x) / 2,
+        //         transform.translation.y - transform.origin.y + (transform.dimensions.y * transform.scale.y) / 2
+        //     )
+
+        //     this.context.rotate(90 * Math.PI/ 180)
+
+        //     this.context.translate
+        //     (
+        //         -(transform.translation.x - transform.origin.x + (transform.dimensions.x * transform.scale.x) / 2), 
+        //         -(transform.translation.y - transform.origin.y + (transform.dimensions.y * transform.scale.y) / 2)
+        //     )
+        //     rotate = false;
+        // }
+
         // Draw image
         this.context.drawImage(
             this.spriteSheet,

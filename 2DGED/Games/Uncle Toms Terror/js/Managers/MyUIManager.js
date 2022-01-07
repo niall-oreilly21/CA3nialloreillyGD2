@@ -45,7 +45,8 @@ class MyUIManager extends UIManager {
      * 
      * @param {GameTime} gameTime 
      */
-    update(gameTime) {
+    update(gameTime) 
+    {
 
         // The below code checks to see if the mouse has been clicked.
         // It then extracts all of the HUD sprites from the object manager.
@@ -101,4 +102,9 @@ class MyUIManager extends UIManager {
             }
         }
     }
+
+         
+
 }
+
+

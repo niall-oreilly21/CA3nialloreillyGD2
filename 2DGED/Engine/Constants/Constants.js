@@ -18,7 +18,8 @@ const ActorType = {
     OrderMenu: 7,
     Player: 8,
     Camera: 9,
-    HUD: 11
+    HUD: 11,
+    Decorator: 12
 
     // Add as many actor types as your game needs here BUT remember that the 
     // assigned number will determine drawn sort order...
@@ -101,6 +102,7 @@ const Color = {
     CornFlowerBlue: "#6495ED",
     LightGreen: "#CACB63",
     DarkGreen: "#688318",
+    Orange: "#FF8300",
 
     // Add more colors that you use often here
     // Use https://html-color-codes.info/colors-from-image/ to determine hex codes 
@@ -110,12 +112,13 @@ const Color = {
 const FontType = 
 {
     InformationSmall: "12px Arial",
-    InformationOrder: "30px Arial",
-    InformationWaiter: "20px Arial",
-    InformationLarge: "60px Arial"
+    InformationOrder: "30px Algerian",
+    InformationWaiter: "20px Algerian",
+    InformationLarge: "60px Georgia, Times, 'Times New Roman', serif, sans-serif"
+
   };
-
-
+  
+  
   const LevelName = 
 {
     LevelOne: "Quiet January Afternoon",
@@ -131,6 +134,15 @@ const FontType =
     LevelEleven: "New Years Eve"
 
   };
+
+  const SideCharacterNames = 
+  {
+    TheLegend:"The Legend",
+    Spud: "Spud",
+    CathyTheCook:"Cook",
+    BossMan: "Boss"
+  };
+  
 // Used by any entity which listens for key input
 const Keys = {
     A: "KeyA",

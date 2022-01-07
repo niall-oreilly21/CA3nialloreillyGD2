@@ -65,7 +65,6 @@ function animate(now)
 
 function update(gameTime) 
 {
-
     // Call the update method of the object manager class
     // to update all sprites
     objectManager.update(gameTime);
@@ -122,12 +121,6 @@ function draw(gameTime)
     context.strokeText(` ${waiterBeer} `, 200, 420)
      context.font = "30px Arial";
      context.strokeStyle = "green"
-    // var canvastemp = document.getElementById("main_canvas")
-    // let ctxtemp = canvastemp.getContext("2d");
-    // ctxtemp.font = "30px Arial";
-    // ctxtemp.strokeStyle = "white"
-    // ctxtemp.strokeText(`Level ${level} Pizza ${orderPizza}   Beer  ${orderBeer} `, 500, 100)
-    // ctxtemp.strokeText(`Level ${level} WPizza ${waiterPizza}   WBeer  ${waiterBeer}`, 500, 200)
 }
 
 function clearCanvas() 
@@ -272,11 +265,12 @@ function initializeSprites()
 {
     initializeBackground();
     initializePlatforms();
-    //initializeDrinksPickups();
+    initializeDrinksPickups();
     initializePlayer();
     initializeHUD();
-    //initializeOnScreenText();
     initializeOnScreenOrder();
+    drawTimer();
+    drawOrderDecorator();
 }
 
 
@@ -340,87 +334,13 @@ function initializePlatforms()
 
 function initializeDrinksPickups() 
 {   
-    //setTimeout(() => {alert("aha!")}, 5000)
-  
-    //let timer = new Stopwatch();
-    //detachControllerByID
-    //console.log(time.getElapsedTime(gameTime))
-//console.log(timer)
-    //console.log(timer)
-    
-    let transform;
-    let artist;
-    let sprite;
 
-    artist = new AnimatedSpriteArtist(
-        context,                                                // Context
-        1,                                                      // Alpha
-        GameData.SIDE_CHARACTERS_ANIMATION                          // Animation Data
-    );
+let p = new RandomGeneratorSideCharacters(notificationCenter,objectManager);
 
-    // Set animation
-    artist.setTake("The Legend");
-
-    transform = new Transform2D(
-        new Vector2(100,100),                         // Translation
-        0,                                                      // Rotation
-        Vector2.One,                                              // Scale
-        Vector2.Zero,                                           // Origin
-        artist.getBoundingBoxByTakeName("The Legend"),                // Dimensions
-        0                                                       // Explode By
-    );
-
-    sprite = new MoveableSprite(
-        "Side Character",                                               // ID
-        transform,                                              // Transform
-        ActorType.SideCharacter,                                       // ActorType
-        CollisionType.NotCollidable,                               // CollisionType
-        StatusType.Updated | StatusType.Drawn,                  // StatusType
-        artist,                                                 // Artist
-        1,                                                      // ScrollSpeedMultipler
-        1                                                       // LayerDepth
-    );
-
-    sprite.body.maximumSpeed = 6;
-    sprite.body.friction = FrictionType.Low;
-    sprite.body.gravity = GravityType.Weak;
-
-
-    // Add sprite to object manager
-    objectManager.add(sprite);
-
+ p.getRandomSprite();
+ 
+    // p.initializeSpeechBubble();       
 }
-
-
-    // Let's create a variable called intervalTimer - this will be used to store a handle to our interval timer
-    let intervalTimer;
-
-    // Let's also create a variable that will determine how much time must elapse between each expire
-    let intervalTime = 1000;
-
-    // Create a function that will start our interval timer when called
-    function startIntervalTimer() 
-    {
-        // Start a timer
-        // Store a handle to the timer that we create
-        intervalTimer = setInterval(intervalFunction, intervalTime);
-        console.log("Interval timer has started!");
-    }
-
-    // Create a function that will be called when our interval timer expires
-    function intervalFunction() 
-    {
-        console.log("Interval timer has elapsed!");
-    }
-
-    // Create a function that will stop our interval timer when called
-    function stopIntervalTimer() 
-    {
-
-        // Stop the interval timer
-        clearInterval(intervalTimer);
-        console.log("Interval timer has been stoppped!");
-    }
 
 
 function initializePlayer() 
@@ -531,6 +451,8 @@ function initializeBackground()
 
     // Add to the object manager
     objectManager.add(backgroundSprite);
+
+    
 }
 
 
@@ -618,7 +540,7 @@ function initializeOrder()
         1,                              // Alpha
         "Order",                  // Text
         FontType.InformationLarge,     // Font Type
-        Color.White,                    // Color
+        Color.Black,                    // Color
         TextAlignType.Center,             // Text Align
         250,                            // Max Width
         true                            // Fixed Position
@@ -667,7 +589,7 @@ function initializePizza()
         1,                              // Alpha
         "Pizzas : ",                  // Text
         FontType.InformationOrder,     // Font Type
-        Color.White,                    // Color
+        Color.Orange,                    // Color
         TextAlignType.Center,             // Text Align
         250,                            // Max Width
         false                            // Fixed Position
@@ -715,7 +637,7 @@ function initializeBeer()
         1,                              // Alpha
         "Beer    : ",                  // Text
         FontType.InformationOrder,     // Font Type
-        Color.White,                    // Color
+        Color.Orange,                    // Color
         TextAlignType.Left,             // Text Align
         250,                            // Max Width
         true                            // Fixed Position
@@ -763,7 +685,7 @@ function initializeWaiterPizza()
         1,                              // Alpha
         "Waiter Pizzas : ",                  // Text
         FontType.InformationWaiter,     // Font Type
-        Color.White,                    // Color
+        Color.Orange,                    // Color
         TextAlignType.Center,             // Text Align
         250,                            // Max Width
         true                            // Fixed Position
@@ -812,7 +734,7 @@ function initializeWaiterBeer()
         1,                              // Alpha
         "Waiter Beers    :  ",                  // Text
         FontType.InformationWaiter,     // Font Type
-        Color.White,                    // Color
+        Color.Orange,                    // Color
         TextAlignType.Left,             // Text Align
         250,                            // Max Width
         true                            // Fixed Position
@@ -834,6 +756,117 @@ function initializeWaiterBeer()
     objectManager.add(sprite);
 } 
 
+function drawTimer()
+{
+    let transform;
+    let artist;
+    let sprite;
+
+    transform = new Transform2D
+    (
+        new Vector2
+        (                   
+            300,
+            0
+        ),                   // Translation
+        0,                              // Rotation
+        new Vector2
+        (
+            0.5,
+            0.5
+        ),                    // Scale
+        Vector2.Zero,                   // Origin
+        new Vector2
+        (                   
+            canvas.clientWidth,
+            canvas.clientHeight
+        ),
+    );
+
+    artist = new SpriteArtist
+    (
+        context,                                                // 2D Context                   (Context)
+        1,                                                      // Alpha                        (Number)
+        GameData.CLOCK,                                  // Sprite sheet                 (Image)
+        Vector2.Zero,                                           // Selection start point        (Vector2)
+        new Vector2
+        (                                            // Selection area (             (Vector2)
+        canvas.clientWidth,
+        canvas.clientHeight                                // selection height
+        )                                                       // )
+    );
+
+    sprite = new Sprite
+    (
+        "Clock",                                           // ID
+        transform,                                              // Transform
+        ActorType.HUD,                                   // ActorType    (Background, NPC, Player, Projectile)
+        null,                                                   // CollisionType
+        StatusType.Drawn,                                       // StatusType   (Off, Drawn, Updated)
+        artist,                                                 // Artist (Set up above)
+        1,
+        1
+    );
+
+    // Add to the object manager
+    objectManager.add(sprite);
+}
+
+function drawOrderDecorator()
+{
+    let transform;
+    let artist;
+    let sprite;
+
+    transform = new Transform2D
+    (
+        new Vector2
+        (                   
+            0,
+            80
+        ),                   // Translation
+        0,                              // Rotation
+        new Vector2
+        (
+            0.45,
+            1
+        ),                    // Scale
+        Vector2.Zero,                   // Origin
+        new Vector2
+        (                   
+            canvas.clientWidth,
+            canvas.clientHeight
+        ),
+    );
+
+    artist = new SpriteArtist
+    (
+        context,                                                // 2D Context                   (Context)
+        1,                                                      // Alpha                        (Number)
+        GameData.ORDER_DECORATOR,                                  // Sprite sheet                 (Image)
+        Vector2.Zero,                                           // Selection start point        (Vector2)
+        new Vector2
+        (                                            // Selection area (             (Vector2)
+        canvas.clientWidth,
+        canvas.clientHeight                                // selection height
+        )                                                       // )
+    );
+
+    sprite = new Sprite
+    (
+        "Order Decorator",                                           // ID
+        transform,                                              // Transform
+        ActorType.Decorator,                                   // ActorType    (Background, NPC, Player, Projectile)
+        null,                                                   // CollisionType
+        StatusType.Drawn,                                       // StatusType   (Off, Drawn, Updated)
+        artist,                                                 // Artist (Set up above)
+        1,
+        1
+    );
+
+    // Add to the object manager
+    objectManager.add(sprite);
+}
 
 
 function getRandomText()

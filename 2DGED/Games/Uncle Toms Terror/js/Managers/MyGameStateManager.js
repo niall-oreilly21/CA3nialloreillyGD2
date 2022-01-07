@@ -22,10 +22,20 @@ class MyGameStateManager extends GameStateManager {
         this.notificationCenter = notificationCenter;
         this.objectManager = objectManager;
         this.playerHealth = initialPlayerHealth;
-        //level = 0;
+        this.intervalTime = 180000;
+        this.intervalTimer = 0;
+        // this.minutes = Math.floor((this.intervalTime );
+        // this.seconds = Math.floor((this.intervalTime % (1000 * 60)) / 1000);
         
         this.registerForNotifications();
-        this.consumables = new Consumables();
+        
+        this.consumables = new Consumables
+        (
+            notificationCenter,
+            keyboardManager,
+            objectManager
+        );
+       
     }
 
     registerForNotifications() {
@@ -106,7 +116,8 @@ class MyGameStateManager extends GameStateManager {
             this.handleEndLevel();
         }
         
-
+        //console.log(this.seconds)
+        //this.startIntervalTimer();
         // Add your code here...
         
         // For example, every update(), we could check the player's health. If
@@ -131,7 +142,11 @@ class MyGameStateManager extends GameStateManager {
         {
             if(!this.isTableVisible())
             {
-                this.createTable();
+                if(!endLevel)
+                {
+                    this.createTable();
+                }
+                
             }
         }
                 
@@ -166,11 +181,11 @@ class MyGameStateManager extends GameStateManager {
 
         if(level === 1)
         {
-            this.consumables.initializeConsumables();
+            this.consumables.initializeConsumablesStart();
         }
         if((level >=  3) && (level <= 5))
         {
-            this.consumables.initializeDrinksPickups();
+            this.consumables.initializeConsumables();
         }
         
         this.getRandomOrder();
@@ -237,49 +252,48 @@ class MyGameStateManager extends GameStateManager {
 
     createTable()
     {
+        let transform;
+        let artist;
+        let sprite;
+    
+        artist = new AnimatedSpriteArtist
+        (
+            context,                                        // Context
+            1,
+            GameData.TABLE_ANIMATION_DATA            // Animation data
+        );
+    
+        transform = new Transform2D
+        (
+            new Vector2
+            (
+                this.setTablesPositonX(),
+                574
+            ),                                              // Translation
+            0,                                              // Rotation
+            new Vector2(1.5, 2),                                    // Scale
+            Vector2.Zero,                                   // Origin
+            artist.getBoundingBoxByTakeName("Table"),  // Dimensions
+            0
+        );
+    
+        sprite = new Sprite
+        (
+            "Table",
+            transform,
+            ActorType.Interactable,
+            CollisionType.Collidable,
+            StatusType.Updated | StatusType.Drawn,
+            artist,
+            1,          // Scroll speed multiplier
+            1           // Layer depth
+        );
+    
+            // Set sprite take
+            artist.setTake("Table");
 
-            artist = new AnimatedSpriteArtist
-            (
-                context,                                        // Context
-                1,
-                GameData.TABLE_ANIMATION_DATA            // Animation data
-            );
-        
-            transform = new Transform2D
-            (
-                new Vector2
-                (
-                    this.setTablesPositonX(),
-                    574
-                ),                                              // Translation
-                0,                                              // Rotation
-                new Vector2(1.5, 2),                                    // Scale
-                Vector2.Zero,                                   // Origin
-                artist.getBoundingBoxByTakeName("Table"),  // Dimensions
-                0
-            );
-        
-            sprite = new MoveableSprite
-            (
-                "Table",
-                transform,
-                ActorType.Interactable,
-                CollisionType.Collidable,
-                StatusType.Updated | StatusType.Drawn,
-                artist,
-                1,          // Scroll speed multiplier
-                1           // Layer depth
-            );
-        
-            sprite.body.maximumSpeed = 0;
-            sprite.body.friction = FrictionType.Normal;
-            sprite.body.gravity = GravityType.Normal;
-        
-                // Set sprite take
-                artist.setTake("Table");
-
-                // Add to object manager
-                objectManager.add(sprite);    
+            // Add to object manager
+            objectManager.add(sprite);    
 
 
                
@@ -305,7 +319,6 @@ removeLevelMessage()
     
     if (LevelMessages == null) return false;
    
-    console.log(LevelMessages)
         // Loop through the list of pickup sprites
         for (let i = 0; i < LevelMessages.length; i++) 
         {
@@ -437,5 +450,32 @@ getMessage()
         return message;
 
 }
+
+    // Create a function that will start our interval timer when called
+    startIntervalTimer() 
+    {
+        // Start a timer
+        // Store a handle to the timer that we create
+        this.intervalTimer = setInterval(this.intervalFunction(), this.intervalTime);
+        console.log("Interval timer has started!");
+    }
+
+    // Create a function that will be called when our interval timer expires
+    intervalFunction() 
+    {
+        console.log("Interval timer has elapsed!");
+        this.stopIntervalTimer() ;
+    }
+
+    // Create a function that will stop our interval timer when called
+    stopIntervalTimer() 
+    {
+
+        // Stop the interval timer
+        clearInterval(this.intervalTimer);
+        console.log("Interval timer has been stoppped!");
+    }
+
+
     
 }

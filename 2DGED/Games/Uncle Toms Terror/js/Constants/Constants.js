@@ -13,7 +13,28 @@ class GameData
 
   static INITIAL_PLAYER_HEALTH = 5; 
   static BACKGROUND = document.getElementById("bar_background");
+  static ORDER_DECORATOR = document.getElementById("order_decorator");
+  static CLOCK = document.getElementById("clock");
   static UI = document.getElementById("ui_sprite_sheet");
+  
+  static SPEECH_BUBBLE =
+  {
+    id: "Speech Bubble",
+    spriteSheet: document.getElementById("speech_bubble"),
+    sourcePosition: Vector2.Zero,
+    sourceDimensions: new Vector2(600, 410),
+    rotation: 0,
+    scale: new Vector2(2, 0.4),
+    origin: Vector2.Zero,
+    actorType: ActorType.Decorator,
+    collisionType: CollisionType.NotCollidable,
+    layerDepth: 0,
+    explodeBoundingBoxInPixels: 0,
+  }
+
+ 
+
+  
   
   static PLATFORM_Y_DIMENSION = 668;
 
@@ -53,10 +74,10 @@ class GameData
       new Vector2(850, this.PLATFORM_Y_DIMENSION),
       new Vector2(900, this.PLATFORM_Y_DIMENSION),
       new Vector2(950, this.PLATFORM_Y_DIMENSION),
-      new Vector2(1000, this.PLATFORM_Y_DIMENSION),
-      new Vector2(1050, this.PLATFORM_Y_DIMENSION),
-      new Vector2(1100, this.PLATFORM_Y_DIMENSION),
-      new Vector2(1150, this.PLATFORM_Y_DIMENSION)
+      new Vector2(1000,this.PLATFORM_Y_DIMENSION),
+      new Vector2(1050,this.PLATFORM_Y_DIMENSION),
+      new Vector2(1100,this.PLATFORM_Y_DIMENSION),
+      new Vector2(1150,this.PLATFORM_Y_DIMENSION)
     ]
   };
 
@@ -552,8 +573,25 @@ class GameData
     }
   }
   
+  static SIDE_CHARACTERS =
+  {
+    id: "Speech Bubble",
+    spriteSheet: document.getElementById("speech_bubble"),
+    sourcePosition: Vector2.Zero,
+    sourceDimensions: new Vector2(600, 410),
+    rotation: 0,
+    scale: Vector2.One,
+    origin: Vector2.Zero,
+    actorType: ActorType.SideCharacter,
+    collisionType: CollisionType.NotCollidable,
+    scrollSpeedMultipler: 0,
+    layerDepth: 0,
+    explodeBoundingBoxInPixels: 0,
+     
+  }
 
+  static SIDE_CHARACTERS_NAMES = [SideCharacterNames.TheLegend, SideCharacterNames.Spud, SideCharacterNames.CathyTheCook,SideCharacterNames.BossMan];
+  static SIDE_CHARACTERS_X_POSITION_LEFT_SIDE;
+  static SIDE_CHARACTERS_X_POSITION_RIGHT_SIDE;
 }
-
-
 

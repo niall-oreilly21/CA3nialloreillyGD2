@@ -3,18 +3,45 @@
  * 
  * @author Niall O' Reilly
  * @version 1.0
- * @class Artist
+ * @class Consumables
  */
- let artist;
- let transform;
- let sprite;
+ 
 
 class Consumables 
 {
+    constructor
+    (
+        notificationCenter,
+        keyboardManager,
+        objectManager,
+    ) 
 
-    initializeDrinksPickups() 
+    {
+        this.notificationCenter = notificationCenter;
+        this.keyboardManager = keyboardManager;
+        this.objectManager = objectManager;
+    }
+
+    getRandomNextConsumableTake(sprite)
+    {
+
+        if(Math.floor(Math.random() * 2))
+        {
+           sprite.artist.setTake("Pizza");
+        }
+        else
+        {
+            sprite.artist.setTake("Drink"); 
+        }
+    }
+
+    initializeConsumables() 
     {
     
+        let artist;
+        let transform;
+        let sprite;
+
         artist = new AnimatedSpriteArtist
         (
             context,                                        // Context
@@ -70,11 +97,15 @@ class Consumables
             this.getRandomNextConsumableTake(sprite);
     
             // Add to object manager
-            objectManager.add(sprite);
+            this.objectManager.add(sprite);
     }
 
-    initializeConsumables()
+    initializeConsumablesStart()
     {
+        let artist;
+        let transform;
+        let sprite;
+
         artist = new AnimatedSpriteArtist
         (
             context,                                        // Context
@@ -131,7 +162,7 @@ class Consumables
                 new Vector2
                 (
                     Math.floor(Math.random() * (canvas.clientWidth)) + 250,
-                Math.floor(-Math.random() * 400)
+                    Math.floor(-Math.random() * 400)
                 )
             );
             
@@ -146,27 +177,12 @@ class Consumables
                 )
                 
             );
-            // startIntervalTimer()
 
             // Set sprite take
             this.getRandomNextConsumableTake(spriteClone);
 
             // Add to object manager
-            objectManager.add(spriteClone);
-            // console.log(spriteClone.transform.translation.y)
-        }
-    }
-    
-    getRandomNextConsumableTake(sprite)
-    {
-
-        if(Math.floor(Math.random() * 2))
-        {
-           sprite.artist.setTake("Pizza");
-        }
-        else
-        {
-            sprite.artist.setTake("Drink"); 
+            this.objectManager.add(spriteClone);
         }
     }
 
@@ -197,7 +213,7 @@ class Consumables
             0
         );
     
-        sprite = new MoveableSprite
+        sprite = new Sprite
         (
             "Spillage",
             transform,
@@ -209,20 +225,14 @@ class Consumables
             1
         );
     
-        // Set performance characteristics of the physics body that is
-        // attached to the moveable sprite
-        sprite.body.maximumSpeed = 0;
-        sprite.body.friction = FrictionType.Normal;
-        sprite.body.gravity = GravityType.Normal;
-    
         artist.setTake("Spillage");
         // Add enemy to object manager
-        objectManager.add(sprite);
+        this.objectManager.add(sprite);
 
 
         setTimeout(() => 
         {
-            notificationCenter.notify
+            this.notificationCenter.notify
             (
                 new Notification
                 (

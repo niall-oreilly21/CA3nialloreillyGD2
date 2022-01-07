@@ -24,7 +24,13 @@ class PlayerMoveController {
         this.moveKeys = moveKeys;
         this.runVelocity = runVelocity;
         this.jumpVelocity = jumpVelocity;
-        this.consumables = new Consumables();
+        
+        this.consumables = new Consumables
+        (
+            notificationCenter,
+            keyboardManager,
+            objectManager
+        );
         this.collidedWithPuddle = false;
     }
 
@@ -36,7 +42,7 @@ class PlayerMoveController {
         this.collidedWithPuddle = false;
         this.applyInput(parent);
         playerCurrentPositionX = parent.transform.translation.x;
-        
+       
     }
 
     applyForces(gameTime, parent) {
@@ -86,11 +92,8 @@ class PlayerMoveController {
 
             if (this.keyboardManager.isKeyDown(this.moveKeys[0])) 
             {
-
                 // Add velocity to begin moving player left
-                    parent.body.setVelocityX(-this.runVelocity * gameTime.elapsedTimeInMs);
-
-                
+                parent.body.setVelocityX(-this.runVelocity * gameTime.elapsedTimeInMs);  
 
                 // Update the player's animation
                 if (!this.keyboardManager.isKeyDown(this.moveKeys[2])) 
@@ -276,11 +279,15 @@ class PlayerMoveController {
         // Get a list of all the pickup sprites that are stored
         // within the object manager
         const pickups = this.objectManager.get(ActorType.Pickup);
-        
+
         // If pickups is null, exit the function
         if (pickups == null) return;
 
         if ((parent.artist.isCurrentTakeName("Fall Right")) || (parent.artist.isCurrentTakeName("Fall Left"))) return;
+
+         let p = new RandomGeneratorSideCharacters(notificationCenter,objectManager);
+
+  
 
         // Loop through the list of pickup sprites
         for (let i = 0; i < pickups.length; i++) {
@@ -376,7 +383,7 @@ class PlayerMoveController {
                     )
                 );
 
-                this.consumables.initializeDrinksPickups();
+                this.consumables.initializeConsumables();
             }
         }
     }
