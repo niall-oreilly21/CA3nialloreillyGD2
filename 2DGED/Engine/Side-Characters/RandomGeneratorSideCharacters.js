@@ -274,8 +274,6 @@ class RandomGeneratorSideCharacters
 
         for (let i = 0; i < SideCharacterDetails.length; i++) 
         {
-console.log(SideCharacterDetails)
-            const SideCharacter = SideCharacterDetails[i];
 
             setTimeout(() => 
             {

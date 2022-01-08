@@ -329,12 +329,13 @@ class PlayerMoveController {
                         );
                         
 
-                        notificationCenter.notify(
+                        notificationCenter.notify
+                        (
                             new Notification
                             (
                             NotificationType.GameState,
-                            NotificationAction.handleHealthStateChange,
-                            [-1]
+                            NotificationAction.Wage,
+                            [10]
                             )
                         );
                     }
@@ -369,15 +370,15 @@ class PlayerMoveController {
                             )
                         );
 
-                            notificationCenter.notify
+                        notificationCenter.notify
+                        (
+                            new Notification
                             (
-                                new Notification
-                                (
-                                NotificationType.GameState,
-                                NotificationAction.handleHealthStateChange,
-                                [-1]
-                                )
-                            );
+                            NotificationType.GameState,
+                            NotificationAction.Wage,
+                            [10]
+                            )
+                        );
 
                        
                     }
@@ -460,6 +461,16 @@ class PlayerMoveController {
                             )
                         );
 
+                        notificationCenter.notify
+                        (
+                            new Notification
+                            (
+                            NotificationType.GameState,
+                            NotificationAction.Wage,
+                            [10]
+                            )
+                        );
+                        
                         notificationCenter.notify
                         (
                             new Notification

@@ -64,8 +64,8 @@ class MyMenuManager extends MenuManager {
 
         // If we created an event to tell the ObjectManager to draw and update,
         // then it means we want the game to run i.e. hide the menu
-        if (statusType != 0) {
-
+        if (statusType != 0) 
+        {
             $('#main_menu').hide();
         }
 
@@ -103,6 +103,14 @@ class MyMenuManager extends MenuManager {
                     NotificationType.Menu,
                     NotificationAction.ShowMenuChanged,
                     [StatusType.Updated | StatusType.Drawn]
+                )
+            );
+
+            notificationCenter.notify(
+                new Notification(
+                    NotificationType.GameState,
+                    NotificationAction.Timer,
+                    [null]
                 )
             );
         });

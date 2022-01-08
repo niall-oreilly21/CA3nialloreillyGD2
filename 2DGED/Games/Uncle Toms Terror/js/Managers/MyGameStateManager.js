@@ -47,17 +47,17 @@ class MyGameStateManager extends GameStateManager {
 
         switch (notification.notificationAction) {
 
-            case NotificationAction.Health:
-                this.handleHealthStateChange(notification.notificationArguments);
+            case NotificationAction.Wage:
+                this.handleWageStateChange(notification.notificationArguments[0]);
                 break;
 
-            case NotificationAction.Inventory:
-                this.handleInventoryStateChange(notification.notificationArguments);
+            case NotificationAction.Timer:
+                this.handleTimer();
                 break;
 
-            case NotificationAction.Ammo:
-                this.handleAmmoStateChange(notification.notificationArguments);
-                break;
+            // case NotificationAction.ResetGame:
+            //     this.handleResetGame();
+            //     break;
 
             case NotificationAction.Level:
                 this.handlelevelStateChange(notification.notificationArguments);
@@ -77,23 +77,55 @@ class MyGameStateManager extends GameStateManager {
         }
     }
 
-    handleHealthStateChange(value) 
+    handleWageStateChange(value) 
     {
-        this.playerHealth = this.playerHealth  + value;
+        wage = wage - value;
         waiterPizza = 0;
         waiterBeer = 0;
         // Add your own code here...
         // Maybe update a health variable?
         // Maybe update a UI element?
+
+        if(wage === 0)
+        {
+            notificationCenter.notify(
+                new Notification(
+                    NotificationType.Reset,
+                    NotificationAction.ResetGame,
+                    null
+                )
+            );
+
+        }
+     
     }
 
-    handleInventoryStateChange(argArray) {
-        console.log(argArray);
+    handleTimer() 
+    {
+    //     setTimeout(this.myFunction(), 3000);
 
-        // Add your code here...
-        // Maybe update an inventory array?
-        // Maybe update a UI element
-    }
+    //     var endDate = new Date('Aug 20, 2021 00:00:00').getTime();
+
+    //     var now = new Date().getTime();
+
+    //     let remainingTime = now - endDate
+
+    //     const second = 18000;
+
+    //     const minute = second * 60;
+
+        
+    //     minutesLeft = Math.trunc((remainingTime % hour) / minute);
+        
+    //     secondsLeft = Math.trunc((remainingTime % minute) / second);
+
+    //     console.log(minute,second)
+    // }
+
+    // myFunction()
+    // {
+    //     console.log("HEre")
+     }
 
     handleLevelStateChange(value) 
     {
@@ -117,8 +149,11 @@ class MyGameStateManager extends GameStateManager {
        
     }
 
+  
+
     update(gameTime) 
     {
+        
             this.handleOrderComplete();
             
             this.isRemoveTable();

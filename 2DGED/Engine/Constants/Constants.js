@@ -97,13 +97,15 @@ const TextBaselineType = {
 // We use this to define colours for drawing to the screen
 // For example, ClearScreen(Color.Black)
 const Color = {
-    Black: "#000000",
+    Black: "#010203",
     White: "#FFFFFF",
     Grey: "#8B8680",
     CornFlowerBlue: "#6495ED",
     LightGreen: "#CACB63",
     DarkGreen: "#688318",
     Orange: "#FF8300",
+    Grey: "rgb(197, 197, 197)",
+    Green: "green"
 
     // Add more colors that you use often here
     // Use https://html-color-codes.info/colors-from-image/ to determine hex codes 
@@ -116,8 +118,8 @@ const FontType =
     InformationOrder: "30px Algerian",
     InformationWaiter: "20px Algerian",
     InformationLarge: "60px Georgia, Times, 'Times New Roman', serif, sans-serif",
-    orderTally: "30px 'Times New Roman'"
-
+    orderTally: "30px 'Times New Roman'",
+    Wage: "50px 'Calibri'"
 };
   
   

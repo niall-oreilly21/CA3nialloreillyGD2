@@ -68,7 +68,7 @@ function update(gameTime)
     // Call the update method of the object manager class
     // to update all sprites
     objectManager.update(gameTime);
-
+    
     // Call the update method of the game state manager
     // class to update the game state
     gameStateManager.update(gameTime);
@@ -115,20 +115,23 @@ function draw(gameTime)
         debugDrawer.draw(gameTime);
     }
     
+    context.font = FontType.Wage;
+    context.fillStyle = Color.Green;
+    context.fillText(` \u20AC ${wage}`, 1000, 50)
+    context.fillStyle = Color.Black;
     
-    context.strokeText(` ${waiterPizza} /`, 85, 300)
-    context.strokeText(` ${orderPizza} `, 125, 300)
-    context.strokeText(` ${orderBeer} /`, 85, 540)
-    context.strokeText(` ${waiterBeer} `, 125, 540)
     context.font = FontType.orderTally;
-    context.strokeStyle = "#5BC236"
+    context.fillText(` ${waiterPizza} /`, 85, 300)
+    context.fillText(` ${orderPizza} `, 125, 300)
+    context.fillText(` ${waiterBeer} /`, 85, 540)
+    context.fillText(` ${orderBeer} `, 125, 540)  
 }
 
 function clearCanvas() 
 {
 
     context.save();
-    context.fillStyle = "rgb(197, 197, 197)";
+    context.fillStyle = Color.Grey;
     context.fillRect(0, 0, canvas.clientWidth, canvas.clientHeight);
     context.restore();
 }
@@ -142,6 +145,7 @@ function initialize()
     initializeManagers();
     initializeCameras();
     initializeSprites();
+    registerForNotifications();
 
     // If we are in debug mode
     if (debugMode) 
@@ -216,6 +220,29 @@ function initializeManagers()
     
 }
 
+
+function registerForNotifications() 
+{
+    notificationCenter.register
+    (
+        NotificationType.Reset, 
+        this, 
+        handleResetGameNotification
+    );
+}
+
+function handleResetGameNotification(notification) 
+{
+
+    switch (notification.notificationAction) 
+    {
+
+        case NotificationAction.ResetGame:
+        resetGame(); 
+    }
+  
+}
+  
 
 function initializeDebugDrawer() 
 {
@@ -775,10 +802,30 @@ function drawOrderDecorator()
 }
 
 
-function resetGame() {
-
+function resetGame() 
+{
     clearCanvas();
-    startGame();
+    handleResetGame();
+}
+
+function handleResetGame()
+{   
+    level = 0;
+    endLevel = true; 
+    consumablesVelocity = 0.05;
+    message = "";
+    wage = 100
+
+    https://developer.mozilla.org/en-US/docs/Web/API/Location/reload
+    window.location.reload();
+    notificationCenter.notify(
+        new Notification(
+            NotificationType.Menu,
+            NotificationAction.ShowMenuChanged,
+            [StatusType.Off]
+        )
+    );
+    
 }
 
 // Start the game once the page has loaded

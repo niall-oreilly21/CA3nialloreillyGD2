@@ -90,7 +90,8 @@ class MyUIManager extends UIManager {
                     // If the user clicks the menu button...
                     // If the user clicks the flip gravity button...
 
-                    if (hudSprite.id === "Pause Button") {
+                    if (hudSprite.id === "Pause Button") 
+                    {
 
                         console.log("You clicked the pause button!");
                     }

@@ -38,7 +38,8 @@ const NotificationType =
     GameState: "GameState",
     Menu: "Menu",
     UI: "UI",
-    Sound: "Sound"
+    Sound: "Sound",
+    Reset: "Reset"
 
     // Add more here as necessary
 };
@@ -71,7 +72,10 @@ const NotificationAction =
     ResetVolumeAll: "ResetVolumeAll",
     UpdateHealthBar: "UpdateHealthBar",
     CreateTable:"CreateTable",
-    RandomGenerateSideCharacters: "RandomGenerateSideCharacters"
+    RandomGenerateSideCharacters: "RandomGenerateSideCharacters",
+    Timer: "Timer",
+    Wage:"Wage",
+    ResetGame:"ResetGame"
 
     // Add more here as required
 };
