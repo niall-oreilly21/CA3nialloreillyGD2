@@ -6,7 +6,6 @@ let level = 0;
 let endLevel = true; 
 let consumablesVelocity = 0.05;
 let playerCurrentPositionX = 0;
-let rotate = false;
 let message = "";
 
 

@@ -11,30 +11,10 @@ class GameData
     new AudioCue("splash", AudioType.WinLose, 1, 1, 0, false),
   ];
 
-  static INITIAL_PLAYER_HEALTH = 5; 
   static BACKGROUND = document.getElementById("bar_background");
   static ORDER_DECORATOR = document.getElementById("order_decorator");
   static CLOCK = document.getElementById("clock");
   static UI = document.getElementById("ui_sprite_sheet");
-  
-  static SPEECH_BUBBLE =
-  {
-    id: "Speech Bubble",
-    spriteSheet: document.getElementById("speech_bubble"),
-    sourcePosition: Vector2.Zero,
-    sourceDimensions: new Vector2(600, 410),
-    rotation: 0,
-    scale: new Vector2(2, 0.4),
-    origin: Vector2.Zero,
-    actorType: ActorType.Decorator,
-    collisionType: CollisionType.NotCollidable,
-    layerDepth: 0,
-    explodeBoundingBoxInPixels: 0,
-  }
-
- 
-
-  
   
   static PLATFORM_Y_DIMENSION = 668;
 
@@ -575,8 +555,7 @@ class GameData
   
   static SIDE_CHARACTERS =
   {
-    id: "Speech Bubble",
-    spriteSheet: document.getElementById("speech_bubble"),
+    id: "Side Characters",
     sourcePosition: Vector2.Zero,
     sourceDimensions: new Vector2(600, 410),
     rotation: 0,
@@ -590,8 +569,39 @@ class GameData
      
   }
 
-  static SIDE_CHARACTERS_NAMES = [SideCharacterNames.TheLegend, SideCharacterNames.Spud, SideCharacterNames.CathyTheCook,SideCharacterNames.BossMan];
-  static SIDE_CHARACTERS_X_POSITION_LEFT_SIDE;
-  static SIDE_CHARACTERS_X_POSITION_RIGHT_SIDE;
+
+  static SIDE_CHARACTERS_NAMES = [SideCharactersNames.TheLegend, SideCharactersNames.Spud, SideCharactersNames.CathyTheCook, SideCharactersNames.BossMan];
+
+  static SIDE_CHARACTERS_MESSAGES = 
+  [
+    ["You muppet!","You're sacked man-servant!!s","Whaty the hell!!!!!","where's me pint", "I am thirsty!!", "YAHO00000WEEERA"],
+    ["great work","unlucky champ!!","Don't worry about it!!","Theres still some drink"],
+    ["my pizzas!!!","your cleaning that!!!","my masterpiece!!", "I will not remake that!!"],
+    ["stop slacking!!!!!","your paying for that!!!","beyond useless!!!","get back to work!!!"]
+  ]
+
+  static SIDE_CHARACTERS_X_POSITION_LEFT_SIDE = 265;
+  static SIDE_CHARACTERS_X_POSITION_RIGHT_SIDE = 1175;
+  static ROTATE_SIDE_CHARACTERS_POSITION_LEFT_SIDE =  90 * Math.PI/ 180;
+  static ROTATE_SIDE_CHARACTERS_POSITION_RIGHT_SIDE = 270 * Math.PI/ 180;
+
+
+  static SPEECH_BUBBLE =
+  {
+    id: "Speech Bubble",
+    sourcePosition: Vector2.Zero,
+    sourceDimensions: new Vector2(600, 410),
+    rotation: 0,
+    scale: new Vector2(1.3, 0.4),
+    origin: Vector2.Zero,
+    actorType: ActorType.SideCharacter,
+    collisionType: CollisionType.NotCollidable,
+    layerDepth: 0,
+    explodeBoundingBoxInPixels: 0,
+  }
+
+  static SPEECH_BUBBLE_LEFT_SIDE = document.getElementById("speech_bubble_left_side");
+  static SPEECH_BUBBLE_RIGHT_SIDE = document.getElementById("speech_bubble_right_side");
 }
+
 

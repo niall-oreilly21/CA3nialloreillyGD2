@@ -115,12 +115,13 @@ function draw(gameTime)
         debugDrawer.draw(gameTime);
     }
     
-    context.strokeText(` ${orderPizza} `, 200, 120)
-    context.strokeText(` ${orderBeer} `, 200, 180)
-    context.strokeText(` ${waiterPizza} `, 200, 320)
-    context.strokeText(` ${waiterBeer} `, 200, 420)
-     context.font = "30px Arial";
-     context.strokeStyle = "green"
+    
+    context.strokeText(` ${waiterPizza} /`, 85, 300)
+    context.strokeText(` ${orderPizza} `, 125, 300)
+    context.strokeText(` ${orderBeer} /`, 85, 540)
+    context.strokeText(` ${waiterBeer} `, 125, 540)
+    context.font = FontType.orderTally;
+    context.strokeStyle = "#5BC236"
 }
 
 function clearCanvas() 
@@ -159,7 +160,7 @@ function initializeNotificationCenter()
 
 function initializeManagers() 
 {
-
+    
     cameraManager = new CameraManager
     (
         "Camera Manager"
@@ -195,8 +196,7 @@ function initializeManagers()
     (
         "Game State Manager",
         notificationCenter,
-        objectManager,
-        GameData.INITIAL_PLAYER_HEALTH                            // Initial player health
+        objectManager                            
     )
 
     menuManager = new MyMenuManager
@@ -213,6 +213,7 @@ function initializeManagers()
         objectManager,
         mouseManager
     )
+    
 }
 
 
@@ -334,12 +335,13 @@ function initializePlatforms()
 
 function initializeDrinksPickups() 
 {   
-
-let p = new RandomGeneratorSideCharacters(notificationCenter,objectManager);
-
- p.getRandomSprite();
- 
-    // p.initializeSpeechBubble();       
+    // let randomSideCharacter = new RandomGeneratorSideCharacters
+    //     (
+    //         notificationCenter,
+    //         objectManager
+    //     )
+    // randomSideCharacter.generateRandomCharacterSprite();
+    
 }
 
 
@@ -507,10 +509,11 @@ function initializeHUD()
 function initializeOnScreenOrder() 
 {
     initializeOrder();
-    initializePizza();
-    initializeBeer();
-    initializeWaiterBeer();
-    initializeWaiterPizza();
+    initializeImagesOrderDecoration("Pizza", 160);
+    initializeImagesOrderDecoration("Drink", 400);
+    initializeOrderTypeText("Pizza", 120);
+    initializeOrderTypeText("Beer", 360);
+
 }
 
 function initializeOrder() 
@@ -563,7 +566,54 @@ function initializeOrder()
     }
 
 
-function initializePizza()
+    function initializeImagesOrderDecoration(takeName, y)
+    {
+        let artist;
+        let transform;
+        let sprite;
+
+        artist = new AnimatedSpriteArtist
+        (
+            context,                                        // Context
+            1,
+    
+            GameData.COMSUMABLES_ANIMATION_DATA            // Animation data
+        );
+    
+        transform = new Transform2D
+        (
+            new Vector2
+            (
+                80, y
+            ),                                              // Translation
+            0,                                              // Rotation
+            new Vector2(0.3, 0.3),                          // Scale
+            Vector2.Zero,                                   // Origin
+            artist.getBoundingBoxByTakeName(takeName),  // Dimensions
+            0
+        );
+
+        sprite = new Sprite
+        (
+            "Consumable Decoration",
+            transform,
+            ActorType.Decorator,
+            CollisionType.NotCollidable,
+            StatusType.Updated | StatusType.Drawn,
+            artist,
+            1,          // Scroll speed multiplier
+            1           // Layer depth
+        );
+    
+            // Set sprite take
+            sprite.artist.setTake(takeName);
+    
+            // Add to object manager
+            objectManager.add(sprite);
+    }
+
+
+function initializeOrderTypeText(text, y)
 {
     let transform;
     let artist;
@@ -574,7 +624,7 @@ function initializePizza()
         new Vector2
         (
             125, 
-            100
+            y
         ),
         0,
         Vector2.One,
@@ -587,7 +637,7 @@ function initializePizza()
     (
         context,                        // Context
         1,                              // Alpha
-        "Pizzas : ",                  // Text
+        text,                  // Text
         FontType.InformationOrder,     // Font Type
         Color.Orange,                    // Color
         TextAlignType.Center,             // Text Align
@@ -597,7 +647,7 @@ function initializePizza()
 
     sprite = new Sprite
     (
-        "Order Pizza",
+        "Order Type",
         transform,
         ActorType.OrderMenu,
         CollisionType.NotCollidable,
@@ -611,150 +661,6 @@ function initializePizza()
     objectManager.add(sprite);
 } 
 
-function initializeBeer()
-{
-    let transform;
-    let artist;
-    let sprite;
-
-    transform = new Transform2D
-    (
-        new Vector2
-        (
-            70, 
-            160
-        ),
-        0,
-        Vector2.One,
-        Vector2.Zero,
-        Vector2.Zero,
-        0
-    );
-
-    artist = new TextSpriteArtist
-    (
-        context,                        // Context
-        1,                              // Alpha
-        "Beer    : ",                  // Text
-        FontType.InformationOrder,     // Font Type
-        Color.Orange,                    // Color
-        TextAlignType.Left,             // Text Align
-        250,                            // Max Width
-        true                            // Fixed Position
-    );
-
-    sprite = new Sprite
-    (
-        "Order Pizza",
-        transform,
-        ActorType.OrderMenu,
-        CollisionType.NotCollidable,
-        StatusType.Updated | StatusType.Drawn,
-        artist,
-        1,
-        1
-    );
-
-    // Add sprite to object manager
-    objectManager.add(sprite);
-} 
-
-function initializeWaiterPizza()
-{
-    let transform;
-    let artist;
-    let sprite;
-
-    transform = new Transform2D
-    (
-        new Vector2
-        (
-            125, 
-            300
-        ),
-        0,
-        Vector2.One,
-        Vector2.Zero,
-        Vector2.Zero,
-        0
-    );
-
-    artist = new TextSpriteArtist
-    (
-        context,                        // Context
-        1,                              // Alpha
-        "Waiter Pizzas : ",                  // Text
-        FontType.InformationWaiter,     // Font Type
-        Color.Orange,                    // Color
-        TextAlignType.Center,             // Text Align
-        250,                            // Max Width
-        true                            // Fixed Position
-    );
-
-    sprite = new Sprite
-    (
-        "Waiter Pizza",
-        transform,
-        ActorType.OrderMenu,
-        CollisionType.NotCollidable,
-        StatusType.Updated | StatusType.Drawn,
-        artist,
-        1,
-        1
-    );
-
-    // Add sprite to object manager
-    objectManager.add(sprite);
-} 
-
-function initializeWaiterBeer()
-{
-    let transform;
-    let artist;
-    let sprite;
-
-    transform = new Transform2D
-    (
-        new Vector2
-        (
-            55, 
-            400
-        ),
-        0,
-        Vector2.One,
-        Vector2.Zero,
-        Vector2.Zero,
-        0
-    );
-
-    
-    artist = new TextSpriteArtist
-    (
-        context,                        // Context
-        1,                              // Alpha
-        "Waiter Beers    :  ",                  // Text
-        FontType.InformationWaiter,     // Font Type
-        Color.Orange,                    // Color
-        TextAlignType.Left,             // Text Align
-        250,                            // Max Width
-        true                            // Fixed Position
-    );
-
-    sprite = new Sprite
-    (
-        "Waiter Beer",
-        transform,
-        ActorType.OrderMenu,
-        CollisionType.NotCollidable,
-        StatusType.Updated | StatusType.Drawn,
-        artist,
-        1,
-        1
-    );
-
-    // Add sprite to object manager
-    objectManager.add(sprite);
-} 
 
 function drawTimer()
 {
@@ -828,7 +734,7 @@ function drawOrderDecorator()
         0,                              // Rotation
         new Vector2
         (
-            0.45,
+            0.43,
             1
         ),                    // Scale
         Vector2.Zero,                   // Origin
@@ -868,18 +774,6 @@ function drawOrderDecorator()
     objectManager.add(sprite);
 }
 
-
-function getRandomText()
-{
-    if(Math.floor(Math.random() * 2))
-        {
-           return "hello";
-        }
-        else
-        {
-           return "here";
-        }
-}
 
 function resetGame() {
 

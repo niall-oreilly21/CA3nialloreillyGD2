@@ -133,18 +133,32 @@ class AnimatedSpriteArtist extends Artist {
 
     isCurrentTakeName(takeName)
     {
-       // if (this.animationData.takes[takeName]) 
-        {
             
-            if (this.currentTakeName === takeName) 
-            {
-                
+        if (this.currentTakeName === takeName) 
+        {               
+            return true;
+        }
+        else 
+        {
+            return false;
+        }
+    }
+
+    isTakesExists(takeNameArray)
+    {
+        for (let i = 0; i < takeNameArray.length; i++) 
+        {
+            let takeName = takeNameArray[i];
+            
+            if (this.animationData.takes[takeName]) 
+            {         
                 return true;
             }
             else 
             {
                 return false;
             }
+            
         }
     }
     
@@ -313,7 +327,7 @@ class AnimatedSpriteArtist extends Artist {
          // Retrieve the current animation frame
         let frame = this.frames[this.currentFrameIndex];
 
-        if (this.isCurrentTakeName("The Legend"))
+        if (this.isTakesExists(GameData.SIDE_CHARACTERS_NAMES))
         {
             this.context.translate
             (
@@ -321,17 +335,21 @@ class AnimatedSpriteArtist extends Artist {
                 transform.translation.y - transform.origin.y + (frame.height * transform.scale.y) / 2
             )
 
-            this.context.rotate(90 * Math.PI/ 180)
+            if(transform.translation.x === GameData.SIDE_CHARACTERS_X_POSITION_LEFT_SIDE)
+            {
+                this.context.rotate(GameData.ROTATE_SIDE_CHARACTERS_POSITION_LEFT_SIDE);
+            }
+            else
+            {
+                this.context.rotate(GameData.ROTATE_SIDE_CHARACTERS_POSITION_RIGHT_SIDE);
+            }
 
             this.context.translate
             (
                 -(transform.translation.x - transform.origin.x + (frame.width * transform.scale.x) / 2), 
                 -(transform.translation.y - transform.origin.y + (frame.height * transform.scale.y) / 2)
             )
-        }
-
-
-       
+        }     
 
         // Draw current animation frame
         this.context.drawImage(

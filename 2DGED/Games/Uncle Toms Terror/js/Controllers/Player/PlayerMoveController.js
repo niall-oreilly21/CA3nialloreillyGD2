@@ -285,8 +285,6 @@ class PlayerMoveController {
 
         if ((parent.artist.isCurrentTakeName("Fall Right")) || (parent.artist.isCurrentTakeName("Fall Left"))) return;
 
-         let p = new RandomGeneratorSideCharacters(notificationCenter,objectManager);
-
   
 
         // Loop through the list of pickup sprites
@@ -319,6 +317,18 @@ class PlayerMoveController {
                             parent.artist.setTake("Fall Left");  
                                                           
                         }  
+                       
+                        notificationCenter.notify
+                        (
+                            new Notification
+                            (
+                                NotificationType.GameState,
+                                NotificationAction.RandomGenerateSideCharacters,
+                                null
+                            )
+                        );
+                        
+
                         notificationCenter.notify(
                             new Notification
                             (
@@ -349,6 +359,16 @@ class PlayerMoveController {
                                                           
                         }  
                         
+                        notificationCenter.notify
+                        (
+                            new Notification
+                            (
+                                NotificationType.GameState,
+                                NotificationAction.RandomGenerateSideCharacters,
+                                null
+                            )
+                        );
+
                             notificationCenter.notify
                             (
                                 new Notification
@@ -409,15 +429,14 @@ class PlayerMoveController {
             // with the enemy sprite
                 if (parent.transform.boundingBox.intersects(puddle.transform.boundingBox)) 
                 {
+                        this.collidedWithPuddle = true;
                         if (parent.artist.isCurrentTakeName("Run Right") || parent.artist.isCurrentTakeName("Jump Right") || parent.artist.isCurrentTakeName("Idle Right") )
                         {
-                            this.collidedWithPuddle = true;
                             parent.artist.setTake("Fall Right");
                         } 
 
                         else if(parent.artist.isCurrentTakeName("Run Left") || parent.artist.isCurrentTakeName("Jump Left") || parent.artist.isCurrentTakeName("Idle Left") )
                         {
-                            this.collidedWithPuddle = true;
                             parent.artist.setTake("Fall Left");                                  
                         } 
 
@@ -431,14 +450,13 @@ class PlayerMoveController {
                             )
                         );
               
-                        
                         notificationCenter.notify
                         (
                             new Notification
                             (
-                                NotificationType.Sound,
-                                NotificationAction.Play,
-                                ["splash"]
+                                NotificationType.GameState,
+                                NotificationAction.RandomGenerateSideCharacters,
+                                null
                             )
                         );
 
@@ -446,9 +464,9 @@ class PlayerMoveController {
                         (
                             new Notification
                             (
-                            NotificationType.GameState,
-                            NotificationAction.handleHealthStateChange,
-                            [-1]
+                                NotificationType.Sound,
+                                NotificationAction.Play,
+                                ["splash"]
                             )
                         );
                 
@@ -496,7 +514,7 @@ class PlayerMoveController {
                                 (
                                     NotificationType.Sound,
                                     NotificationAction.Play,
-                                    ["splash"]
+                                    ["boing"]
                                 )
                             );
                             

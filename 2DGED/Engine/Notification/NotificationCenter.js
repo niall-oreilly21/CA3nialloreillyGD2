@@ -28,13 +28,13 @@
 // Here we try to think of ALL the unique type of events that may want a
 // listener to respond by performing an action (e.g. menu, player, sound, 
 // pickup)
-const NotificationType = {
+const NotificationType = 
+{
 
     Player: "Player",
     Enemy: "Enemy",
     Pickup: "Pickup",
     Sprite: "Sprite",
-
     GameState: "GameState",
     Menu: "Menu",
     UI: "UI",
@@ -46,7 +46,8 @@ const NotificationType = {
 // Here we try to think of ALL the unique actions in our game that may 
 // want a listener to respond by performing an action (e.g. playing a 
 // sound, updating the UI)
-const NotificationAction = {
+const NotificationAction = 
+{
 
     Fire: "Fire",
     Win: "Win",
@@ -68,9 +69,10 @@ const NotificationAction = {
     SetVolumeByTheme: "SetVolumeByTheme",
     SetVolumeAll: "SetVolumeAll",
     ResetVolumeAll: "ResetVolumeAll",
-
     UpdateHealthBar: "UpdateHealthBar",
-    
+    CreateTable:"CreateTable",
+    RandomGenerateSideCharacters: "RandomGenerateSideCharacters"
+
     // Add more here as required
 };
 

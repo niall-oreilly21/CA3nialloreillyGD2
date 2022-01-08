@@ -10,16 +10,17 @@ const ActorType = {
 
     Background: 0,
     Platform: 1,
-    SideCharacter: 2,
-    Pickup: 3,
+    Decorator: 2, 
+    SideCharacter: 3,   
     Interactable: 4,
     LevelMessage: 5,
     Puddle: 6,
-    OrderMenu: 7,
-    Player: 8,
-    Camera: 9,
+    Pickup: 7,
+    OrderMenu: 8,
+    Player: 9,
+    Camera: 10,
     HUD: 11,
-    Decorator: 12
+    
 
     // Add as many actor types as your game needs here BUT remember that the 
     // assigned number will determine drawn sort order...
@@ -114,34 +115,36 @@ const FontType =
     InformationSmall: "12px Arial",
     InformationOrder: "30px Algerian",
     InformationWaiter: "20px Algerian",
-    InformationLarge: "60px Georgia, Times, 'Times New Roman', serif, sans-serif"
+    InformationLarge: "60px Georgia, Times, 'Times New Roman', serif, sans-serif",
+    orderTally: "30px 'Times New Roman'"
 
-  };
+};
   
   
   const LevelName = 
 {
-    LevelOne: "Quiet January Afternoon",
-    LevelTwo: "Easter Monday",
-    LevelThree: "Christmas Eve",
-    LevelFour: "May Bank Holiday",
-    LevelFive: "Results Night",
-    LevelSix: "Heatwave July",
-    LevelSeven: "St.Patricks Day",
-    LevelEight: "Holloween",
-    LevelNine: "September Back to College",
-    LevelTen: "St.Stephens Day",
+    LevelOne:    "Quiet January Afternoon",
+    LevelTwo:    "Easter Monday",
+    LevelThree:  "Christmas Eve",
+    LevelFour:   "May Bank Holiday",
+    LevelFive:   "Results Night",
+    LevelSix:    "Heatwave July",
+    LevelSeven:  "St.Patricks Day",
+    LevelEight:  "Holloween",
+    LevelNine:   "September Back to College",
+    LevelTen:    "St.Stephens Day",
     LevelEleven: "New Years Eve"
 
+};
+
+  const SideCharactersNames = 
+  {
+    TheLegend:    "The Legend",
+    Spud:         "Spud",
+    CathyTheCook: "Cook",
+    BossMan:      "Boss",
   };
 
-  const SideCharacterNames = 
-  {
-    TheLegend:"The Legend",
-    Spud: "Spud",
-    CathyTheCook:"Cook",
-    BossMan: "Boss"
-  };
   
 // Used by any entity which listens for key input
 const Keys = {

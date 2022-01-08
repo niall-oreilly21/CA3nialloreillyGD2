@@ -6,36 +6,33 @@
  */
 class MyGameStateManager extends GameStateManager {
     
-    get playerHealth() {
-        return this._playerHealth;
-    }
-
-    set playerHealth(value) {
-        this._playerHealth = value;
-    }
-
-
-    constructor(id, notificationCenter, objectManager, initialPlayerHealth) {
+    constructor(id, notificationCenter, objectManager) {
         
         super(id);
 
         this.notificationCenter = notificationCenter;
         this.objectManager = objectManager;
-        this.playerHealth = initialPlayerHealth;
         this.intervalTime = 180000;
         this.intervalTimer = 0;
-        // this.minutes = Math.floor((this.intervalTime );
-        // this.seconds = Math.floor((this.intervalTime % (1000 * 60)) / 1000);
-        
-        this.registerForNotifications();
-        
         this.consumables = new Consumables
         (
             notificationCenter,
             keyboardManager,
             objectManager
         );
+
+        this.randomSideCharacter = new RandomGeneratorSideCharacters
+        (
+            notificationCenter,
+            objectManager
+        )
        
+        // this.minutes = Math.floor((this.intervalTime );
+        // this.seconds = Math.floor((this.intervalTime % (1000 * 60)) / 1000);
+        
+        this.registerForNotifications();
+        
+    
     }
 
     registerForNotifications() {
@@ -65,6 +62,13 @@ class MyGameStateManager extends GameStateManager {
             case NotificationAction.Level:
                 this.handlelevelStateChange(notification.notificationArguments);
                 break;
+
+            case NotificationAction.RandomGenerateSideCharacters:
+                this.handleSideCharacter();
+                break;
+
+            case NotificationAction.CreateTable:
+                this.createTable();
 
             // Add more cases here...
 
@@ -100,6 +104,19 @@ class MyGameStateManager extends GameStateManager {
         // Maybe update a UI element?
     }
 
+    handleSideCharacter()
+    {
+        const SideCharacterDetails = this.objectManager.get(ActorType.SideCharacter);
+
+        // If enemies is null, exit the function
+        if (SideCharacterDetails == null || SideCharacterDetails.length === 0)
+        {
+            this.randomSideCharacter.generateRandomCharacterSprite();
+        } 
+
+       
+    }
+
     update(gameTime) 
     {
             this.handleOrderComplete();
@@ -116,13 +133,11 @@ class MyGameStateManager extends GameStateManager {
             this.handleEndLevel();
         }
         
-        //console.log(this.seconds)
         //this.startIntervalTimer();
         // Add your code here...
         
         // For example, every update(), we could check the player's health. If
         // the player's health is <= 0, then we can create a notification...
-
         // Play a sound?
         // Pause the game?
         // Play the 'player death' animation?
@@ -144,7 +159,15 @@ class MyGameStateManager extends GameStateManager {
             {
                 if(!endLevel)
                 {
-                    this.createTable();
+                    notificationCenter.notify
+                    (
+                        new Notification
+                        (
+                            NotificationType.GameState,
+                            NotificationAction.CreateTable,
+                            null
+                        )
+                    );
                 }
                 
             }
@@ -154,15 +177,7 @@ class MyGameStateManager extends GameStateManager {
 
     handleEndLevel()
     {
-        // this.notificationCenter.notify
-        // (
-        //     new Notification
-        //     (
-        //         NotificationType.GameState,            
-        //         NotificationAction.handleLevelStateChange, 
-        //         [1]                
-        //     )
-        // );
+
         level++;
         waiterBeer = 0;
         waiterPizza = 0;
