@@ -17,6 +17,8 @@ let soundManager;
 let gameStateManager;
 let menuManager;
 let uiManager;
+let seconds = 0;
+let minutes = 3;
 
 // Set to false to hide bounding boxes
 const debugMode = false;
@@ -116,15 +118,29 @@ function draw(gameTime)
     }
     
     context.font = FontType.Wage;
+
+    context.fillStyle = Color.LightBlue;
+    if(seconds > 9)
+    {
+    context.fillText(` ${minutes}:${seconds}  `, 400, 80)  
+    }
+    else
+    {
+        context.fillText(` ${minutes}:0${seconds}  `, 400, 80)  
+    }
+
     context.fillStyle = Color.Green;
     context.fillText(` \u20AC ${wage}`, 1000, 50)
+
     context.fillStyle = Color.Black;
-    
     context.font = FontType.orderTally;
     context.fillText(` ${waiterPizza} /`, 85, 300)
     context.fillText(` ${orderPizza} `, 125, 300)
     context.fillText(` ${waiterBeer} /`, 85, 540)
     context.fillText(` ${orderBeer} `, 125, 540)  
+
+  
+
 }
 
 function clearCanvas() 
@@ -239,6 +255,10 @@ function handleResetGameNotification(notification)
 
         case NotificationAction.ResetGame:
         resetGame(); 
+
+        case NotificationAction.Timer:
+            handleTimer();
+            break;
     }
   
 }
@@ -293,7 +313,6 @@ function initializeSprites()
 {
     initializeBackground();
     initializePlatforms();
-    initializeDrinksPickups();
     initializePlayer();
     initializeHUD();
     initializeOnScreenOrder();
@@ -360,14 +379,54 @@ function initializePlatforms()
 }
 
 
-function initializeDrinksPickups() 
+function handleTimer() 
 {   
-    // let randomSideCharacter = new RandomGeneratorSideCharacters
-    //     (
-    //         notificationCenter,
-    //         objectManager
-    //     )
-    // randomSideCharacter.generateRandomCharacterSprite();
+     let intervalTimer;
+     let intervalTime = 1000;
+     let totalSeconds = 180;
+     
+     startIntervalTimer() ;
+     // Create a function that will start our interval timer when called
+     function startIntervalTimer() 
+     {
+         // Start a timer
+         // Store a handle to the timer that we create
+         intervalTimer = setInterval(intervalFunction, intervalTime);
+         console.log("Interval timer has started!");
+     }
+ 
+     // Create a function that will be called when our interval timer expires
+     function intervalFunction() 
+     {
+        totalSeconds--;
+        minutes = Math.floor(totalSeconds / 60);
+        seconds = totalSeconds % 60;
+
+        if(totalSeconds === 0)
+        {
+            stopIntervalTimer(); 
+        }
+     }
+ 
+     // Create a function that will stop our interval timer when called
+     function stopIntervalTimer() 
+     {
+ console.log("HERE")
+        // Stop the interval timer
+        clearInterval(intervalTimer);
+
+        notificationCenter.notify
+        (
+            new Notification(
+                NotificationType.Reset,
+                NotificationAction.ResetGame,
+                null
+            )
+        );
+        
+     }
+ 
+     
     
 }
 

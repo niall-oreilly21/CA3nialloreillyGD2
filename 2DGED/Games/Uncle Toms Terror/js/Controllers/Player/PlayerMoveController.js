@@ -334,7 +334,7 @@ class PlayerMoveController {
                             new Notification
                             (
                             NotificationType.GameState,
-                            NotificationAction.Wage,
+                            NotificationAction.DecreaseWage,
                             [10]
                             )
                         );
@@ -375,7 +375,7 @@ class PlayerMoveController {
                             new Notification
                             (
                             NotificationType.GameState,
-                            NotificationAction.Wage,
+                            NotificationAction.DecreaseWage,
                             [10]
                             )
                         );
@@ -466,7 +466,7 @@ class PlayerMoveController {
                             new Notification
                             (
                             NotificationType.GameState,
-                            NotificationAction.Wage,
+                            NotificationAction.DecreaseWage,
                             [10]
                             )
                         );
@@ -528,8 +528,16 @@ class PlayerMoveController {
                                     ["boing"]
                                 )
                             );
-                            
-                    endLevel = true;
+                           
+                            notificationCenter.notify
+                            (
+                                new Notification
+                                (
+                                    NotificationType.GameState,
+                                    NotificationAction.EndLevel,
+                                    null
+                                )
+                            );   
                     }
                     
                    

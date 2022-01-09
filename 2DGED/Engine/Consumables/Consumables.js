@@ -6,6 +6,8 @@
  * @class Consumables
  */
  
+ let lastSelectedTake = "";
+ let lastSelectedTakeCount = 0;
 
 class Consumables 
 {
@@ -20,18 +22,55 @@ class Consumables
         this.notificationCenter = notificationCenter;
         this.keyboardManager = keyboardManager;
         this.objectManager = objectManager;
+
+
+        
     }
 
     getRandomNextConsumableTake(sprite)
     {
 
-        if(Math.floor(Math.random() * 2))
+       if(Math.floor(Math.random() * 2))
         {
-           sprite.artist.setTake("Pizza");
+            sprite.artist.setTake("Pizza");
+            
+            if(lastSelectedTake === "Pizza")
+            {
+                lastSelectedTakeCount++;
+
+                if(lastSelectedTakeCount === 4)
+                {
+                    sprite.artist.setTake("Drink"); 
+                    lastSelectedTake = "Drink";
+                    lastSelectedTakeCount = 1;
+                }
+           }
+           else
+           {
+                lastSelectedTake = "Pizza";
+                lastSelectedTakeCount = 1;
+           }  
         }
         else
         {
             sprite.artist.setTake("Drink"); 
+        
+            if(lastSelectedTake === "Drink")
+            {
+                lastSelectedTakeCount++;
+                
+                if(lastSelectedTakeCount === 4)
+                {
+                    sprite.artist.setTake("Pizza"); 
+                    lastSelectedTake = "Pizza";
+                    lastSelectedTakeCount = 1;
+                }
+            }
+            else
+            {
+                lastSelectedTake = "Drink";
+                lastSelectedTakeCount = 1;
+            }
         }
     }
 

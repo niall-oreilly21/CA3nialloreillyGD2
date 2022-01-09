@@ -47,20 +47,8 @@ class MyGameStateManager extends GameStateManager {
 
         switch (notification.notificationAction) {
 
-            case NotificationAction.Wage:
-                this.handleWageStateChange(notification.notificationArguments[0]);
-                break;
-
-            case NotificationAction.Timer:
-                this.handleTimer();
-                break;
-
-            // case NotificationAction.ResetGame:
-            //     this.handleResetGame();
-            //     break;
-
-            case NotificationAction.Level:
-                this.handlelevelStateChange(notification.notificationArguments);
+            case NotificationAction.DecreaseWage:
+                this.handleDeductingWage(notification.notificationArguments[0]);
                 break;
 
             case NotificationAction.RandomGenerateSideCharacters:
@@ -70,6 +58,9 @@ class MyGameStateManager extends GameStateManager {
             case NotificationAction.CreateTable:
                 this.createTable();
 
+            case NotificationAction.EndLevel:
+            this.handleEndLevel();
+
             // Add more cases here...
 
             default:
@@ -77,7 +68,7 @@ class MyGameStateManager extends GameStateManager {
         }
     }
 
-    handleWageStateChange(value) 
+    handleDeductingWage(value) 
     {
         wage = wage - value;
         waiterPizza = 0;
@@ -100,41 +91,6 @@ class MyGameStateManager extends GameStateManager {
      
     }
 
-    handleTimer() 
-    {
-    //     setTimeout(this.myFunction(), 3000);
-
-    //     var endDate = new Date('Aug 20, 2021 00:00:00').getTime();
-
-    //     var now = new Date().getTime();
-
-    //     let remainingTime = now - endDate
-
-    //     const second = 18000;
-
-    //     const minute = second * 60;
-
-        
-    //     minutesLeft = Math.trunc((remainingTime % hour) / minute);
-        
-    //     secondsLeft = Math.trunc((remainingTime % minute) / second);
-
-    //     console.log(minute,second)
-    // }
-
-    // myFunction()
-    // {
-    //     console.log("HEre")
-     }
-
-    handleLevelStateChange(value) 
-    {
-        level + value;
-
-        // Add your code here...
-        // Maybe update an ammo variable?
-        // Maybe update a UI element?
-    }
 
     handleSideCharacter()
     {
@@ -157,16 +113,19 @@ class MyGameStateManager extends GameStateManager {
             this.handleOrderComplete();
             
             this.isRemoveTable();
-            if(this.playerHealth === 0)
+            if(level === 0)
             {
-                console.log("hello")
-                this.playerHealth = 0;
+                notificationCenter.notify
+                (
+                    new Notification
+                    (
+                        NotificationType.GameState,
+                        NotificationAction.EndLevel,
+                        null
+                    )
+                ); 
             }
-            
-        if(endLevel)
-        {           
-            this.handleEndLevel();
-        }
+
         
         //this.startIntervalTimer();
         // Add your code here...
@@ -190,10 +149,10 @@ class MyGameStateManager extends GameStateManager {
         
         if((orderBeer === waiterBeer) && (orderPizza === waiterPizza))
         {
+            console.log("HEREREE")
             if(!this.isTableVisible())
             {
-                if(!endLevel)
-                {
+                
                     notificationCenter.notify
                     (
                         new Notification
@@ -203,7 +162,7 @@ class MyGameStateManager extends GameStateManager {
                             null
                         )
                     );
-                }
+                
                 
             }
         }
@@ -212,16 +171,12 @@ class MyGameStateManager extends GameStateManager {
 
     handleEndLevel()
     {
-
         level++;
         waiterBeer = 0;
         waiterPizza = 0;
         orderBeer = 0;
         orderPizza = 0;
         consumablesVelocity = consumablesVelocity + 0.02;
-        endLevel = false;
-
-     
 
         if(this.removeLevelMessage() || level === 1)
         {

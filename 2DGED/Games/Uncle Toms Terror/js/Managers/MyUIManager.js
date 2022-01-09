@@ -22,24 +22,33 @@ class MyUIManager extends UIManager {
         );
     }
 
-    handleUINotification(notification) {
+    // handleUINotification(notification) {
 
-        switch (notification.notificationAction) {
+    //     switch (notification.notificationAction) {
 
-            case NotificationAction.UpdateHealthBar:
+    //         case NotificationAction.ShowPauseMenuChanged:
 
-                this.updateHealthBar(notification.notificationArguments[0]);
-                break;
+    //             this.freezeGame(notification.notificationArguments[0]);
+    //             break;
 
-            default:
-                break;
-        }
-    }
+    //         default:
+    //             break;
+    //     }
+    // }
 
-    updateHealthBar(health) {
+    // freezeGame(statusType) 
+    // {
 
-        // TO DO: Your code here...
-    }
+    //     if (statusType != 0) 
+    //     {
+    //         $('#pause_menu').hide();
+    //     }
+
+    //     else {
+
+    //         $('#pause_menu').show();
+    //     }
+    // }
 
     /**
      * 
@@ -92,8 +101,14 @@ class MyUIManager extends UIManager {
 
                     if (hudSprite.id === "Pause Button") 
                     {
-
-                        console.log("You clicked the pause button!");
+                        notificationCenter.notify(
+                            new Notification(
+                                NotificationType.Menu,
+                                NotificationAction.ShowPauseMenuChanged,
+                                [StatusType.Off]
+                            )
+                        );
+                        //console.log("You clicked the pause button!");
                     }
 
                     if (hudSprite.id === "Exit Button") {

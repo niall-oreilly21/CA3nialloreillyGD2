@@ -576,7 +576,7 @@ class GameData
   [
     ["You muppet!","You're sacked man-servant!!","Whaty the hell!!!!!","where's me pint", "I am thirsty!!", "YAHO00000WEEERA"],
     ["it's alright buddy!!!","unlucky champ!!","Don't worry about it!!","Theres still some drink"],
-    ["my pizzas!!!","your cleaning that!!!","my masterpiece!!", "I will not remake that!!"],
+    ["my pizzas!!!","you are cleaning that!!!","my masterpiece!!", "I will not remake that!!"],
     ["stop slacking!!!!!","your paying for that!!!","beyond useless!!!","get back to work!!!"]
   ]
 

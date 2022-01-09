@@ -25,20 +25,38 @@ class MyMenuManager extends MenuManager {
 
     handleMenuNotification(notification) {
 
-        switch (notification.notificationAction) {
+        switch (notification.notificationAction) 
+        {
 
             case NotificationAction.ShowMenuChanged:
-
                 this.showMenu(notification.notificationArguments[0]);
                 break;
 
-            default:
+            case NotificationAction.ShowPauseMenuChanged:
+                this.freezeGame(notification.notificationArguments[0]);
                 break;
+
+            default:
+            break;
+        }
+    }
+
+    freezeGame(statusType) 
+    {
+        if (statusType != 0) 
+        {
+            $('#exit_menu').hide();
+        }
+
+        else {
+
+    $('#exit_menu').show();
+    $('#exit_menu').removeClass('hidden');
         }
     }
 
     showMenu(statusType) {
-
+      
         // Check out the initialize function of this class. In it, we create a 'Menu' notification
         // whenever the play button is pressed. This notification has an action of ShowMenuChanged,
         // and an argument of [StatusType.Updated | StatusType.Drawn]. The handleMenuNotification 
@@ -87,6 +105,9 @@ class MyMenuManager extends MenuManager {
         $('#control_menu').hide();
         $('#control_menu').addClass('hidden');
 
+        $('#pause_menu').hide();
+        $('#pause_menu').addClass('hidden');
+
         // Hide the YOUR_MENU menu
         // $('#YOUR_MENU_ID').hide();
         // $('#YOUR_MENU_ID').addClass('hidden');
@@ -108,7 +129,7 @@ class MyMenuManager extends MenuManager {
 
             notificationCenter.notify(
                 new Notification(
-                    NotificationType.GameState,
+                    NotificationType.Reset,
                     NotificationAction.Timer,
                     [null]
                 )
