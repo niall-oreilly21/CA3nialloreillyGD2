@@ -51,12 +51,14 @@ const StatusType = {
 
 const AudioType = {
     Background: 0,
-    Menu: 1,
-    Explosion: 2,
+    GameBackground:1,
+    Menu: 2,
     WinLose: 3,
     Weapon: 4,
     All: 5,
     Move: 6,
+    Explosion: 7
+    
 };
 
 const CollisionType = {

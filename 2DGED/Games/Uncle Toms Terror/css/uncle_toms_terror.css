@@ -65,9 +65,22 @@ body {
     background-color: black;
 }
 
-#control_menu {
+#control_menu 
+{
     background-color: pink;
     color: goldenrod;
+}
+
+#pause_menu
+{
+    background-image: url('../assets/images/backgrounds/bar.png');
+    background-size:cover;
+}
+
+#audio_menu
+{
+    background-image: url('../assets/images/backgrounds/bar.png');
+    background-size:cover;
 }
 
 #main_canvas {
@@ -84,6 +97,7 @@ ul {
 
 li {
     padding: 10px 0;
+    list-style-type: none;
 }
 
 a {

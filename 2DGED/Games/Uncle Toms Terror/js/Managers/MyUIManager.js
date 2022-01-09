@@ -108,6 +108,15 @@ class MyUIManager extends UIManager {
                                 [StatusType.Off]
                             )
                         );
+
+                        notificationCenter.notify(
+                            new Notification(
+                                NotificationType.Reset,
+                                NotificationAction.PauseTimer,
+                                [null]
+                            )
+                        );
+                        
                         //console.log("You clicked the pause button!");
                     }
 

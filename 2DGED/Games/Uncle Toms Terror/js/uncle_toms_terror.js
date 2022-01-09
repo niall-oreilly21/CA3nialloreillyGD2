@@ -19,6 +19,9 @@ let menuManager;
 let uiManager;
 let seconds = 0;
 let minutes = 3;
+let intervalTimer;
+let intervalTime = 1000;
+let totalSeconds = 180;
 
 // Set to false to hide bounding boxes
 const debugMode = false;
@@ -254,11 +257,16 @@ function handleResetGameNotification(notification)
     {
 
         case NotificationAction.ResetGame:
-        resetGame(); 
+            resetGame(); 
 
-        case NotificationAction.Timer:
-            handleTimer();
+        case NotificationAction.StartTimer:
+            startIntervalTimer();
             break;
+
+        case NotificationAction.PauseTimer:
+            pauseTimer();
+            break;
+        
     }
   
 }
@@ -379,55 +387,47 @@ function initializePlatforms()
 }
 
 
-function handleTimer() 
-{   
-     let intervalTimer;
-     let intervalTime = 1000;
-     let totalSeconds = 180;
-     
-     startIntervalTimer() ;
-     // Create a function that will start our interval timer when called
-     function startIntervalTimer() 
-     {
-         // Start a timer
-         // Store a handle to the timer that we create
-         intervalTimer = setInterval(intervalFunction, intervalTime);
-         console.log("Interval timer has started!");
-     }
- 
-     // Create a function that will be called when our interval timer expires
-     function intervalFunction() 
-     {
-        totalSeconds--;
-        minutes = Math.floor(totalSeconds / 60);
-        seconds = totalSeconds % 60;
 
-        if(totalSeconds === 0)
-        {
-            stopIntervalTimer(); 
-        }
-     }
- 
-     // Create a function that will stop our interval timer when called
-     function stopIntervalTimer() 
-     {
- console.log("HERE")
-        // Stop the interval timer
-        clearInterval(intervalTimer);
-
-        notificationCenter.notify
-        (
-            new Notification(
-                NotificationType.Reset,
-                NotificationAction.ResetGame,
-                null
-            )
-        );
-        
-     }
- 
-     
+function startIntervalTimer() 
+{
     
+    // Start a timer
+    // Store a handle to the timer that we create
+    intervalTimer = setInterval(intervalFunction, intervalTime);
+}
+
+// Create a function that will be called when our interval timer expires
+function intervalFunction() 
+{
+    totalSeconds--;
+    minutes = Math.floor(totalSeconds / 60);
+    seconds = totalSeconds % 60;
+
+    if(totalSeconds === 0)
+    {
+        stopIntervalTimer(); 
+    }
+}
+
+function stopIntervalTimer() 
+{
+    // Stop the interval timer
+    clearInterval(intervalTimer);
+
+    notificationCenter.notify
+    (
+        new Notification(
+            NotificationType.Reset,
+            NotificationAction.ResetGame,
+            null
+        )
+    );
+    
+}
+
+function pauseTimer()
+{
+    clearInterval(intervalTimer);
 }
 
 

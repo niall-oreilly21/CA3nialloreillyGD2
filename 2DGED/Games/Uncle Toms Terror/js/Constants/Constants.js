@@ -9,6 +9,7 @@ class GameData
     new AudioCue("boing", AudioType.All, 1, 1, 0, false),
     new AudioCue("game_over", AudioType.WinLose, 1, 1, 0, false),
     new AudioCue("splash", AudioType.WinLose, 1, 1, 0, false),
+    new AudioCue("kick_start_my_heart", AudioType.WinLose, 1, 1, 0, false)
   ];
 
   static BACKGROUND = document.getElementById("bar_background");

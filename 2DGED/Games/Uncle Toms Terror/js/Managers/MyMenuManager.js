@@ -23,7 +23,8 @@ class MyMenuManager extends MenuManager {
         );
     }
 
-    handleMenuNotification(notification) {
+    handleMenuNotification(notification) 
+    {
 
         switch (notification.notificationAction) 
         {
@@ -43,15 +44,31 @@ class MyMenuManager extends MenuManager {
 
     freezeGame(statusType) 
     {
+
         if (statusType != 0) 
         {
-            $('#exit_menu').hide();
+            $('#pause_menu').hide();
+            $('#pause_menu').addClass('hidden');
+            
         }
 
-        else {
-
-    $('#exit_menu').show();
-    $('#exit_menu').removeClass('hidden');
+        else 
+        {
+            $('#pause_menu').show();
+            $('#pause_menu').removeClass('hidden');
+        
+            notificationCenter.notify
+            (
+                new Notification
+                (
+                    NotificationType.Sound,
+                    NotificationAction.Pause,
+                    ["kick_start_my_heart"]
+            
+                )
+        
+            );
+    
         }
     }
 
@@ -91,12 +108,14 @@ class MyMenuManager extends MenuManager {
 
             $('#main_menu').show();
         }
+        
     }
 
     initialize() {
 
         // TO DO: Please make sure to hide any other menus that you have created
 
+      
         // Hide the exit menu
         $('#exit_menu').hide();
         $('#exit_menu').addClass('hidden');
@@ -108,6 +127,9 @@ class MyMenuManager extends MenuManager {
         $('#pause_menu').hide();
         $('#pause_menu').addClass('hidden');
 
+        $('#audio_menu').hide();
+        $('#audio_menu').addClass('hidden');
+
         // Hide the YOUR_MENU menu
         // $('#YOUR_MENU_ID').hide();
         // $('#YOUR_MENU_ID').addClass('hidden');
@@ -116,7 +138,7 @@ class MyMenuManager extends MenuManager {
         $('.play').click(function () {
 
             // Hide the menu
-            $('#main_menu').hide();
+            //$('#main_menu').hide();
 
             // Send a notification to update and draw the game
             notificationCenter.notify(
@@ -130,11 +152,98 @@ class MyMenuManager extends MenuManager {
             notificationCenter.notify(
                 new Notification(
                     NotificationType.Reset,
+                    NotificationAction.StartTimer,
+                    [null]
+                )
+            );
+
+            notificationCenter.notify(
+                new Notification(
+                    NotificationType.Sound,
+                    NotificationAction.Play,
+                    ["kick_start_my_heart"]
+                )
+            );
+
+            // notificationCenter.notify(
+            //     new Notification(
+            //         NotificationType.Sound,
+            //         NotificationAction.SetVolume,
+            //         ["kick_start_my_heart", 0]
+            //     )
+            // );
+
+       
+        });
+
+        $('.unpauseGame').click(function () 
+        {
+
+            // Hide the menu
+            //$('#pause_menu').hide();
+            //$('#pause_menu').addClass('hidden');
+
+            notificationCenter.notify(
+                new Notification(
+                    NotificationType.Menu,
+                    NotificationAction.ShowPauseMenuChanged,
+                    [StatusType.Updated | StatusType.Drawn]
+                )
+            );
+
+            // Send a notification to update and draw the game
+            notificationCenter.notify(
+                new Notification(
+                    NotificationType.Sound,
+                    NotificationAction.UnPause,
+                    ["kick_start_my_heart"]
+                )
+            );
+
+            notificationCenter.notify(
+                new Notification(
+                    NotificationType.Reset,
+                    NotificationAction.StartTimer,
+                    [null]
+                )
+            );
+
+       
+        });
+
+        $('.resetGame').click(function () 
+        {
+
+            notificationCenter.notify(
+                new Notification(
+                    NotificationType.Menu,
+                    NotificationAction.ShowPauseMenuChanged,
+                    [StatusType.Updated | StatusType.Drawn]
+                )
+            );
+
+            notificationCenter.notify(
+                new Notification(
+                    NotificationType.Reset,
+                    NotificationAction.ResetGame,
+                    [null]
+                )
+            );
+
+            // Send a notification to update and draw the game
+            notificationCenter.notify(
+                new Notification(
+                    NotificationType.Reset,
                     NotificationAction.Timer,
                     [null]
                 )
             );
+
+       
         });
+        
+
+
 
         // If the audio button is clicked
         // Or more specifically - if an element which has
@@ -142,8 +251,8 @@ class MyMenuManager extends MenuManager {
         $('#audio_button').click(function () {
 
             // Do something...
-
-            console.log("You clicked the audio button!");
+            $('#audio_menu').show();
+            $('#audio_menu').removeClass('hidden');
             
             // Hint: Send a notification to toggle the audio on/off
         });

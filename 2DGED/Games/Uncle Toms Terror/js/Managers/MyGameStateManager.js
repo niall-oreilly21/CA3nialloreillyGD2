@@ -47,8 +47,8 @@ class MyGameStateManager extends GameStateManager {
 
         switch (notification.notificationAction) {
 
-            case NotificationAction.DecreaseWage:
-                this.handleDeductingWage(notification.notificationArguments[0]);
+            case NotificationAction.Wage:
+                this.handleWage(notification.notificationArguments[0]);
                 break;
 
             case NotificationAction.RandomGenerateSideCharacters:
@@ -57,10 +57,11 @@ class MyGameStateManager extends GameStateManager {
 
             case NotificationAction.CreateTable:
                 this.createTable();
+                break;
 
             case NotificationAction.EndLevel:
             this.handleEndLevel();
-
+                break;
             // Add more cases here...
 
             default:
@@ -68,9 +69,9 @@ class MyGameStateManager extends GameStateManager {
         }
     }
 
-    handleDeductingWage(value) 
+    handleWage(value) 
     {
-        wage = wage - value;
+        wage = wage + value;
         waiterPizza = 0;
         waiterBeer = 0;
         // Add your own code here...
@@ -111,8 +112,8 @@ class MyGameStateManager extends GameStateManager {
     {
         
             this.handleOrderComplete();
-            
             this.isRemoveTable();
+            
             if(level === 0)
             {
                 notificationCenter.notify
@@ -124,9 +125,9 @@ class MyGameStateManager extends GameStateManager {
                         null
                     )
                 ); 
+            
             }
 
-        
         //this.startIntervalTimer();
         // Add your code here...
         
@@ -149,10 +150,8 @@ class MyGameStateManager extends GameStateManager {
         
         if((orderBeer === waiterBeer) && (orderPizza === waiterPizza))
         {
-            console.log("HEREREE")
             if(!this.isTableVisible())
-            {
-                
+            {     
                     notificationCenter.notify
                     (
                         new Notification
@@ -455,31 +454,6 @@ getMessage()
         return message;
 
 }
-
-    // Create a function that will start our interval timer when called
-    startIntervalTimer() 
-    {
-        // Start a timer
-        // Store a handle to the timer that we create
-        this.intervalTimer = setInterval(this.intervalFunction(), this.intervalTime);
-        console.log("Interval timer has started!");
-    }
-
-    // Create a function that will be called when our interval timer expires
-    intervalFunction() 
-    {
-        console.log("Interval timer has elapsed!");
-        this.stopIntervalTimer() ;
-    }
-
-    // Create a function that will stop our interval timer when called
-    stopIntervalTimer() 
-    {
-
-        // Stop the interval timer
-        clearInterval(this.intervalTimer);
-        console.log("Interval timer has been stoppped!");
-    }
 
 
     

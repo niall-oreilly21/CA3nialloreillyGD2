@@ -44,11 +44,21 @@
                 <h1>This is the control menu!</h1>
             </div>
 
-            <!-- <div id="pause_menu" class="menu hidden">
-                <li><a href="javascript:void(0)" class="button play">Back to Game </a></li>
-                <li><a href="javascript:void(0)" class="button ResetGame">Reset Game</a></li>
+             <div id="pause_menu" class="menu hidden">
+                <li><a href="javascript:void(0)" class="button unpauseGame">Back to Game </a></li>
+                <li><a href="javascript:void(0)" class="button resetGame">Reset Game</a></li>
         
-            </div> -->
+            </div> 
+
+            <div id="audio_menu" class="menu hidden">
+                <h1>Thanks for playing!</h1>
+
+                <label class="switch">
+                    <input type="checkbox">
+                    <span class="slider round"></span>
+                  </label>
+            </div>
+
             <!-- Add More Menu's Here -->
 
             <!-- 
@@ -83,6 +93,7 @@
     <audio preload="auto" id="splash" src="assets/sound/effects/splash.mp3"></audio>
     <audio preload="auto" id="jump" src="assets/sound/effects/jump.mp3"></audio>
     <audio preload="auto" id="boing" src="assets/sound/effects/boing.mp3"></audio>
+    <audio preload="auto" id="kick_start_my_heart" src="assets/sound/background/kickstart_my_heart.mp3"></audio>
 
     <!-- Globals Declared First so that all other JavaScript files can see them-->
     <script src="../Uncle Toms Terror/js/Globals/globals.js"></script>

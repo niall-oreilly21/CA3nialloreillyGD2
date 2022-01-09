@@ -154,6 +154,10 @@ class SoundManager {
                 this.pause(notification.notificationArguments[0]);
                 break;
 
+            case NotificationAction.UnPause:
+                this.unPause(notification.notificationArguments[0]);
+                break;
+
             case NotificationAction.SetVolume:
                 this.setVolume(
                     notification.notificationArguments[0],
@@ -266,7 +270,7 @@ class SoundManager {
     pause(name) {
 
         // Get the audio object
-        let audioObject = getAudioObject(name);
+        let audioObject = this.getAudioObject(name);
 
         // If an audio object is present
         if (audioObject) {
@@ -275,10 +279,30 @@ class SoundManager {
             if (!audioObject.paused) {
 
                 // Pause the audio object
-                cue.pause();
+                audioObject.pause();
             }
         }
     }
+
+    unPause(name) 
+    {
+
+        // Get the audio object
+        let audioObject = this.getAudioObject(name);
+
+        // If an audio object is present
+        if (audioObject) {
+
+            // If theo audio object is not already playing
+            if(audioObject.paused) 
+            {
+                audioObject.play();
+              }
+  
+        }
+    }
+
+    
 
     /**
      * 
@@ -287,17 +311,14 @@ class SoundManager {
      */
     setVolume(name, volume) {
 
-        // Get the audio cue
-        let audioCue = this.cueArray[index];
-
         // Get the audio object
-        let audioObject = getAudioObject(name);
+        let audioObject = this.getAudioObject(name);
 
         // If an audio object is present
         if (audioObject) {
 
             // Set audio object volume
-            audioObject.volume = audioCue.volume = volume;
+            audioObject.volume = volume;
         }
     }
 

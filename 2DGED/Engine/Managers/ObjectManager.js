@@ -125,6 +125,12 @@ class ObjectManager {
 
                 this.statusType = notification.notificationArguments[0];
                 break;
+
+            case NotificationAction.ShowPauseMenuChanged:
+
+                this.statusType = notification.notificationArguments[0];
+                break;
+
         }
     }
 

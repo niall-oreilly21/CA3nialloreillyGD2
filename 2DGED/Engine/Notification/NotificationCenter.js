@@ -65,6 +65,7 @@ const NotificationAction =
 
     Play: "Play",
     Pause: "Pause",
+    UnPause:"UnPause",
     ShowMenuChanged: "ShowMenuChanged",
     ShowPauseMenuChanged: "ShowPauseMenuChanged",
     SetVolume: "SetVolume",
@@ -74,11 +75,12 @@ const NotificationAction =
     UpdateHealthBar: "UpdateHealthBar",
     CreateTable:"CreateTable",
     RandomGenerateSideCharacters: "RandomGenerateSideCharacters",
-    Timer: "Timer",
-    DecreaseWage:"DecreaseWage",
-    IncreaseWage: "IncreaseWage",
+    StartTimer: "Timer",
+    PauseTimer: "PauseTimer",
+    Wage:"Wage",
     ResetGame:"ResetGame",
-    EndLevel: "EndLevel"
+    EndLevel: "EndLevel",
+    OrderComplete: "OrderComplete"
 
     // Add more here as required
 };
