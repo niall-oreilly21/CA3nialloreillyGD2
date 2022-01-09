@@ -34,15 +34,21 @@ class MyMenuManager extends MenuManager {
                 break;
 
             case NotificationAction.ShowPauseMenuChanged:
-                this.freezeGame(notification.notificationArguments[0]);
+                this.showPauseMenu(notification.notificationArguments[0]);
                 break;
+            
+            case NotificationAction.ShowGameOverMenuChanged:
+                this.showGameOverMenu(notification.notificationArguments[0]);
+                break;
+            
+            
 
             default:
             break;
         }
     }
 
-    freezeGame(statusType) 
+    showPauseMenu(statusType) 
     {
 
         if (statusType != 0) 
@@ -72,6 +78,35 @@ class MyMenuManager extends MenuManager {
         }
     }
 
+    showGameOverMenu(statusType) 
+    {
+
+        if (statusType != 0) 
+        {
+            $('#game_over_menu').hide();
+            $('#game_over_menu').addClass('hidden');
+            
+        }
+
+        else 
+        {
+            $('#game_over_menu').show();
+            $('#game_over_menu').removeClass('hidden');
+        
+            notificationCenter.notify
+            (
+                new Notification
+                (
+                    NotificationType.Sound,
+                    NotificationAction.Pause,
+                    ["kick_start_my_heart"]
+            
+                )
+        
+            );
+    
+        }
+    }
     showMenu(statusType) {
       
         // Check out the initialize function of this class. In it, we create a 'Menu' notification
@@ -116,10 +151,6 @@ class MyMenuManager extends MenuManager {
         // TO DO: Please make sure to hide any other menus that you have created
 
       
-        // Hide the exit menu
-        $('#exit_menu').hide();
-        $('#exit_menu').addClass('hidden');
-
         // Hide the control menu
         $('#control_menu').hide();
         $('#control_menu').addClass('hidden');
@@ -129,6 +160,12 @@ class MyMenuManager extends MenuManager {
 
         $('#audio_menu').hide();
         $('#audio_menu').addClass('hidden');
+
+        $('#about_menu').hide();
+        $('#about_menu').addClass('hidden');
+
+        $('#game_over_menu').hide();
+        $('#game_over_menu').addClass('hidden');
 
         // Hide the YOUR_MENU menu
         // $('#YOUR_MENU_ID').hide();
@@ -211,16 +248,12 @@ class MyMenuManager extends MenuManager {
        
         });
 
-        $('.resetGame').click(function () 
+        $('.exitGame').click(function () 
         {
 
-            notificationCenter.notify(
-                new Notification(
-                    NotificationType.Menu,
-                    NotificationAction.ShowPauseMenuChanged,
-                    [StatusType.Updated | StatusType.Drawn]
-                )
-            );
+            $('#pause_menu').hide();
+            $('#pause_menu').addClass('hidden');
+
 
             notificationCenter.notify(
                 new Notification(
@@ -229,20 +262,8 @@ class MyMenuManager extends MenuManager {
                     [null]
                 )
             );
-
-            // Send a notification to update and draw the game
-            notificationCenter.notify(
-                new Notification(
-                    NotificationType.Reset,
-                    NotificationAction.Timer,
-                    [null]
-                )
-            );
-
-       
         });
-        
-
+    
 
 
         // If the audio button is clicked
@@ -257,12 +278,12 @@ class MyMenuManager extends MenuManager {
             // Hint: Send a notification to toggle the audio on/off
         });
 
-        // If the exit button is clicked
-        $('.exit').click(function () {
+        $('.about').click(function () 
+        {
 
-            // Show exit menu
-            $('#exit_menu').show();
-            $('#exit_menu').removeClass('hidden');
+            $('#about_menu').show();
+            $('#about_menu').removeClass('hidden');
+
         });
 
         // If the control button is clicked
@@ -273,6 +294,8 @@ class MyMenuManager extends MenuManager {
             $('#control_menu').removeClass('hidden');
         });
     }
+
+    
 
     update(gameTime) {
 

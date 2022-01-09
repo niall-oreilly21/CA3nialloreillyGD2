@@ -68,6 +68,7 @@ const NotificationAction =
     UnPause:"UnPause",
     ShowMenuChanged: "ShowMenuChanged",
     ShowPauseMenuChanged: "ShowPauseMenuChanged",
+    ShowGameOverMenuChanged:"ShowGameOverMenuChanged",
     SetVolume: "SetVolume",
     SetVolumeByTheme: "SetVolumeByTheme",
     SetVolumeAll: "SetVolumeAll",

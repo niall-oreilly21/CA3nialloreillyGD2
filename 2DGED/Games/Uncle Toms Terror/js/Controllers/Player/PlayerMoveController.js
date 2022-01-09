@@ -397,14 +397,6 @@ class PlayerMoveController {
                     )
                 );
 
-                notificationCenter.notify(
-                    new Notification(
-                        NotificationType.Sound,
-                        NotificationAction.Play,
-                        ["jump"]
-                    )
-                );
-
                 this.consumables.initializeConsumables();
             }
         }
@@ -519,24 +511,22 @@ class PlayerMoveController {
                                     [table]                    // Arguments
                                 )
                             );
-                        
-                            this.notificationCenter.notify
-                            (
-                                new Notification
-                                (
+                           
+                            notificationCenter.notify(
+                                new Notification(
                                     NotificationType.Sound,
                                     NotificationAction.Play,
-                                    ["boing"]
+                                    ["cha_ching"]
                                 )
                             );
-                           
+
                             notificationCenter.notify
                             (
                                 new Notification
                                 (
                                 NotificationType.GameState,
                                 NotificationAction.Wage,
-                                [10]
+                                [20]
                                 )
                             );
 
@@ -548,7 +538,9 @@ class PlayerMoveController {
                                     NotificationAction.EndLevel,
                                     null
                                 )
-                            );   
+                            );  
+                            
+                         
                     }
                     
                    

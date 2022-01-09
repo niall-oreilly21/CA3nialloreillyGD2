@@ -107,7 +107,7 @@ const Color = {
     DarkGreen: "#688318",
     Orange: "#FF8300",
     Grey: "rgb(197, 197, 197)",
-    Green: "green",
+    Green: "#00b050",
     LightBlue: "#00b0f0"
 
     // Add more colors that you use often here

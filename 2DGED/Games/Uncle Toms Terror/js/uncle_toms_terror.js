@@ -414,12 +414,12 @@ function stopIntervalTimer()
     // Stop the interval timer
     clearInterval(intervalTimer);
 
-    notificationCenter.notify
-    (
-        new Notification(
-            NotificationType.Reset,
-            NotificationAction.ResetGame,
-            null
+    notificationCenter.notify(
+        new Notification
+        (
+            NotificationType.Menu,
+            NotificationAction.ShowGameOverMenuChanged,
+            [StatusType.Off]
         )
     );
     
@@ -553,11 +553,11 @@ function initializeHUD()
 
     transform = new Transform2D(
         new Vector2(
-            canvas.clientWidth - 40,
+            canvas.clientWidth - 80,
             10
         ),
         0,
-        new Vector2(3, 3),
+        new Vector2(5, 5),
         Vector2.Zero,
         new Vector2(10, 10),
         0
@@ -875,7 +875,7 @@ function handleResetGame()
     message = "";
     wage = 100
 
-    https://developer.mozilla.org/en-US/docs/Web/API/Location/reload
+    //https://developer.mozilla.org/en-US/docs/Web/API/Location/reload
     window.location.reload();
     notificationCenter.notify(
         new Notification(
@@ -886,6 +886,8 @@ function handleResetGame()
     );
     
 }
+
+
 
 // Start the game once the page has loaded
 window.addEventListener("load", start);

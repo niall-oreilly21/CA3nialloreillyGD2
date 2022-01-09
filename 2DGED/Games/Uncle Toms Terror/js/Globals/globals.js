@@ -7,7 +7,7 @@ let endLevel = true;
 let consumablesVelocity = 0.05;
 let playerCurrentPositionX = 0;
 let message = "";
-let wage = 100
+let wage = 10
 
 
 

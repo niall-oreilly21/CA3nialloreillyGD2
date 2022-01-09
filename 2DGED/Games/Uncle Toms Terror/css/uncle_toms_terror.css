@@ -6,10 +6,10 @@ body {
 
    background-color: burlywood;
 
-    /* background-image: url('../assets/images/backgrounds/arcade_background.jpg');
+    background-image: url('../assets/images/backgrounds/arcade_background.jpg');
     background-repeat: no-repeat;
     background-attachment: fixed;
-    background-size: cover; */
+    background-size: cover; 
 }
 
 #title {
@@ -17,9 +17,14 @@ body {
     margin-top: 2rem;
 }
 
-#title h1 {
-    color: rgb(90, 41, 0);
-    font-family:  Georgia, Times, 'Times New Roman', serif, sans-serif;
+#title h1 
+{
+    font-size: 60px;
+    font-family:  heading_font;
+    width: 700;
+    background-color: white;
+    margin: 0 auto;
+    margin-bottom: 10px;
 }
 
 #game_window {
@@ -45,7 +50,8 @@ body {
 
 .menu {
     position: absolute;
-    
+    background-image: url('../assets/images/backgrounds/bar.png');
+    background-size:cover;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -56,34 +62,8 @@ body {
     top: 0;
 }
 
-#main_menu {
-    background-image: url('../assets/images/backgrounds/bar.png');
-    background-size:cover;
-}
-
-#exit_menu {
-    background-color: black;
-}
-
-#control_menu 
-{
-    background-color: pink;
-    color: goldenrod;
-}
-
-#pause_menu
-{
-    background-image: url('../assets/images/backgrounds/bar.png');
-    background-size:cover;
-}
-
-#audio_menu
-{
-    background-image: url('../assets/images/backgrounds/bar.png');
-    background-size:cover;
-}
-
-#main_canvas {
+#main_canvas
+ {
     left: 0;
     top: 0;
     background-color: rgb(190, 58, 58);
@@ -107,22 +87,25 @@ a {
 }
 
 .button {
+    font-family : button_font;
     display: block;
     margin: 0 auto;
-    width: 150px;
-    height: 30px;
+    width: 230px;
+    height: 80px;
     color: white;
     font-weight: bold;
-    line-height: 30px;
+    line-height: 80px;
+    
     text-shadow: 1px 1px 0 black;
     background-image: linear-gradient(to bottom, #2B5754 0%, blue 100%);
-    border: 1px solid white;
+    border: 3px solid white;
     border-radius: 10px;
 }
 
 .button:hover {
-    background-color: #B30D5D;
-    background-image: linear-gradient(to bottom, #B30D5D 0%, #FB1886 100%);
+    font-family : button_font;
+    background-color: #0d63b3;
+    background-image: linear-gradient(to bottom, #0d63b3 0%, #0d63b3 100%);
 }
 
 .sprite {
@@ -133,3 +116,110 @@ a {
     opacity: 0;
 }
 
+
+.column
+{
+    float: left;
+    width: 50%;
+    padding: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    height: 1000px; 
+    box-sizing: border-box;
+    font-size: 20px;
+    background-color:white;
+    margin-top:40px;
+}
+
+
+.row:after 
+{
+    content: "";
+    display: table;
+    clear: both;   
+}
+
+
+.charactersImages
+{
+    display: block;
+    margin:auto;
+    width:100%;
+    height: 420px;
+    margin-bottom: 10px;
+}
+
+
+.characterSubHeading
+{
+    font-size: 35px;
+    color: black;
+    padding-bottom: 0px;
+    border:none;
+}
+
+
+.characterText
+{
+    padding-left: 10px;
+    padding-bottom: 0px;
+    font-size: 30px;
+    color: black; 
+    border:none;
+}
+
+
+.characterParagraph
+{
+    padding-top: 20px;
+    font-size: 25px;
+    color: black; 
+    padding-left: 10px;
+    padding-right: 10px; 
+    font-family:Verdana,sans-serif;
+}
+
+
+p
+{
+    margin-top: 0px;
+    color:black;
+    text-align: justify;
+    font-size:25px;
+    background-color: white;
+    font-family:Verdana,sans-serif;
+}
+
+
+.sectionParagraph
+{
+    background-color:green;
+    padding: 15px;
+}
+
+h2
+{
+    Color: white;
+    background-color:#da0f10;
+    text-align: center;
+    font-size: 60px;
+    margin-bottom: 0px;
+    font-family : disneyBold;
+} 
+
+/*
+    https://www.fontspace.com/category/bar
+*/
+
+@font-face 
+{
+    font-family : button_font;
+    src         : url(../css/fonts/button_font.ttf);
+}
+
+
+@font-face 
+{
+    font-family : heading_font;
+    src         : url(../css/fonts/heading_font.ttf);
+}

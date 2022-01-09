@@ -81,10 +81,11 @@ class MyGameStateManager extends GameStateManager {
         if(wage === 0)
         {
             notificationCenter.notify(
-                new Notification(
-                    NotificationType.Reset,
-                    NotificationAction.ResetGame,
-                    null
+                new Notification
+                (
+                    NotificationType.Menu,
+                    NotificationAction.ShowGameOverMenuChanged,
+                    [StatusType.Off]
                 )
             );
 
