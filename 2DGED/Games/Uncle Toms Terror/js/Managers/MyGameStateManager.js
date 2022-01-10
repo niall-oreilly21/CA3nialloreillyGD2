@@ -78,8 +78,11 @@ class MyGameStateManager extends GameStateManager {
         // Maybe update a health variable?
         // Maybe update a UI element?
 
-        if(wage === 0)
+        if(wage <= 0)
         {
+          
+            localStorage.playersWage = 0;
+
             notificationCenter.notify(
                 new Notification
                 (

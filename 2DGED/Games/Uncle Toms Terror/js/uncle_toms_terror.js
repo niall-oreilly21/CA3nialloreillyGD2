@@ -406,6 +406,12 @@ function intervalFunction()
 
     if(totalSeconds === 0)
     {
+        if(wage > localStorage.topWage)
+        {
+            localStorage.topWage = wage;
+        }
+        localStorage.playersWage = wage;
+
         stopIntervalTimer(); 
     }
 }
@@ -430,7 +436,6 @@ function pauseTimer()
 {
     clearInterval(intervalTimer);
 }
-
 
 function initializePlayer() 
 {

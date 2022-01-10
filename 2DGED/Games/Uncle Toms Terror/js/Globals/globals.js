@@ -7,8 +7,10 @@ let endLevel = true;
 let consumablesVelocity = 0.05;
 let playerCurrentPositionX = 0;
 let message = "";
-let wage = 10
-localStorage.topWage = 0
+let wage = 50
+const highestWage = document.getElementById("highestWage");
+const playersWage = document.getElementById("playersWage");
+
 
 
 

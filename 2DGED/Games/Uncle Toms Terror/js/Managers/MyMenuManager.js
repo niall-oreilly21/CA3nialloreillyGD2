@@ -90,6 +90,9 @@ class MyMenuManager extends MenuManager {
 
         else 
         {
+            highestWage.innerHTML = "\u20AC" + localStorage.topWage;
+            playersWage.innerHTML = "\u20AC" + localStorage.playersWage;
+
             $('#game_over_menu').show();
             $('#game_over_menu').removeClass('hidden');
         
