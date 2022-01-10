@@ -41,7 +41,6 @@ body {
     height: 670;
     left: 0;
     top: 0;
-
     text-align: center;
     color: white;
 }
@@ -53,7 +52,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    
+    text-align: center;
     width: 1250;
     height: 670;
     left: 0;
@@ -64,14 +63,33 @@ body {
 {
     width:300px;
     float:left;
-    margin: 20px;
+}
+
+#audioHeading
+{
+    font-size: 35px;
+    color: black;
+    padding-bottom: 60px;
+    border:none;
+    font-family : paragraph_font;
+    
 }
 
 #pauseAudioButtons
 {
-    width:300px;
+    width:50px;
     float:right;
-    margin: 20px;
+    margin-right: 100px;
+    margin-bottom: 20px;
+} 
+
+#pauseAudioButtonTwo
+{
+    width:50px;
+    margin-top: 50px;
+    margin-right: 100px;
+    float:right;
+    margin-bottom: 50px;
 }
 
 
@@ -93,7 +111,7 @@ li {
     list-style-type: none;
 }
 
-.rules li 
+/* .rules li 
 {
     list-style-type: circle;
     float: left;
@@ -101,7 +119,7 @@ li {
     color: black;
     border:none;
     font-family : paragraph_font;
-}
+} */
 
 a {
     color: inherit;

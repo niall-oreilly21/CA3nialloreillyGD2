@@ -51,7 +51,7 @@ const StatusType = {
 
 const AudioType = {
     Background: 0,
-    GameBackground:1,
+    DiegeticSounds:1,
     Menu: 2,
     WinLose: 3,
     Weapon: 4,

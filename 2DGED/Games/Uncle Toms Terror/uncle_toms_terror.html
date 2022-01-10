@@ -54,19 +54,24 @@
 
              <div id="audio_menu" class="menu hidden">
                 <div class = "container">
-                    
-                    <div id = "pauseMenuButtons">
-                        <li><a href="javascript:void(0)" class="button unpauseGame">Back to Game </a></li>
-                        <li><a href="javascript:void(0)" class="button exitGame">Exit Game</a></li>
+                    <div id = pauseMenuButtons>
+                        <span class = "audioHeading">Background Music:</span><br>
+                        <span class = "audioHeading">In Game Sounds:</span>
                     </div>
-
                     <div id = "pauseAudioButtons">
                     <label class="switch" >
-                        <input id="isAudioTurnedOn" a href="javascript:void(0);" class = "button switch" type="checkbox">
+                        <input id="isBackgroundAudioTurnedOn" a href="javascript:void(0);" class = "button switchNonDiegeticSounds" type="checkbox">
+                        <span class="slider round"></span>
+                      
+                    </div>
+                    <div id = "pauseAudioButtonTwo">
+                    <label class="switch" >
+                        <input id="isOtherAudioTurnedOn" a href="javascript:void(0);" class = "button switchDiegeticSounds" type="checkbox">
                         <span class="slider round"></span>
                     </div>
-              
-        
+
+                    <li><a href="javascript:void(0)" class="button exitGame">Back to Main Menu</a></li>
+            
             </div> 
         </div> 
 
@@ -81,11 +86,8 @@
             </div> 
 
             <div id="pause_menu" class="menu hidden">
-                <div class = "container">
-                  
-                    <li><a href="javascript:void(0)" class="button exitGame">Back to Main Menu</a></li>
-                </div>
-
+                        <li><a href="javascript:void(0)" class="button unpauseGame">Back to Game </a></li>
+                        <li><a href="javascript:void(0)" class="button exitGame">Exit Game</a></li>           
                 
             </div>
 

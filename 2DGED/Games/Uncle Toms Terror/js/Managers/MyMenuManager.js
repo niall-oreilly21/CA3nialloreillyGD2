@@ -261,8 +261,9 @@ class MyMenuManager extends MenuManager {
         $('#audio_button').click(function () {
 
 
-            document.getElementById("isAudioTurnedOn").checked = (localStorage.isAudioTurnedOn === "true");
-            
+            document.getElementById("isBackgroundAudioTurnedOn").checked = (localStorage.isBackgroundAudioTurnedOn === "true");
+            document.getElementById("isOtherAudioTurnedOn").checked = (localStorage.isOtherAudioTurnedOn === "true");
+
             // Do something...
             $('#audio_menu').show();
             $('#audio_menu').removeClass('hidden');
@@ -286,38 +287,84 @@ class MyMenuManager extends MenuManager {
             $('#control_menu').removeClass('hidden');
         });
 
-        $('.switch').click(function () 
+        $('.switchNonDiegeticSounds').click(function () 
         {
          
-            let checkbox = document.querySelector('input[type="checkbox"]');
-
+            let checkbox = document.getElementById('isBackgroundAudioTurnedOn');
+            
             // Show control menu
-            checkbox.addEventListener('change', function () 
-            {
-               
-                localStorage.isAudioTurnedOn = checkbox.checked;
-                document.getElementById("isAudioTurnedOn").checked = checkbox.checked;
+            checkbox.addEventListener('change', audio => 
+            {           
+                localStorage.isBackgroundAudioTurnedOn = checkbox.checked;
+                document.getElementById("isBackgroundAudioTurnedOn").checked = checkbox.checked;
 
-
-                if (checkbox.checked) 
+                if (audio.target.checked) 
                 {
-                   notificationCenter.notify(
-                new Notification(
-                    NotificationType.Sound,
-                    NotificationAction.SetVolume,
-                    ["kick_start_my_heart", 1]
-                )
-            );
-                } else {
-                  notificationCenter.notify(
-                    new Notification(
-                        NotificationType.Sound,
-                        NotificationAction.SetVolume,
-                        ["kick_start_my_heart", 0]
-                    )
-                );
+                    notificationCenter.notify
+                    (
+                        new Notification
+                        (
+                            NotificationType.Sound,
+                            NotificationAction.SetVolume,
+                            [AudioType.Background, 1]
+                        )
+                    );
+                } 
+                else 
+                {
+                    notificationCenter.notify
+                    (
+                        new Notification
+                        (
+                            NotificationType.Sound,
+                            NotificationAction.SetVolume,
+                            [AudioType.Background, 0]
+                        )
+                    );
                 }
-              });
+
+            });
+        });
+
+
+        $('.switchDiegeticSounds').click(function () 
+        {
+           
+            let checkbox = document.getElementById('isOtherAudioTurnedOn');
+
+            checkbox.addEventListener('change', audio => 
+            {
+                localStorage.isOtherAudioTurnedOn = checkbox.checked;
+                document.getElementById("isOtherAudioTurnedOn").checked = checkbox.checked;
+
+                if(audio.target.checked)
+                {
+                    
+                    notificationCenter.notify
+                    (
+                        new Notification
+                        (
+                            NotificationType.Sound,
+                            NotificationAction.SetVolume,
+                            [AudioType.DiegeticSounds, 1]
+                        )
+                    );
+                    
+                } 
+                else 
+                {
+                    notificationCenter.notify
+                    (
+                        new Notification
+                        (
+                            NotificationType.Sound,
+                            NotificationAction.SetVolume,
+                            [AudioType.DiegeticSounds, 0]
+                        )
+                    );
+                }
+
+            });
         });
     }
 

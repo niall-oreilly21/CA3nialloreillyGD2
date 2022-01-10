@@ -159,7 +159,7 @@ class SoundManager {
                 break;
 
             case NotificationAction.SetVolume:
-                this.setVolume(            
+                this.setVolumeByTheme(            
                     notification.notificationArguments[0],
                     notification.notificationArguments[1]
                 );
@@ -247,7 +247,16 @@ class SoundManager {
                     
                     // Set up the audio object
                     audioObject.currentTime = audioCue.currentTime;
-                    audioObject.volume = audioCue.volume;
+    
+                    if(audioCue.theme === AudioType.Background)
+                    {
+                        audioObject.volume = localStorage.nonDiegeticVolume;
+                    }
+                    else
+                    {
+                        audioObject.volume = localStorage.diegeticSounds;
+                    }
+                   
                     audioObject.playbackRate = audioCue.playbackRate;
 
                     // Play the audio object
@@ -314,11 +323,31 @@ class SoundManager {
         // Get the audio object
         let audioObject = this.getAudioObject(name);
 
-        // If an audio object is present
-        if (audioObject) {
+        let audioCue;
 
-            // Set audio object volume
-            audioObject.volume = volume;
+        let index = this.findIndex(name);
+
+        // Check if the audio cue exists
+        if (index != -1) 
+        {
+
+            // Get the audio cue
+            audioCue = this.cueArray[index];
+
+        }
+
+        // If an audio object is present
+        if (audioObject) 
+        {
+            if(audioCue.theme === AudioType.Background)
+            {
+                localStorage.nonDiegeticVolume = volume;
+            }
+            else
+            {
+                localStorage.diegeticSounds = volume;
+            }
+
         }
     }
 
@@ -343,6 +372,16 @@ class SoundManager {
 
                     // Set the audio object's volume
                     audioObject.volume = this.cueArray[i].volume = volume;
+
+                    if(this.cueArray[i].theme === AudioType.Background)
+                    {
+                        console.log(volume)
+                        localStorage.nonDiegeticVolume = volume;
+                    }
+                    else
+                    {
+                        localStorage.diegeticSounds = volume;
+                    }
                 }
 
                 else {
