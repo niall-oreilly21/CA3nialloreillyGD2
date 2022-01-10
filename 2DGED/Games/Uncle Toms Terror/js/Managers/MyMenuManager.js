@@ -201,24 +201,13 @@ class MyMenuManager extends MenuManager {
                     ["kick_start_my_heart"]
                 )
             );
-
-            // notificationCenter.notify(
-            //     new Notification(
-            //         NotificationType.Sound,
-            //         NotificationAction.SetVolume,
-            //         ["kick_start_my_heart", 0]
-            //     )
-            // );
-
+    
        
         });
 
         $('.unpauseGame').click(function () 
         {
 
-            // Hide the menu
-            //$('#pause_menu').hide();
-            //$('#pause_menu').addClass('hidden');
 
             notificationCenter.notify(
                 new Notification(
@@ -271,6 +260,9 @@ class MyMenuManager extends MenuManager {
         // the audio class is clicked
         $('#audio_button').click(function () {
 
+
+            document.getElementById("isAudioTurnedOn").checked = (localStorage.isAudioTurnedOn === "true");
+            
             // Do something...
             $('#audio_menu').show();
             $('#audio_menu').removeClass('hidden');
@@ -292,6 +284,40 @@ class MyMenuManager extends MenuManager {
             // Show control menu
             $('#control_menu').show();
             $('#control_menu').removeClass('hidden');
+        });
+
+        $('.switch').click(function () 
+        {
+         
+            let checkbox = document.querySelector('input[type="checkbox"]');
+
+            // Show control menu
+            checkbox.addEventListener('change', function () 
+            {
+               
+                localStorage.isAudioTurnedOn = checkbox.checked;
+                document.getElementById("isAudioTurnedOn").checked = checkbox.checked;
+
+
+                if (checkbox.checked) 
+                {
+                   notificationCenter.notify(
+                new Notification(
+                    NotificationType.Sound,
+                    NotificationAction.SetVolume,
+                    ["kick_start_my_heart", 1]
+                )
+            );
+                } else {
+                  notificationCenter.notify(
+                    new Notification(
+                        NotificationType.Sound,
+                        NotificationAction.SetVolume,
+                        ["kick_start_my_heart", 0]
+                    )
+                );
+                }
+              });
         });
     }
 

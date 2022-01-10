@@ -4,8 +4,6 @@ body {
     font-family: arial, sans-serif;
     font-size: 16px;
 
-   background-color: burlywood;
-
     background-image: url('../assets/images/backgrounds/arcade_background.jpg');
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -62,6 +60,21 @@ body {
     top: 0;
 }
 
+#pauseMenuButtons
+{
+    width:300px;
+    float:left;
+    margin: 20px;
+}
+
+#pauseAudioButtons
+{
+    width:300px;
+    float:right;
+    margin: 20px;
+}
+
+
 #main_canvas
  {
     left: 0;
@@ -80,6 +93,16 @@ li {
     list-style-type: none;
 }
 
+.rules li 
+{
+    list-style-type: circle;
+    float: left;
+    font-size: 35px;
+    color: black;
+    border:none;
+    font-family : paragraph_font;
+}
+
 a {
     color: inherit;
     text-decoration: none;
@@ -95,7 +118,6 @@ a {
     color: white;
     font-weight: bold;
     line-height: 80px;
-    
     text-shadow: 1px 1px 0 black;
     background-image: linear-gradient(to bottom, #2B5754 0%, blue 100%);
     border: 3px solid white;
@@ -127,7 +149,7 @@ a {
     height: 1000px; 
     box-sizing: border-box;
     font-size: 20px;
-    background-color:white;
+    background-color:rgb(255, 255, 255);
     margin-top:40px;
 }
 
@@ -150,44 +172,37 @@ a {
 }
 
 
-.characterSubHeading
+
+
+span
+{
+    font-size: 35px;
+    color: black;
+    padding-bottom: 40px;
+    border:none;
+    font-family : paragraph_font;
+   
+    
+}
+
+.subHeading
 {
     font-size: 35px;
     color: black;
     padding-bottom: 0px;
+    font-weight: bold;
     border:none;
+    font-family : paragraph_font;
 }
 
 
 .characterText
 {
     padding-left: 10px;
-    padding-bottom: 0px;
+    padding-bottom: 40px;
     font-size: 30px;
     color: black; 
     border:none;
-}
-
-
-.characterParagraph
-{
-    padding-top: 20px;
-    font-size: 25px;
-    color: black; 
-    padding-left: 10px;
-    padding-right: 10px; 
-    font-family:Verdana,sans-serif;
-}
-
-
-p
-{
-    margin-top: 0px;
-    color:black;
-    text-align: justify;
-    font-size:25px;
-    background-color: white;
-    font-family:Verdana,sans-serif;
 }
 
 
@@ -199,13 +214,39 @@ p
 
 h2
 {
-    Color: white;
-    background-color:#da0f10;
     text-align: center;
-    font-size: 60px;
+    font-size: 40px;
+    color: white;
+    background-color: #ffb321;
     margin-bottom: 0px;
-    font-family : disneyBold;
-} 
+    padding:15px;
+}
+ 
+
+.container
+{
+    width:900px;
+    margin: 0 auto;
+    border: 2px solid white;
+    border-radius: 10px;
+    padding:15px; 
+    background-color: #d62424;
+}
+
+#aboutContainer
+{
+    width:1200px;
+    max-height: 600px;
+    margin: 0 auto;
+    border: 2px solid white;
+    border-radius: 10px;
+    padding:15px; 
+    background-color: #d62424;
+    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
 
 /*
     https://www.fontspace.com/category/bar
@@ -223,3 +264,92 @@ h2
     font-family : heading_font;
     src         : url(../css/fonts/heading_font.ttf);
 }
+
+@font-face 
+{
+    font-family : heading_2_font;
+    src         : url(../css/fonts/heading_2_font.ttf);
+}
+
+@font-face 
+{
+    font-family : paragraph_font;
+    src         : url(../css/fonts/paragraph_font.ttf);
+}
+
+
+
+/*
+    https://www.w3schools.com/howto/howto_css_switch.asp
+*/
+
+.switch 
+{
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+  
+  /* Hide default HTML checkbox */
+  .switch input 
+  {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  /* The slider */
+  .slider
+   {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  .slider:before 
+  {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  input:checked + .slider 
+  {
+    background-color: #2196F3;
+  }
+  
+  input:focus + .slider 
+  {
+    box-shadow: 0 0 1px #2196F3;
+  }
+  
+  input:checked + .slider:before
+   {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+  }
+  
+  /* Rounded sliders */
+  .slider.round 
+  {
+    border-radius: 34px;
+  }
+  
+  .slider.round:before 
+  {
+    border-radius: 50%;
+  }

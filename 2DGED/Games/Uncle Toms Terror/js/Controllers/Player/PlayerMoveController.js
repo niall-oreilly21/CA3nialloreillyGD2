@@ -323,6 +323,16 @@ class PlayerMoveController {
                         (
                             new Notification
                             (
+                                NotificationType.Sound,
+                                NotificationAction.Play,
+                                ["splash"]
+                            )
+                        );
+
+                        notificationCenter.notify
+                        (
+                            new Notification
+                            (
                                 NotificationType.GameState,
                                 NotificationAction.RandomGenerateSideCharacters,
                                 null
@@ -360,6 +370,16 @@ class PlayerMoveController {
                             parent.artist.setTake("Fall Left");  
                                                           
                         }  
+                        
+                        notificationCenter.notify
+                        (
+                            new Notification
+                            (
+                                NotificationType.Sound,
+                                NotificationAction.Play,
+                                ["splash"]
+                            )
+                        );
                         
                         notificationCenter.notify
                         (

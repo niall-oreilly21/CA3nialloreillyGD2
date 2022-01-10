@@ -1,6 +1,10 @@
-<html>
 
-<head>
+<html lang="en">
+    <head>
+        
+        <meta charset="UTF-8">
+        <meta name = "viewport" content="width=device-width, initial-scale=1.0">
+        <link rel = "icon" type="image/png" href="css/images/header.png">
     <title>Uncle Tom's Terror</title>
 
     <!-- Include Stylesheets -->
@@ -35,153 +39,138 @@
 
             <!-- Control Menu -->
             <div id="control_menu" class="menu hidden">
-                <h1>This is the control menu!</h1>
+                
+            <div class = "container">
+                <p>
+                    These are the following controls for Uncle Tom's Terror.
+                    To exit the game at any time press hover with your mouse and CLICK the pause button icon in the top right hand side of the screen. 
+                  </p>
+                <span class = "subHeading">Move Right:</span><span>Right Arrow Key</span><br>
+                <span class = "subHeading">Move Left:</span><span>Left Arrow Key</span><br>
+                <span class = "subHeading">Jump Up:</span><span>Up Arrow Key</span><br>
+                <li><a href="javascript:void(0)" class="button exitGame">Back to Main Menu</a></li>
+            </div>
             </div>
 
-             <div id="pause_menu" class="menu hidden">
-                <li><a href="javascript:void(0)" class="button unpauseGame">Back to Game </a></li>
-                <li><a href="javascript:void(0)" class="button exitGame">Exit Game</a></li>
+             <div id="audio_menu" class="menu hidden">
+                <div class = "container">
+                    
+                    <div id = "pauseMenuButtons">
+                        <li><a href="javascript:void(0)" class="button unpauseGame">Back to Game </a></li>
+                        <li><a href="javascript:void(0)" class="button exitGame">Exit Game</a></li>
+                    </div>
+
+                    <div id = "pauseAudioButtons">
+                    <label class="switch" >
+                        <input id="isAudioTurnedOn" a href="javascript:void(0);" class = "button switch" type="checkbox">
+                        <span class="slider round"></span>
+                    </div>
+              
         
             </div> 
+        </div> 
 
             <div id="game_over_menu" class="menu hidden">
-                <h2>YOU ARE SACKED!!!!!!!!!</h2>
+
+            <div class = "container">
+                <h2>YOU ARE SACKED!!!</h2>
+                <span class = "subHeading">High Score:</span><span>€120</span><br>
+                <span class = "subHeading">Your Score:</span><span>€10</span><br>
                 <li><a href="javascript:void(0)" class="button exitGame">Exit Game</a></li>
+            </div>
             </div> 
 
-            <div id="audio_menu" class="menu hidden">
-                <h1>Thanks for playing!</h1>
+            <div id="pause_menu" class="menu hidden">
+                <div class = "container">
+                  
+                    <li><a href="javascript:void(0)" class="button exitGame">Back to Main Menu</a></li>
+                </div>
 
-                <label class="switch">
-                    <input type="checkbox">
-                    <span class="slider round"></span>
-                  </label>
+                
             </div>
 
 
             <div id="about_menu" class="menu hidden">
-                
 
-                <h2>Meet Your Icons</h2>
-                <div class="sectionParagraph">   
-                    <p> Across the park,our guests will be given the chance to meet there favourite heroes from across Disney.Some of our must popular characters are listed below.
-                    </p>   
-                </div>
-<div class = "row">
-    <div class = "column">
-      <h2>Mickey Mouse</h2>
-      <img class = "charactersImages" src = "" alt = "Mickey Mouse">
-      <span class = "characterSubHeading">Affilation:</span><span class = "characterText">Walt Disney </span><br>
-      <span class = "characterSubHeading">Species:</span><span class = "characterText">Mouse</span><br>
-      <span class = "characterSubHeading">Gender:</span><span class = "characterText">Male</span>
+<div id = "aboutContainer">  
+    <h3>Rules of the Game</h3> 
+     <li class = "rules">The main objective of the game is to keep your job. This is done by keeping your wage above the threshold. </li>
+        <li>To increase your wage your wage you must complete orders.
+            This is done by catching each food and drink order as they fall down the screen, then bringing the order to the table.</li>
 
-      <p class = "characterParagraph">Mickey Mouse is the main icon of our park. In our park, he is all in green to represent Ireland. You can find our Mickey Mouse mascot in the main park. If you see
-        him, be quick to get a photo with him. He may need your help in finding his lost treasure!
-      </p>
+        <li class = "rules"> For each order you bring out, your wage goes up, for each order you don’t bring out, your wage goes down. </li>
+       
+        <li class = "rules"> When an order is completed, a table will appear at the side of screen. The player must then navigate Wally to collide with the table. 
+            If Wally reaches the table, then the player’s wage will then be increased. 
+            However, if another food or drink item lands on Wally or if Wally slips on spillage, the sprite for Wally falling will be activated and the 
+            player’s wage will be reduced by €10.</li>
+
+        <li class = "rules">If the player accidently catches more items, then are on the order while delivering an order,
+            then the falling sprite will be activated, and the players wage will go down.</li>
+       
+        <li class = "rules">  When a player reaches the table then there next order will appear with more items to collect then the previous order.
+            The game is on a timer which last for 3 minutes. The game will end when the countdown hits 0 or if the player wage reaches 0.</li>
+      
+        <li class = "rules">The highest score is measured by the highest wage at the end of the game.</li>
+
+    <div class="row">
+      <div class="column">
+        <h2>Wally</h2>
+        <img class = "charactersImages" src = "css/images/wally.png" alt = "Wally">
+        <span class = "subHeading">Nickname:</span><span>The Lifter</span><br>
+        <span class = "subHeading">Favourite Drink:</span><span>Smithwicks</span><br>
+    
+        <p class = "characterParagraph">Quack! Quack! Donald Duck is a iconic character from Disney and his mascot can be found in Disneyland Park. The Donald Duck mascot is extremely friendly and will gladly take 
+          photos with guests. Coming soon to our park is Daisy Duck who will soon steal Donald Duck's thunder. 
+        </p>
+      </div>
+      <div class = "column">
+        <h2>Boss Man</h2>
+        <img class = "charactersImages" src = "css/images/boss.png" alt = "Boss Man">
+        <span class = "subHeading">Nickname:</span><span>Jimmy</span><br>
+        <span class = "subHeading">Favourite Drink:</span><span>Carlsburg</span><br>
+        <p class = "characterParagraph">Disney's fan favourite pet "Pluto" can be found lurking around in our main park. He is usually close in hand beside his owner, Snoopie. Be careful when taking a photo
+          with the Pluto mascot that he doesn't try to lick you!
+        </p>
+      </div>
     </div>
-    <div class = "column">
-      <h2>Minnie Mouse</h2>
-      <img class = "charactersImages" src = "" alt = "Minnie Mouse">
-      <span class = "characterSubHeading">Affilation:</span><span class = "characterText">Walt Disney</span><br>
-      <span class = "characterSubHeading">Species:</span><span class = "characterText">Mouse</span><br>
-      <span class = "characterSubHeading">Gender:</span><span class = "characterText">Female</span>
-      <p class = "characterParagraph">Minnie Mouse is Mickey Mouse's girlfriend. She keeps him in check. You can find Minnie in the same place as Mickey in Disneyland Park. Make sure to get a photo seperate with
-        Mickey nd Minnie because they might be too busy with eachother!
-      </p>
+    <div class="row">
+      <div class="column">
+        <h2>Cathy The Cook</h2>
+        <img class = "charactersImages" src = "css/images/cook.png" alt = "Cathy The Cook">
+        <span class = "subHeading">Nickname:</span><span>Chef</span><br>
+        <span class = "subHeading">Favourite Drink:</span><span>Martini</span><br>
+    
+        <p class = "characterParagraph">The cowboy from the "Wild Wide West", Woody is a fan favourite from the Toy Story Films. His story was concluded recently "Toy Story 4". Woodie's mascot can be found in
+          Disneyland Studios near the RC Racer ride.
+        </p>
+      </div>
+      <div class = "column">
+        <h2>The Legend</h2>
+        <img class = "charactersImages" src = "css/images/the_legend.png" alt = "The Legend">
+        <span class = "subHeading">Nickname:</span><span>Tommy</span><br>
+        <span class = "subHeading">Favourite Drink:</span><span>Guinness</span><br>
+        <p class = "characterParagraph">Woodie's loyal companion "Buzz ligtyear" is an iconic character for his hilarious space man impression and the heart warming moments with him and Woodie.
+          Buzz lightyear can be found in Disneyland Park beside his ride "Buzz lightyear Laser Blast".
+        </p>
+      </div>
     </div>
+    <div class="row">
+        <div class="column">
+          <h2>Spud</h2>
+          <img class = "charactersImages" src = "css/images/spud.png" alt = "Spud">
+          <span class = "subHeading">Nickname:</span><span>Sam</span><br>
+          <span class = "subHeading">Favourite Drink:</span><span>Heineken</span><br>
+      
+          <p class = "characterParagraph">The cowboy from the "Wild Wide West", Woody is a fan favourite from the Toy Story Films. His story was concluded recently "Toy Story 4". Woodie's mascot can be found in
+            Disneyland Studios near the RC Racer ride.
+          </p>
+        </div>
+      </div>
+    <li><a href="javascript:void(0)" class="button exitGame">Back to Main Menu</a></li>
+    
 </div>
-<div class="row">
-  <div class="column">
-    <h2>Donald Duck</h2>
-    <img class = "charactersImages" src = "" alt = "Donald Duck">
-    <span class = "characterSubHeading">Affilation:</span><span class = "characterText">Walt Disney</span><br>
-    <span class = "characterSubHeading">Species:</span><span class = "characterText">Duck</span><br>
-    <span class = "characterSubHeading">Gender:</span><span class = "characterText">Male</span>
 
-    <p class = "characterParagraph">Quack! Quack! Donald Duck is a iconic character from Disney and his mascot can be found in Disneyland Park. The Donald Duck mascot is extremely friendly and will gladly take 
-      photos with guests. Coming soon to our park is Daisy Duck who will soon steal Donald Duck's thunder. 
-    </p>
-  </div>
-  <div class = "column">
-    <h2>Pluto</h2>
-    <img class = "charactersImages" src = "" alt = "Pluto">
-    <span class = "characterSubHeading">Affilation:</span><span class = "characterText">Walt Disney</span><br>
-    <span class = "characterSubHeading">Species:</span><span class = "characterText">Dog</span><br>
-    <span class = "characterSubHeading">Gender:</span><span class = "characterText">Male</span>
-    <p class = "characterParagraph">Disney's fan favourite pet "Pluto" can be found lurking around in our main park. He is usually close in hand beside his owner, Snoopie. Be careful when taking a photo
-      with the Pluto mascot that he doesn't try to lick you!
-    </p>
-  </div>
-</div>
-<div class="row">
-  <div class="column">
-    <h2>Woody</h2>
-    <img class = "charactersImages" src = "" alt = "Woody">
-    <span class = "characterSubHeading">Affilation:</span><span class = "characterText">Toy Story</span><br>
-    <span class = "characterSubHeading">Species:</span><span class = "characterText">Toy</span><br>
-    <span class = "characterSubHeading">Gender:</span><span class = "characterText">Male</span>
-
-    <p class = "characterParagraph">The cowboy from the "Wild Wide West", Woody is a fan favourite from the Toy Story Films. His story was concluded recently "Toy Story 4". Woodie's mascot can be found in
-      Disneyland Studios near the RC Racer ride.
-    </p>
-  </div>
-  <div class = "column">
-    <h2>Buzz Lightyear</h2>
-    <img class = "charactersImages" src = "css/images/the_legend.png" alt = "Buzz Lightyear">
-    <span class = "characterSubHeading">Affilation:</span><span class = "characterText">Toy Story</span><br>
-    <span class = "characterSubHeading">Species:</span><span class = "characterText">Toy</span><br>
-    <span class = "characterSubHeading">Gender:</span><span class = "characterText">Male</span>
-    <p class = "characterParagraph">Woodie's loyal companion "Buzz ligtyear" is an iconic character for his hilarious space man impression and the heart warming moments with him and Woodie.
-      Buzz lightyear can be found in Disneyland Park beside his ride "Buzz lightyear Laser Blast".
-    </p>
-  </div>
-</div>
-<div class="row">
-  <div class="column">
-    <h2>Chewbacca</h2>
-    <img class = "charactersImages" src = "" alt = "Chewbacca">
-    <span class = "characterSubHeading">Affilation:</span><span class = "characterText">Star Wars </span><br>
-    <span class = "characterSubHeading">Species:</span><span class = "characterText">Wookie</span><br>
-    <span class = "characterSubHeading">Gender:</span><span class = "characterText">Male</span>
-
-    <p class = "characterParagraph">The Wookie giant, Chewbacca is the loyal companion of Han Solo from Star Wars. When taking a photo with the mascot make sure to give him a hug becuase his fur is 
-      incredible soft. Don't bother trying to communicate to Chewbacca because you will get the response of "RAHHHHH".
-
-    </p>
-  </div>
-  <div class = "column">
-    <h2>Darth Vader</h2>
-    <img class = "charactersImages" src = "" alt = "Darth Vader">
-    <span class = "characterSubHeading">Affilation:</span><span class = "characterText">Star Wars</span><br>
-    <span class = "characterSubHeading">Species:</span><span class = "characterText">Part man, part robot</span><br>
-    <span class = "characterSubHeading">Gender:</span><span class = "characterText">Male programming</span>
-    <p class = "characterParagraph">Darth Vader is a villian from Star Wars and probably the most famous villian of all time. His heavy breathing is haunting and fills the people in the room with fear.
-      You must go and find his throne in Disneyland Studios and take a photo beside him and embrace the dark side.
-    </p>
-  </div>
-</div>
-<div class="row">
-  <div class="column">
-    <h2>Mushu</h2>
-    <img class = "charactersImages" src = "" alt = "Mushu">
-    <span class = "characterSubHeading">Affilation:</span><span class = "characterText">Mulan </span><br>
-    <span class = "characterSubHeading">Species:</span><span class = "characterText">Dragon</span><br>
-    <span class = "characterSubHeading">Gender:</span><span class = "characterText">Male</span>
-    <p class = "characterParagraph">The talkative dragon from the original "Mulan" film is a hilarious characters who helps Mulan on her journey. For a dragon he is quite small, but that is apart of the joke. Mushu can be found in our "Mulan" restaurant.
-      Make sure to get a photo with him fast as he is a popular character. 
-    </p>
-  </div>
-  <div class = "column">
-    <h2>Baymax</h2>
-    <img class = "charactersImages" src = "" alt = "Baymax">
-    <span class = "characterSubHeading">Affilation:</span><span class = "characterText">Big Hero 6</span><br>
-    <span class = "characterSubHeading">Species:</span><span class = "characterText">Robot</span><br>
-    <span class = "characterSubHeading">Gender:</span><span class = "characterText">Male programming</span>
-    <p class = "characterParagraph">Baymax is the loving affectionate robot in "Big Hero Six" who helped Hiro throughout the film. Baymax can be found in the "Big Hero Six" restaurant.
-      Make sure too give him a massive hug because he is good at giving them.
-    </p>
-  </div>
-</div>
 
             <!-- Add More Menu's Here -->
 

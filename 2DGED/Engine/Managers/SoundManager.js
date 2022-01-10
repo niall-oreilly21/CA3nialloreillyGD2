@@ -159,7 +159,7 @@ class SoundManager {
                 break;
 
             case NotificationAction.SetVolume:
-                this.setVolume(
+                this.setVolume(            
                     notification.notificationArguments[0],
                     notification.notificationArguments[1]
                 );

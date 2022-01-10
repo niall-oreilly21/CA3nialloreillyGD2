@@ -10,7 +10,7 @@ class GameData
     new AudioCue("game_over", AudioType.WinLose, 1, 1, 0, false),
     new AudioCue("splash", AudioType.WinLose, 1, 1, 0, false),
     new AudioCue("kick_start_my_heart", AudioType.WinLose, 1, 1, 0, false),
-    new AudioCue("cha_ching", AudioType.WinLose, 1, 1, 0, true),
+    new AudioCue("cha_ching", AudioType.WinLose, 1, 1, 0, false),
    
   ];
 

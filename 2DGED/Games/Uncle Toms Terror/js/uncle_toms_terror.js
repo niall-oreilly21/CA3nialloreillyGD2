@@ -319,6 +319,7 @@ function initializeCameras()
 
 function initializeSprites() 
 {
+
     initializeBackground();
     initializePlatforms();
     initializePlayer();
@@ -539,8 +540,6 @@ function initializeBackground()
 
     // Add to the object manager
     objectManager.add(backgroundSprite);
-
-    
 }
 
 
