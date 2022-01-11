@@ -1,0 +1,37 @@
+
+//Profilling of code
+//The highest time taken in performances in functions and methods are listed below
+//uncle_toms_terror
+//function window.requestAnimationFrame(animate);			       101.7ms	
+
+//function draw(gameTime)
+  //context.fillText(`\u20AC ${wage}`, 1000, 50) 				31.5ms
+  //context.fillText(` ${minutes}:${seconds}  `, 400, 80) 			 4.6ms
+
+//function objectManager.draw()							 3.5ms
+
+//function startIntervalTimer() 
+
+
+//function clearCanvas() 
+  //context.fillRect(0, 0, canvas.clientWidth, canvas.clientHeight);   		21.4ms
+
+
+//Object Manager 
+//update(gameTime) 								16.6ms
+//draw(gameTime)								13.9ms
+
+//PlayerMoveController
+//playerCurrentPositionX = parent.transform.translation.x;			 4.7ms
+//this.checkCollisions(parent);  						 5.7ms
+
+//Keyboard Manager
+//isAnyKeyPressed()								38.2ms
+
+//Sprite
+// draw(gameTime, camera)
+   //if ((this.statusType & StatusType.Drawn) != 0) 				10.0ms
+  //this.artist.draw(gameTime, this, camera);
+
+//scrollSpeedMultiplier not needed						17.7ms
+
