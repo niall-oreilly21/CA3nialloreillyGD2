@@ -22,34 +22,6 @@ class MyUIManager extends UIManager {
         );
     }
 
-    // handleUINotification(notification) {
-
-    //     switch (notification.notificationAction) {
-
-    //         case NotificationAction.ShowPauseMenuChanged:
-
-    //             this.freezeGame(notification.notificationArguments[0]);
-    //             break;
-
-    //         default:
-    //             break;
-    //     }
-    // }
-
-    // freezeGame(statusType) 
-    // {
-
-    //     if (statusType != 0) 
-    //     {
-    //         $('#pause_menu').hide();
-    //     }
-
-    //     else {
-
-    //         $('#pause_menu').show();
-    //     }
-    // }
-
     /**
      * 
      * @param {GameTime} gameTime 
@@ -91,7 +63,8 @@ class MyUIManager extends UIManager {
 
                 // Use the rect object to check if the mouse click took place
                 // inside of the hudSprite
-                if (hudSprite.transform.boundingBox.contains(mouseClickPosition)) {
+                if (hudSprite.transform.boundingBox.contains(mouseClickPosition)) 
+                {
 
                     // TO DO: Your code here...
 
@@ -101,7 +74,9 @@ class MyUIManager extends UIManager {
 
                     if (hudSprite.id === "Pause Button") 
                     {
-                        notificationCenter.notify(
+                        //Shoes the pause menu
+                        notificationCenter.notify
+                        (
                             new Notification(
                                 NotificationType.Menu,
                                 NotificationAction.ShowPauseMenuChanged,
@@ -109,7 +84,9 @@ class MyUIManager extends UIManager {
                             )
                         );
 
-                        notificationCenter.notify(
+                        //Pauses the timer in the game
+                        notificationCenter.notify
+                        (
                             new Notification(
                                 NotificationType.Reset,
                                 NotificationAction.PauseTimer,

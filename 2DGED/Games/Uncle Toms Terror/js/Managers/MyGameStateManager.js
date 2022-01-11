@@ -1,19 +1,23 @@
 /**
- * Stores, updates, and changes game state in my specific game e.g. Snailbait.
- * @author
+ * Stores, updates the wage in the game. 
+ * Keeps tabs of the current order in the game and creates a table at the end of the order.
+ * Generates the side characters in the game when a player falls.
+ * Resets the level of the game and creates the next order.
+ * Ends the game if the playes wage falls below 0.
+ * @author Niall O' Reilly
  * @version 1.0
  * @class MyGameStateManager
  */
-class MyGameStateManager extends GameStateManager {
+class MyGameStateManager extends GameStateManager 
+{
     
-    constructor(id, notificationCenter, objectManager) {
+    constructor(id, notificationCenter, objectManager) 
+    {
         
         super(id);
-
         this.notificationCenter = notificationCenter;
         this.objectManager = objectManager;
-        this.intervalTime = 180000;
-        this.intervalTimer = 0;
+
         this.consumables = new Consumables
         (
             notificationCenter,
@@ -26,26 +30,27 @@ class MyGameStateManager extends GameStateManager {
             notificationCenter,
             objectManager
         )
-       
-        // this.minutes = Math.floor((this.intervalTime );
-        // this.seconds = Math.floor((this.intervalTime % (1000 * 60)) / 1000);
         
         this.registerForNotifications();
-        
     
     }
 
-    registerForNotifications() {
-        this.notificationCenter.register(
+    registerForNotifications() 
+    {
+        this.notificationCenter.register
+        (
             NotificationType.GameState, 
             this, 
             this.handleGameStateNotification
         );
     }
 
-    handleGameStateNotification(notification) {
 
-        switch (notification.notificationAction) {
+    handleGameStateNotification(notification) 
+    {
+
+        switch (notification.notificationAction) 
+        {
 
             case NotificationAction.Wage:
                 this.handleWage(notification.notificationArguments[0]);
@@ -62,25 +67,24 @@ class MyGameStateManager extends GameStateManager {
             case NotificationAction.EndLevel:
             this.handleEndLevel();
                 break;
-            // Add more cases here...
 
             default:
                 break;
         }
     }
 
+
     handleWage(value) 
     {
         wage = wage + value;
         waiterPizza = 0;
         waiterBeer = 0;
-        // Add your own code here...
-        // Maybe update a health variable?
-        // Maybe update a UI element?
 
+        //If the wage hits 0 or below then end the game
         if(wage <= 0)
         {
-            notificationCenter.notify(
+            notificationCenter.notify
+            (
                 new Notification
                 (
                     NotificationType.Menu,
@@ -98,7 +102,7 @@ class MyGameStateManager extends GameStateManager {
     {
         const SideCharacterDetails = this.objectManager.get(ActorType.SideCharacter);
 
-        // If enemies is null, exit the function
+        // If SideCharacterDetails is null or length is 0 then generate a new side charcter
         if (SideCharacterDetails == null || SideCharacterDetails.length === 0)
         {
             this.randomSideCharacter.generateRandomCharacterSprite();
@@ -107,50 +111,37 @@ class MyGameStateManager extends GameStateManager {
        
     }
 
-  
-
-    update(gameTime) 
-    {
+    update() 
+    {    
+        this.handleOrderComplete();
+        this.isRemoveTable();
         
-            this.handleOrderComplete();
-            this.isRemoveTable();
-            
-            if(level === 0)
-            {
-                notificationCenter.notify
+        //For the first order a new order has to be created
+        if(level === 0)
+        {
+            notificationCenter.notify
+            (
+                new Notification
                 (
-                    new Notification
-                    (
-                        NotificationType.GameState,
-                        NotificationAction.EndLevel,
-                        null
-                    )
-                ); 
-            
-            }
-
-        //this.startIntervalTimer();
-        // Add your code here...
+                    NotificationType.GameState,
+                    NotificationAction.EndLevel,
+                    null
+                )
+            ); 
         
-        // For example, every update(), we could check the player's health. If
-        // the player's health is <= 0, then we can create a notification...
-        // Play a sound?
-        // Pause the game?
-        // Play the 'player death' animation?
-        // Remove the player sprite from the game?
-        // Show the win/lose screen?
-
-        // How could we have these events fire one after each other, rather
-        // than all at the same time? Hint: use timers.
+        }
     }
 
 
     handleOrderComplete()
     {
+        //If all the order details = 0 then exit the function
         if((orderBeer === 0) && (waiterBeer === 0) && (orderPizza === 0) && (waiterPizza === 0)) return;
         
+        //If the order details match
         if((orderBeer === waiterBeer) && (orderPizza === waiterPizza))
         {
+            //If the table is not visible the create it
             if(!this.isTableVisible())
             {     
                     notificationCenter.notify
@@ -169,6 +160,7 @@ class MyGameStateManager extends GameStateManager {
                 
     }
 
+    //Resets the level
     handleEndLevel()
     {
         level++;
@@ -176,14 +168,17 @@ class MyGameStateManager extends GameStateManager {
         waiterPizza = 0;
         orderBeer = 0;
         orderPizza = 0;
+
+        //Increase the consumable velecity
         consumablesVelocity = consumablesVelocity + 0.02;
 
+        //Initialize the level tagline
         if(this.removeLevelMessage() || level === 1)
         {
             this.initializeLevelMessage();
         }
         
-
+        //Initialize the level consumables
         if(level === 1)
         {
             this.consumables.initializeConsumablesStart();
@@ -198,6 +193,7 @@ class MyGameStateManager extends GameStateManager {
     
     getRandomOrder()
     {    
+        //Genrates a random order for each round
         for(let i = 0; i < level; i++)
         {
             if(Math.floor(Math.random() * 2))
@@ -215,11 +211,13 @@ class MyGameStateManager extends GameStateManager {
     {
         const removeTables = this.objectManager.get(ActorType.Interactable);
 
+        //If removeTables is null then exit the function
         if (removeTables == null) return;
 
+        //If waiterBeer is 0 and waiterPizza is 0 then remove the table
         if((waiterBeer === 0) && (waiterPizza === 0))
         {
-            // Loop through the list of pickup sprites
+            // Loop through the list of Interactable sprites
             for (let i = 0; i < removeTables.length; i++) 
             {
              const removeTable = removeTables[i];
@@ -228,8 +226,8 @@ class MyGameStateManager extends GameStateManager {
                 (
                     new Notification
                     (
-                        NotificationType.Sprite,    // Type
-                        NotificationAction.RemoveFirst,  // Action
+                        NotificationType.Sprite,   
+                        NotificationAction.RemoveFirst,  
                         [removeTable]                   
                     )
                 );
@@ -243,8 +241,10 @@ class MyGameStateManager extends GameStateManager {
     {
         const tables = this.objectManager.get(ActorType.Interactable);
         
+        //If tables is null the return false
         if (tables == null) return false;
 
+        //If the tables lenght is 0 then return false
         if (tables.length === 0) 
         { 
             return false;
@@ -263,9 +263,9 @@ class MyGameStateManager extends GameStateManager {
     
         artist = new AnimatedSpriteArtist
         (
-            context,                                        // Context
+            context,                                          // Context
             1,
-            GameData.TABLE_ANIMATION_DATA            // Animation data
+            GameData.TABLE_ANIMATION_DATA                     // Animation data
         );
     
         transform = new Transform2D
@@ -276,9 +276,9 @@ class MyGameStateManager extends GameStateManager {
                 574
             ),                                              // Translation
             0,                                              // Rotation
-            new Vector2(1.5, 2),                                    // Scale
+            new Vector2(1.5, 2),                            // Scale
             Vector2.Zero,                                   // Origin
-            artist.getBoundingBoxByTakeName("Table"),  // Dimensions
+            artist.getBoundingBoxByTakeName("Table"),       // Dimensions
             0
         );
     
@@ -290,21 +290,20 @@ class MyGameStateManager extends GameStateManager {
             CollisionType.Collidable,
             StatusType.Updated | StatusType.Drawn,
             artist,
-            1,          // Scroll speed multiplier
-            1           // Layer depth
+            1,          
+            1          
         );
     
             // Set sprite take
             artist.setTake("Table");
 
             // Add to object manager
-            objectManager.add(sprite);    
-
-
-               
+            this.objectManager.add(sprite);    
+             
         }
 
 
+        //Set the table positon to the furthest side away from the player
         setTablesPositonX()
         {
             if(playerCurrentPositionX + GameData.WAITER_WIDTH < canvas.clientWidth / 2)
@@ -318,87 +317,86 @@ class MyGameStateManager extends GameStateManager {
             
         }
     
-removeLevelMessage()
-{
-    const LevelMessages = this.objectManager.get(ActorType.LevelMessage);
+    removeLevelMessage()
+    {
+        const LevelMessages = this.objectManager.get(ActorType.LevelMessage);
+        
+        //If LevelMessages is null then retrun false
+        if (LevelMessages == null) return false;
     
-    if (LevelMessages == null) return false;
-   
-        // Loop through the list of pickup sprites
-        for (let i = 0; i < LevelMessages.length; i++) 
-        {
-            const LevelMessage = LevelMessages[i];
+            // Loop through the list of pickup sprites
+            for (let i = 0; i < LevelMessages.length; i++) 
+            {
+                const LevelMessage = LevelMessages[i];
 
-            this.notificationCenter.notify
-            (
-                new Notification
+                this.notificationCenter.notify
                 (
-                    NotificationType.Sprite,    // Type
-                    NotificationAction.RemoveFirst,  // Action
-                    [LevelMessage]                   
-                )
-            );
-        }
+                    new Notification
+                    (
+                        NotificationType.Sprite,    
+                        NotificationAction.RemoveFirst,  
+                        [LevelMessage]                   
+                    )
+                );
+            }
 
-        return true;
-}
+            return true;
+    }
+
+            
+
+    initializeLevelMessage()
+    {
+        let transform;
+        let artist;
+        let sprite;
+
+        transform = new Transform2D
+        (
+            new Vector2
+            (
+                canvas.clientWidth / 2, 
+                10
+            ),
+            0,
+            Vector2.One,
+            Vector2.Zero,
+            Vector2.Zero,
+            0
+        );
 
         
-
-initializeLevelMessage()
-{
-    let transform;
-    let artist;
-    let sprite;
-
-    transform = new Transform2D
-    (
-        new Vector2
+        artist = new TextSpriteArtist
         (
-            canvas.clientWidth / 2, 
-            10
-        ),
-        0,
-        Vector2.One,
-        Vector2.Zero,
-        Vector2.Zero,
-        0
-    );
+            context,                        // Context
+            1,                              // Alpha
+            this.getMessage(),              // Text
+            FontType.InformationOrder,      // Font Type
+            Color.White,                    // Color
+            TextAlignType.Left,             // Text Align
+            250,                            // Max Width
+            true                            // Fixed Position
+        );
 
-    
-    artist = new TextSpriteArtist
-    (
-        context,                        // Context
-        1,                              // Alpha
-        this.getMessage(),                  // Text
-        FontType.InformationOrder,     // Font Type
-        Color.White,                    // Color
-        TextAlignType.Left,             // Text Align
-        250,                            // Max Width
-        true                            // Fixed Position
-    );
+        sprite = new Sprite
+        (
+            "Waiter Beer",
+            transform,
+            ActorType.LevelMessage,
+            CollisionType.NotCollidable,
+            StatusType.Updated | StatusType.Drawn,
+            artist,
+            1,
+            1
+        );
 
-    sprite = new Sprite
-    (
-        "Waiter Beer",
-        transform,
-        ActorType.LevelMessage,
-        CollisionType.NotCollidable,
-        StatusType.Updated | StatusType.Drawn,
-        artist,
-        1,
-        1
-    );
+        // Add sprite to object manager
+        this.objectManager.add(sprite);
+    } 
 
-    // Add sprite to object manager
-    objectManager.add(sprite);
-} 
-
-
-getMessage()
-{
-
-
+    //Selects the tagline day for the level
+    getMessage()
+    {
         switch (level) 
         {
 
@@ -417,7 +415,7 @@ getMessage()
             case 4:
                 message = LevelName.LevelFour;
                 break;
- 
+
             case 5:
                 message = LevelName.LevelFive;
                 break;
@@ -454,7 +452,7 @@ getMessage()
 
         return message;
 
-}
+    }
 
 
     

@@ -131,6 +131,10 @@ class AnimatedSpriteArtist extends Artist {
         }
     }
 
+    /**
+     * Checks to see if the current takeName is equal to the current takeName of the sprite.
+     * @param {string} takeName 
+     */
     isCurrentTakeName(takeName)
     {
             
@@ -144,6 +148,10 @@ class AnimatedSpriteArtist extends Artist {
         }
     }
 
+     /**
+     * Returns a boolean if a takeName from the inputted array list is stored in the Animation Data.
+     * @param {string} takeNameArray 
+     */
     isTakesExists(takeNameArray)
     {
         for (let i = 0; i < takeNameArray.length; i++) 
@@ -256,8 +264,7 @@ class AnimatedSpriteArtist extends Artist {
 
             this.currentFrameIndex++;
         }
-
-       
+     
         else 
         {
                
@@ -269,17 +276,19 @@ class AnimatedSpriteArtist extends Artist {
                     this.finishLoopCount++;                
                 }
                 else
-                {
+                {               
                     if (this.isCurrentTakeName("Fall Right"))
                     {
+                        //Set the take to Idle Right when the player fall aniation finishes
                         this.setTake("Idle Right");
                     }
 
                     else if(this.isCurrentTakeName("Fall Left"))
                     {
-                        {
-                            this.setTake("Idle Left");
-                        }
+                        
+                        //Set the take to Idle Left when the player fall aniation finishes
+                        this.setTake("Idle Left");
+                        
                     }   
                     this.finishLoopCount = 0;
                     
@@ -291,8 +300,6 @@ class AnimatedSpriteArtist extends Artist {
                 this.currentFrameIndex = this.startFrameIndex;
             }
             
-            
-            // TO DO: Modify this class to handle 0 loops, N loops, or infinite looping ...
         }
     }
 
@@ -329,6 +336,7 @@ class AnimatedSpriteArtist extends Artist {
          // Retrieve the current animation frame
         let frame = this.frames[this.currentFrameIndex];
 
+        //If the the current take is a side character
         if (this.isTakesExists(GameData.SIDE_CHARACTERS_NAMES))
         {
             this.context.translate
@@ -337,12 +345,15 @@ class AnimatedSpriteArtist extends Artist {
                 transform.translation.y - transform.origin.y + (frame.height * transform.scale.y) / 2
             )
 
+            //If the side character is on the left side of the canvas
             if(transform.translation.x === GameData.SIDE_CHARACTERS_X_POSITION_LEFT_SIDE)
             {
+                //Rotate the side character 90 degrees
                 this.context.rotate(GameData.ROTATE_SIDE_CHARACTERS_POSITION_LEFT_SIDE);
             }
             else
             {
+                //Rotate the side character 270 degrees
                 this.context.rotate(GameData.ROTATE_SIDE_CHARACTERS_POSITION_RIGHT_SIDE);
             }
 

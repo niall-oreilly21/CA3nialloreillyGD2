@@ -1,29 +1,32 @@
 /**
  * Moves the parent sprite based on keyboard input and detect collisions against platforms, pickups etc.
  * 
- * @author Niall McGuinness
+ * @author Niall O' Reilly based on Niall McGuinness
  * @version 1.0
  * @class PlayerMoveController
  */
 
-class PlayerMoveController {
- 
-    
-    constructor(
+class PlayerMoveController 
+{
+
+    constructor
+    (
         notificationCenter,
         keyboardManager,
         objectManager,
         moveKeys,
         runVelocity,
         jumpVelocity
-    ) {
+    ) 
+
+    {
         this.notificationCenter = notificationCenter;
         this.keyboardManager = keyboardManager;
         this.objectManager = objectManager;
-
         this.moveKeys = moveKeys;
         this.runVelocity = runVelocity;
         this.jumpVelocity = jumpVelocity;
+        this.collidedWithPuddle = false;
         
         this.consumables = new Consumables
         (
@@ -31,8 +34,9 @@ class PlayerMoveController {
             keyboardManager,
             objectManager
         );
-        this.collidedWithPuddle = false;
+        
     }
+
 
     update(gameTime, parent) 
     {
@@ -41,31 +45,31 @@ class PlayerMoveController {
         this.handleInput(gameTime, parent);
         this.collidedWithPuddle = false;
         this.applyInput(parent);
+
+        //Keeps track of the players current position
         playerCurrentPositionX = parent.transform.translation.x;
        
     }
 
-    applyForces(gameTime, parent) {
 
-        // Apply basic physic forces to the
-        // player sprite
-        
+    applyForces(gameTime, parent) 
+    {  
         parent.body.applyGravity(gameTime);
 
-        if (parent.body.onGround) {
-            
+        if (parent.body.onGround) 
+        {      
             parent.body.applyFriction(gameTime);
         }
     }
 
-     handleInput(gameTime, parent) 
-     {
-        
+
+    handleInput(gameTime, parent) 
+    {    
         this.handleIdle(parent);
         this.handleMove(gameTime, parent);
-        this.handleJump(gameTime, parent);
-        
+        this.handleJump(gameTime, parent);        
     }
+
 
     handleIdle(parent)
     {
@@ -82,147 +86,122 @@ class PlayerMoveController {
         }
     }
 
-    handleMove(gameTime, parent) {
 
-        
-        
-        // If the move left key is pressed
+    handleMove(gameTime, parent) 
+    {
+        // If the current take is fall right or fall left then the player can't move
         if ((parent.artist.isCurrentTakeName("Fall Right")) || (parent.artist.isCurrentTakeName("Fall Left"))) return;
 
+        // If the move left key is pressed
+        if (this.keyboardManager.isKeyDown(this.moveKeys[0])) 
+        {
+            // Add velocity to begin moving player left
+            parent.body.setVelocityX(-this.runVelocity * gameTime.elapsedTimeInMs);  
 
-            if (this.keyboardManager.isKeyDown(this.moveKeys[0])) 
+            // Update the player's animation
+            if (!this.keyboardManager.isKeyDown(this.moveKeys[2])) 
             {
-                // Add velocity to begin moving player left
-                parent.body.setVelocityX(-this.runVelocity * gameTime.elapsedTimeInMs);  
-
-                // Update the player's animation
-                if (!this.keyboardManager.isKeyDown(this.moveKeys[2])) 
-                {
+                parent.artist.setTake("Run Left");               
+            }
+        }
     
-                        parent.artist.setTake("Run Left");
-                    
-                }
-            }
-        
-            // If the move right key is pressed
-            else if (this.keyboardManager.isKeyDown(this.moveKeys[1])) 
-            {
+        // If the move right key is pressed
+        else if (this.keyboardManager.isKeyDown(this.moveKeys[1])) 
+        {
+            parent.body.setVelocityX(this.runVelocity * gameTime.elapsedTimeInMs);
 
-                // Add velocity to begin moving the player right
-                // if (parent.artist.isCurrentTakeName("Fall Left"))
-                // {
-                //     parent.body.setVelocityX(0);
-                // }
-                // else
-                // {
-                    parent.body.setVelocityX(this.runVelocity * gameTime.elapsedTimeInMs);
-                
-                //}
-            
-            
-                // Update the player's animation
-                if (!this.keyboardManager.isKeyDown(this.moveKeys[2])) 
+            if (!this.keyboardManager.isKeyDown(this.moveKeys[2])) 
+            {
+                if (!parent.artist.isCurrentTakeName("Fall Right"))
                 {
-                    if (!parent.artist.isCurrentTakeName("Fall Right"))
-                    {
-                        parent.artist.setTake("Run Right");
-                    }
+                    parent.artist.setTake("Run Right");
                 }
             }
+        }
         
     }
 
-    // UPDATE JUMP 
-    handleJump(gameTime, parent) {
+
+    handleJump(gameTime, parent) 
+    {
 
         // If the player is already jumping, or if the player is
         // not on the ground, then don't allow the player to jump
-      
         if (parent.body.jumping || !parent.body.onGround) return;
 
-        // If the jump key is pressed
+        // If the current take is fall right or fall left then the player can't jump
         if ((parent.artist.isCurrentTakeName("Fall Right")) || (parent.artist.isCurrentTakeName("Fall Left"))) return;
 
-
+        //If the player is colliding with a puddle then they can't jump
         if(this.collidedWithPuddle) return;
         
-            if (this.keyboardManager.isKeyDown(this.moveKeys[2])) 
+        // If the jump key is pressed
+        if (this.keyboardManager.isKeyDown(this.moveKeys[2])) 
+        {
+
+            // Update body variables
+            parent.body.jumping = true;
+            parent.body.onGround = false;
+
+            // Apply velocity to begin moving the player up
+            // This gives the effect of jumping 
+            parent.body.setVelocityY(this.jumpVelocity * gameTime.elapsedTimeInMs);
+        
+            // If the move right key is pressed
+            if (this.keyboardManager.isKeyDown(this.moveKeys[1]))
             {
-
-                // Update body variables
-                parent.body.jumping = true;
-                parent.body.onGround = false;
-
-                // Apply velocity to begin moving the player up
-                // This gives the effect of jumping 
-                
-                parent.body.setVelocityY(this.jumpVelocity * gameTime.elapsedTimeInMs);
-            
-                if (this.keyboardManager.isKeyDown(this.moveKeys[1]))
-                {
-                    parent.artist.setTake("Jump Right");   
-                }
-
-                else if(this.keyboardManager.isKeyDown(this.moveKeys[0]))
-                {
-                    parent.artist.setTake("Jump Left");   
-                }
-
-                if(parent.artist.isCurrentTakeName("Run Right") || parent.artist.isCurrentTakeName("Idle Right"))
-                {
-                    parent.artist.setTake("Jump Right");
-                }
-
-                else if(parent.artist.isCurrentTakeName("Run Left") || parent.artist.isCurrentTakeName("Idle Left"))
-                {
-                    parent.artist.setTake("Jump Left");
-                
-                }
-
-                // Create a jump sound notification
-                notificationCenter.notify(
-                    new Notification(
-                        NotificationType.Sound,
-                        NotificationAction.Play,
-                        ["jump"]
-                        
-                    )
-                );
-
+                parent.artist.setTake("Jump Right");   
             }
+            // If the move left key is pressed
+            else if(this.keyboardManager.isKeyDown(this.moveKeys[0]))
+            {
+                parent.artist.setTake("Jump Left");   
+            }
+
+            if(parent.artist.isCurrentTakeName("Run Right") || parent.artist.isCurrentTakeName("Idle Right"))
+            {
+                parent.artist.setTake("Jump Right");
+            }
+
+            else if(parent.artist.isCurrentTakeName("Run Left") || parent.artist.isCurrentTakeName("Idle Left"))
+            {
+                parent.artist.setTake("Jump Left");
+            
+            }
+
+            // Create a jump sound notification
+            notificationCenter.notify
+            (
+                new Notification
+                (
+                    NotificationType.Sound,
+                    NotificationAction.Play,
+                    ["jump"]
+        
+                )
+            );
+
+        }
         
     }
 
-    checkCollisions(parent) {
-
-        // Assume that the play is not on the ground - i.e., 
-        // assume that they are falling. We will update this
-        // value in handlePlatformCollision function if the
-        // player is currently colliding with a platform that
-        // is below them (i.e., if they are on the ground)
-        parent.body.onGround = false;
-
-       
-       this.handleOutOfBoundsCollision(parent);
-        
-        this.handlePlatformCollision(parent);
-        
-        this.handlePickupCollision(parent);
-     
-        this.handleEnemyCollision(parent);    
-        
+    checkCollisions(parent) 
+    {
+        parent.body.onGround = false;  
+        this.handleOutOfBoundsCollision(parent);     
+        this.handlePlatformCollision(parent);     
+        this.handlePickupCollision(parent); 
+        this.handleSpillageCollision(parent);          
         this.handleTableCollision(parent); 
     }
 
-    
 
     handleOutOfBoundsCollision(parent) 
     {
-        // If the bullet has left the top bounds of our canvas
+        // If the player has left the top bounds of our canvas
         if (parent.transform.translation.x + GameData.WAITER_WIDTH >= canvas.clientWidth) 
         {
             parent.transform.translation.x = canvas.clientWidth - GameData.WAITER_WIDTH;
-        
         }
 
         else if(parent.transform.translation.x <= 250)
@@ -232,7 +211,8 @@ class PlayerMoveController {
         
     }
 
-    handlePlatformCollision(parent) {
+    handlePlatformCollision(parent) 
+    {
         // Get a list of all the platform sprites that are stored
         // within the object manager
         const platforms = this.objectManager.get(ActorType.Platform);
@@ -241,21 +221,21 @@ class PlayerMoveController {
         if (platforms == null) return;
 
         // Loop through the list of platform sprites        
-        for (let i = 0; i < platforms.length; i++) {
+        for (let i = 0; i < platforms.length; i++) 
+        {
 
             // Store a reference to the current pickup sprite
             const platform = platforms[i];
 
-          
-            let collisionLocationType = Collision.GetCollisionLocationType(
+            let collisionLocationType = Collision.GetCollisionLocationType
+            (
                 parent,
                 platform
             );
 
-
             // If the player has landed on a platform
-            if (collisionLocationType === CollisionLocationType.Bottom) {
-
+            if (collisionLocationType === CollisionLocationType.Bottom) 
+            {
                 // Update variables to represent their new state
                 parent.body.onGround = true;
                 parent.body.jumping = false;
@@ -265,7 +245,8 @@ class PlayerMoveController {
 
             // If the player has collided with a platform that is above
             // them
-            if (collisionLocationType === CollisionLocationType.Top) {
+            if (collisionLocationType === CollisionLocationType.Top) 
+            {
 
                 // Update their velocity to move them downwards.
                 // This will create a bounce effect, where it will look 
@@ -275,8 +256,9 @@ class PlayerMoveController {
         }
     }
 
-    handlePickupCollision(parent) {
 
+    handlePickupCollision(parent) 
+    {
         // Get a list of all the pickup sprites that are stored
         // within the object manager
         const pickups = this.objectManager.get(ActorType.Pickup);
@@ -284,9 +266,8 @@ class PlayerMoveController {
         // If pickups is null, exit the function
         if (pickups == null) return;
 
+        // If the current take is fall right or fall left then the player can't jump
         if ((parent.artist.isCurrentTakeName("Fall Right")) || (parent.artist.isCurrentTakeName("Fall Left"))) return;
-
-  
 
         // Loop through the list of pickup sprites
         for (let i = 0; i < pickups.length; i++) {
@@ -298,14 +279,15 @@ class PlayerMoveController {
             // with the pickup sprite
             if (parent.transform.boundingBox.intersects(pickup.transform.boundingBox)) 
             {
-
-                // If the player has collided with a pickup, do something...
+                // If the pickup current take is pizza
                 if(pickup.artist.isCurrentTakeName("Pizza"))
                 {
                     if(waiterPizza != orderPizza)
                     {
+                        //Add to the waiter pizza
                         waiterPizza++;
                     }
+                    //Else set the falling animation
                     else 
                     {
                         if (parent.artist.isCurrentTakeName("Run Right") || parent.artist.isCurrentTakeName("Jump Right") || parent.artist.isCurrentTakeName("Idle Right") )
@@ -319,6 +301,7 @@ class PlayerMoveController {
                                                           
                         }  
                        
+                        //Play the splash sound
                         notificationCenter.notify
                         (
                             new Notification
@@ -329,6 +312,7 @@ class PlayerMoveController {
                             )
                         );
 
+                        //Generate a random side character
                         notificationCenter.notify
                         (
                             new Notification
@@ -339,7 +323,7 @@ class PlayerMoveController {
                             )
                         );
                         
-
+                        //Decrease the wage by €10
                         notificationCenter.notify
                         (
                             new Notification
@@ -352,12 +336,15 @@ class PlayerMoveController {
                     }
                  
                 }
+                // If the pickup current take is beer
                 else if(pickup.artist.isCurrentTakeName("Drink"))
                 {
                     if(waiterBeer != orderBeer)
                     {
+                        //add to the waiter berr
                         waiterBeer++;
                     }
+                    //Else set the falling animation
                     else 
                     {
                         if (parent.artist.isCurrentTakeName("Run Right") || parent.artist.isCurrentTakeName("Jump Right") || parent.artist.isCurrentTakeName("Idle Right") )
@@ -371,6 +358,7 @@ class PlayerMoveController {
                                                           
                         }  
                         
+                        //Play the splash sound
                         notificationCenter.notify
                         (
                             new Notification
@@ -381,6 +369,7 @@ class PlayerMoveController {
                             )
                         );
                         
+                        //Generate a random side character
                         notificationCenter.notify
                         (
                             new Notification
@@ -391,6 +380,7 @@ class PlayerMoveController {
                             )
                         );
 
+                        //Decrease the wage by €10
                         notificationCenter.notify
                         (
                             new Notification
@@ -399,187 +389,198 @@ class PlayerMoveController {
                             NotificationAction.Wage,
                             [-10]
                             )
-                        );
-
-                       
-                    }
-                   
-                  
+                        );  
+                    }   
                 }
     
-                // Create a notification that will ultimately remove
-                // the pickup sprite
-                notificationCenter.notify(
+                //Remove the consumable 
+                notificationCenter.notify
+                (
                     new Notification(
                         NotificationType.Sprite,
                         NotificationAction.Remove,
                         [pickup]
                     )
                 );
-
+            
+                //Generate a new consumable
                 this.consumables.initializeConsumables();
             }
         }
     }
 
-    handleEnemyCollision(parent) 
+
+    handleSpillageCollision(parent) 
     {
 
-        // Get a list of all the enemy sprites that are stored within
+        // Get a list of all the spillage sprites that are stored within
         // the object mananger
         const puddles = this.objectManager.get(ActorType.Puddle);
 
-        // If enemies is null, exit the function
+        // If spillage is null, exit the function
         if (puddles == null) return;
 
         // Loop through the list of enemy sprites
         for (let i = 0; i < puddles.length; i++) 
         {
 
-            // Store a reference to the current enemy sprite
+            // Store a reference to the current spillage sprite
             const puddle = puddles[i];
 
             // We can use a simple collision check here to check if the player has collided
-            // with the enemy sprite
-                if (parent.transform.boundingBox.intersects(puddle.transform.boundingBox)) 
-                {
-                        this.collidedWithPuddle = true;
-                        if (parent.artist.isCurrentTakeName("Run Right") || parent.artist.isCurrentTakeName("Jump Right") || parent.artist.isCurrentTakeName("Idle Right") )
-                        {
-                            parent.artist.setTake("Fall Right");
-                        } 
-
-                        else if(parent.artist.isCurrentTakeName("Run Left") || parent.artist.isCurrentTakeName("Jump Left") || parent.artist.isCurrentTakeName("Idle Left") )
-                        {
-                            parent.artist.setTake("Fall Left");                                  
-                        } 
-
-                        notificationCenter.notify
-                        (
-                            new Notification
-                            (
-                                NotificationType.Sprite,    // Type
-                                NotificationAction.RemoveFirst,  // Action
-                                [puddle]                    // Arguments
-                            )
-                        );
-              
-                        notificationCenter.notify
-                        (
-                            new Notification
-                            (
-                                NotificationType.GameState,
-                                NotificationAction.RandomGenerateSideCharacters,
-                                null
-                            )
-                        );
-
-                        notificationCenter.notify
-                        (
-                            new Notification
-                            (
-                            NotificationType.GameState,
-                            NotificationAction.Wage,
-                            [-10]
-                            )
-                        );
-                        
-                        notificationCenter.notify
-                        (
-                            new Notification
-                            (
-                                NotificationType.Sound,
-                                NotificationAction.Play,
-                                ["splash"]
-                            )
-                        );
-                
-                }
-        }
-    }   
-        handleTableCollision(parent) 
-        {
-
-            // Get a list of all the enemy sprites that are stored within
-            // the object mananger
-            const tables = this.objectManager.get(ActorType.Interactable);
-
-            // If enemies is null, exit the function
-            if (tables == null) return;
-            
-            if ((parent.artist.isCurrentTakeName("Fall Right")) || (parent.artist.isCurrentTakeName("Fall Left"))) return;
-
-            // Loop through the list of enemy sprites
-            for (let i = 0; i < tables.length; i++) 
+            // with the spillage sprite
+            if (parent.transform.boundingBox.intersects(puddle.transform.boundingBox)) 
             {
-    
-                // Store a reference to the current enemy sprite
-                const table = tables[i];
-              
-                // We can use a simple collision check here to check if the player has collided
-                // with the enemy sprite
+        
+                this.collidedWithPuddle = true;
+
+                //Sets the falling animation 
+                if (parent.artist.isCurrentTakeName("Run Right") || parent.artist.isCurrentTakeName("Jump Right") || parent.artist.isCurrentTakeName("Idle Right") )
+                {
+                    parent.artist.setTake("Fall Right");
+                } 
+
+                else if(parent.artist.isCurrentTakeName("Run Left") || parent.artist.isCurrentTakeName("Jump Left") || parent.artist.isCurrentTakeName("Idle Left") )
+                {
+                    parent.artist.setTake("Fall Left");                                  
+                } 
+
+                //Removes the spliiage
+                notificationCenter.notify
+                (
+                    new Notification
+                    (
+                        NotificationType.Sprite,    
+                        NotificationAction.RemoveFirst,  
+                        [puddle]                   
+                    )
+                );
+        
+                //Generate a random side character
+                notificationCenter.notify
+                (
+                    new Notification
+                    (
+                        NotificationType.GameState,
+                        NotificationAction.RandomGenerateSideCharacters,
+                        null
+                    )
+                );
+
+                //Decrease the wage by €10
+                notificationCenter.notify
+                (
+                    new Notification
+                    (
+                    NotificationType.GameState,
+                    NotificationAction.Wage,
+                    [-10]
+                    )
+                );
                 
-                    if (parent.transform.boundingBox.intersects(table.transform.boundingBox)) 
-                    {
-
-                            this.notificationCenter.notify
-                            (
-                                new Notification
-                                (
-                                    NotificationType.Sprite,    // Type
-                                    NotificationAction.RemoveFirst,  // Action
-                                    [table]                    // Arguments
-                                )
-                            );
-                           
-                            notificationCenter.notify(
-                                new Notification(
-                                    NotificationType.Sound,
-                                    NotificationAction.Play,
-                                    ["cha_ching"]
-                                )
-                            );
-
-                            notificationCenter.notify
-                            (
-                                new Notification
-                                (
-                                NotificationType.GameState,
-                                NotificationAction.Wage,
-                                [20]
-                                )
-                            );
-
-                            notificationCenter.notify
-                            (
-                                new Notification
-                                (
-                                    NotificationType.GameState,
-                                    NotificationAction.EndLevel,
-                                    null
-                                )
-                            );  
-                            
-                         
-                    }
-                    
-                   
+                //Plays the splash sound
+                notificationCenter.notify
+                (
+                    new Notification
+                    (
+                        NotificationType.Sound,
+                        NotificationAction.Play,
+                        ["splash"]
+                    )
+                );
+        
             }
         }
+    } 
 
-    
+
+    handleTableCollision(parent) 
+    {
+
+        // Get a list of all the table sprites that are stored within
+        // the object mananger
+        const tables = this.objectManager.get(ActorType.Interactable);
+
+        // If table is null, exit the function
+        if (tables == null) return;
+        
+        if ((parent.artist.isCurrentTakeName("Fall Right")) || (parent.artist.isCurrentTakeName("Fall Left"))) return;
+
+        // Loop through the list of table sprites
+        for (let i = 0; i < tables.length; i++) 
+        {
+
+            // Store a reference to the current table sprite
+            const table = tables[i];
+            
+            // We can use a simple collision check here to check if the player has collided
+            // with the table sprite
+            
+            if (parent.transform.boundingBox.intersects(table.transform.boundingBox)) 
+            {
+
+                //Removes the table
+                this.notificationCenter.notify
+                (
+                    new Notification
+                    (
+                        NotificationType.Sprite,    
+                        NotificationAction.RemoveFirst,  
+                        [table]                    
+                    )
+                );
+                
+                //Plays the cha ching sound
+                notificationCenter.notify
+                (
+                    new Notification
+                    (
+                        NotificationType.Sound,
+                        NotificationAction.Play,
+                        ["cha_ching"]
+                    )
+                );
+
+                //Increase the wage by €20
+                notificationCenter.notify
+                (
+                    new Notification
+                    (
+                    NotificationType.GameState,
+                    NotificationAction.Wage,
+                    [20]
+                    )
+                );
+
+                //Ends the leveland goes to the next order
+                notificationCenter.notify
+                (
+                    new Notification
+                    (
+                        NotificationType.GameState,
+                        NotificationAction.EndLevel,
+                        null
+                    )
+                );             
+                    
+            }
+                     
+        }
+    }
+
 
     applyInput(parent) {
 
         // If the x velocity value is very small
-        if (Math.abs(parent.body.velocityX) <= Body.MIN_SPEED) {
-
+        if (Math.abs(parent.body.velocityX) <= Body.MIN_SPEED) 
+        {
             // Then set the velocity to zero
             parent.body.setVelocityX(0);
         }
 
         // If the y velocity value is very small
-        if (Math.abs(parent.body.velocityY) <= Body.MIN_SPEED) {
+        if (Math.abs(parent.body.velocityY) <= Body.MIN_SPEED) 
+        {
 
             // Then set the velocity to zero
             parent.body.setVelocityY(0);
@@ -597,30 +598,14 @@ class PlayerMoveController {
         // player sprite - if we removed the below code, then the 
         // player would never move.
 
-        parent.transform.translateBy(
-            new Vector2(
+        parent.transform.translateBy
+        (
+            new Vector2
+            (
                 parent.body.velocityX,
                 parent.body.velocityY
             )
         );
-    }
-
-    equals(other) {
-
-        // TO DO...
-        throw "Not Yet Implemented";
-    }
-
-    toString() {
-
-        // TO DO...
-        throw "Not Yet Implemented";
-    }
-
-    clone() {
-
-        // TO DO...
-        throw "Not Yet Implemented";
     }
 
 }

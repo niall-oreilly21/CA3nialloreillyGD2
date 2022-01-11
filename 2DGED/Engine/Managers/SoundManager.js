@@ -248,12 +248,15 @@ class SoundManager {
                     // Set up the audio object
                     audioObject.currentTime = audioCue.currentTime;
     
+                    //If the audio theme is background
                     if(audioCue.theme === AudioType.Background)
                     {
+                        //Set the volume to the Non Diegetic Volume stored in the local Storage
                         audioObject.volume = localStorage.nonDiegeticVolume;
                     }
                     else
                     {
+                        //Set the volume to the Diegetic Volume stored in the local Storage
                         audioObject.volume = localStorage.diegeticSounds;
                     }
                    
@@ -293,6 +296,11 @@ class SoundManager {
         }
     }
 
+    /**
+     * Un Pause a given audio cue
+     *  
+     * @param {*} name 
+     */
     unPause(name) 
     {
 
@@ -312,7 +320,6 @@ class SoundManager {
     }
 
     
-
     /**
      * 
      * @param {*} name 
@@ -339,12 +346,15 @@ class SoundManager {
         // If an audio object is present
         if (audioObject) 
         {
+            //If the audio theme is background
             if(audioCue.theme === AudioType.Background)
             {
+                //Set the volume to the Non Diegetic Volume stored in the local Storage
                 localStorage.nonDiegeticVolume = volume;
             }
             else
             {
+                //Set the volume to the Diegetic Volume stored in the local Storage
                 localStorage.diegeticSounds = volume;
             }
 
@@ -373,13 +383,15 @@ class SoundManager {
                     // Set the audio object's volume
                     audioObject.volume = this.cueArray[i].volume = volume;
 
+                    //If the audio theme is background
                     if(this.cueArray[i].theme === AudioType.Background)
                     {
-                        console.log(volume)
+                        //Set the volume to the Non Diegetic Volume stored in the local Storage
                         localStorage.nonDiegeticVolume = volume;
                     }
                     else
                     {
+                        //Set the volume to the Diegetic Volume stored in the local Storage
                         localStorage.diegeticSounds = volume;
                     }
                 }

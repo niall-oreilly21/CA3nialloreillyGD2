@@ -1,5 +1,6 @@
 /**
- * 
+ * Generates a random side character sprite with a random speech bubble and random text.
+ * This is a unique class for Uncle Tom's Terror.
  * 
  * @author Niall O' Reilly
  * @version 1.0
@@ -67,6 +68,10 @@ class RandomGeneratorSideCharacters
     }
   
 
+     /**
+     * Set a random X position for the side character to the left or right of the canvas.
+     * 
+     */
     setRandomPositionX()
     {
         if(Math.floor(Math.random() * 2))
@@ -80,6 +85,10 @@ class RandomGeneratorSideCharacters
     }
 
     
+     /**
+     * Set a random take name based on the sideCharactersArray.
+     * 
+     */
     setRandomTakeName()
     {
         //https://www.kirupa.com/html5/picking_random_item_from_array.htm
@@ -96,6 +105,10 @@ class RandomGeneratorSideCharacters
     }
 
 
+    /**
+     * Intililizes the sprite for the side character
+     * 
+     */
     initilizeGameSideCharacter()
     {
         let transform;
@@ -109,7 +122,7 @@ class RandomGeneratorSideCharacters
         (
             context,                                                // Context
             1,                                                      // Alpha
-            GameData.SIDE_CHARACTERS_ANIMATION                          // Animation Data
+            GameData.SIDE_CHARACTERS_ANIMATION                      // Animation Data
         );
 
         // Set animation
@@ -117,25 +130,25 @@ class RandomGeneratorSideCharacters
 
         transform = new Transform2D
         (
-            new Vector2(this.x, this.y),                                        // Translation
-            GameData.SIDE_CHARACTERS.rotation,                         // Rotation
-            GameData.SIDE_CHARACTERS.scale,                            // Scale
-            GameData.SIDE_CHARACTERS.origin,                          // Origin
-            artist.getBoundingBoxByTakeName(this.takeName),                // Dimensions
-            GameData.SIDE_CHARACTERS.explodeBoundingBoxInPixels       // Explode By
+            new Vector2(this.x, this.y),                             // Translation
+            GameData.SIDE_CHARACTERS.rotation,                       // Rotation
+            GameData.SIDE_CHARACTERS.scale,                          // Scale
+            GameData.SIDE_CHARACTERS.origin,                         // Origin
+            artist.getBoundingBoxByTakeName(this.takeName),          // Dimensions
+            GameData.SIDE_CHARACTERS.explodeBoundingBoxInPixels      // Explode By
         );
          
 
         sprite = new Sprite
         (
-            this.takeName,                                               // ID
-            transform,                                              // Transform
-            GameData.SIDE_CHARACTERS.actorType,                     // ActorType
-            GameData.SIDE_CHARACTERS.collisionType,                 // CollisionType
-            StatusType.Updated | StatusType.Drawn,                  // StatusType
-            artist,                                                 // Artist
-            GameData.SIDE_CHARACTERS.scrollSpeedMultipler,          // ScrollSpeedMultipler
-            GameData.SIDE_CHARACTERS.LayerDepth                     // LayerDepth
+            this.takeName,                                           // ID
+            transform,                                               // Transform
+            GameData.SIDE_CHARACTERS.actorType,                      // ActorType
+            GameData.SIDE_CHARACTERS.collisionType,                  // CollisionType
+            StatusType.Updated | StatusType.Drawn,                   // StatusType
+            artist,                                                  // Artist
+            GameData.SIDE_CHARACTERS.scrollSpeedMultipler,           // ScrollSpeedMultipler
+            GameData.SIDE_CHARACTERS.LayerDepth                      // LayerDepth
         );
 
         // Add sprite to object manager
@@ -143,6 +156,10 @@ class RandomGeneratorSideCharacters
     }
 
 
+    /**
+     * Gets the speech bubble sprite for the side character depending on the current x positon of the side charcter sprite.
+     * 
+     */
     getSpeechBubbleSpriteSheet()
     {
         if(this.x === GameData.SIDE_CHARACTERS_X_POSITION_LEFT_SIDE)
@@ -155,6 +172,11 @@ class RandomGeneratorSideCharacters
         }
     }
 
+
+    /**
+     * Gets the speech bubble sprite x position for the side character depending on the current x positon of the side charcter sprite.
+     * 
+     */
     getSpeechBubblePositionX()
     {
         if(this.x === GameData.SIDE_CHARACTERS_X_POSITION_RIGHT_SIDE)
@@ -167,6 +189,11 @@ class RandomGeneratorSideCharacters
         }
     }
 
+
+    /**
+     * Intililizes the sprite for the speech bubble for the side character.
+     * 
+     */
     initializeSpeechBubble()
     {
         let transform;
@@ -181,7 +208,7 @@ class RandomGeneratorSideCharacters
             2,                                                      // Alpha
             this.getSpeechBubbleSpriteSheet(),
             GameData.SPEECH_BUBBLE.sourcePosition,
-            GameData.SPEECH_BUBBLE.sourceDimensions                       // Animation Data
+            GameData.SPEECH_BUBBLE.sourceDimensions                       
         );
 
         transform = new Transform2D
@@ -191,16 +218,16 @@ class RandomGeneratorSideCharacters
             GameData.SPEECH_BUBBLE.scale,
             GameData.SPEECH_BUBBLE.origin,
             GameData.SPEECH_BUBBLE.sourceDimensions,
-            GameData.SPEECH_BUBBLE.explodeBoundingBoxInPixels                                                    // Explode By
+            GameData.SPEECH_BUBBLE.explodeBoundingBoxInPixels                                                    
         );
          
         
         sprite = new Sprite
         (
-            GameData.SPEECH_BUBBLE.id,                                               // ID
+            GameData.SPEECH_BUBBLE.id,                              // ID
             transform,                                              // Transform
-            GameData.SPEECH_BUBBLE.actorType,                                       // ActorType
-            GameData.SPEECH_BUBBLE.collisionType,                               // CollisionType
+            GameData.SPEECH_BUBBLE.actorType,                       // ActorType
+            GameData.SPEECH_BUBBLE.collisionType,                   // CollisionType
             StatusType.Updated | StatusType.Drawn,                  // StatusType
             artist,                                                 // Artist
             1,                                                      // ScrollSpeedMultipler
@@ -214,11 +241,19 @@ class RandomGeneratorSideCharacters
 
     } 
     
+
+    /**
+     * Intililizes the sprite for the speech bubble text for the side character.
+     * @param {*} x
+     * @param {*} y
+     */
     initializeSpeechBubbleText(x, y)
     {
         let transform;
         let artist;
         let sprite;
+
+        //The speech message is a random messages which is selected from a array of messages which comes from the current random side character
         let message = this.textMessages[this.randomCharacterIndex][Math.floor(Math.random() * this.textMessages[this.randomCharacterIndex].length)]
 
 
@@ -265,6 +300,11 @@ class RandomGeneratorSideCharacters
 
     } 
 
+
+    /**
+     * Sets a timer of 3 seconds to remove the side character sprites after they have been created.
+     * 
+     */
     setTimer()
     {
         const SideCharacterDetails = this.objectManager.get(ActorType.SideCharacter);
@@ -281,9 +321,9 @@ class RandomGeneratorSideCharacters
                 (
                     new Notification
                     (
-                        NotificationType.Sprite,    // Type
-                        NotificationAction.RemoveAllByType,  // Action
-                        [ActorType.SideCharacter]                    // Arguments
+                        NotificationType.Sprite,    
+                        NotificationAction.RemoveAllByType,  
+                        [ActorType.SideCharacter]                   
                         
                     )
                 );

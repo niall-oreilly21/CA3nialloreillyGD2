@@ -1,5 +1,6 @@
 /**
- * 
+ * Stores and generates pizzas, beers and spilage sprites
+ * This is a unique class for Uncle Tom's Terror.
  * 
  * @author Niall O' Reilly
  * @version 1.0
@@ -21,12 +22,15 @@ class Consumables
     {
         this.notificationCenter = notificationCenter;
         this.keyboardManager = keyboardManager;
-        this.objectManager = objectManager;
-
-
-        
+        this.objectManager = objectManager;   
     }
 
+
+    /**
+     * Gets a random consumable take for a inputted sprite.
+     * 
+     * @param {*} sprite 
+     */
     getRandomNextConsumableTake(sprite)
     {
 
@@ -38,6 +42,7 @@ class Consumables
             {
                 lastSelectedTakeCount++;
 
+                //If the lastSelectedTakeCount for pizza is = 4 then the take is set to drink(beer) 
                 if(lastSelectedTakeCount === 4)
                 {
                     sprite.artist.setTake("Drink"); 
@@ -59,6 +64,7 @@ class Consumables
             {
                 lastSelectedTakeCount++;
                 
+                //If the lastSelectedTakeCount for pizza is = 4 then the take is set to drink(beer) 
                 if(lastSelectedTakeCount === 4)
                 {
                     sprite.artist.setTake("Pizza"); 
@@ -74,6 +80,11 @@ class Consumables
         }
     }
 
+
+     /**
+     * initialize a random pizza or beer sprite.
+     * 
+     */
     initializeConsumables() 
     {
     
@@ -85,7 +96,6 @@ class Consumables
         (
             context,                                        // Context
             1,
-    
             GameData.COMSUMABLES_ANIMATION_DATA            // Animation data
         );
     
@@ -93,13 +103,16 @@ class Consumables
         (
             new Vector2
             (
+                //Postion on the x axis is between 250 and the canvas width
                 Math.floor(Math.random() * (canvas.clientWidth)) + 250,
+
+                //Postion on the y axis is between 250 and the canvas width
                 Math.floor(-Math.random() * 400)
-            ),                                              // Translation
+            ),                                              
             0,                                              // Rotation
             new Vector2(0.2, 0.2),                          // Scale
             Vector2.Zero,                                   // Origin
-            artist.getBoundingBoxByTakeName("Pizza"),  // Dimensions
+            artist.getBoundingBoxByTakeName("Pizza"),       // Dimensions
             0
         );
 
@@ -112,8 +125,8 @@ class Consumables
             CollisionType.Collidable,
             StatusType.Updated | StatusType.Drawn,
             artist,
-            1,          // Scroll speed multiplier
-            1           // Layer depth
+            1,          
+            1           
         );
     
         sprite.body.maximumSpeed = 3;
@@ -127,6 +140,8 @@ class Consumables
                     notificationCenter,
                     keyboardManager,
                     objectManager,
+
+                    //The consumables velocity is increased every new level
                     consumablesVelocity
                 )
                 
@@ -139,6 +154,11 @@ class Consumables
             this.objectManager.add(sprite);
     }
 
+
+    /**
+     * initialize two random consumables either pizza or beer sprite.
+     * 
+     */
     initializeConsumablesStart()
     {
         let artist;
@@ -200,7 +220,10 @@ class Consumables
             (
                 new Vector2
                 (
+                    //Postion on the x axis is between 250 and the canvas width
                     Math.floor(Math.random() * (canvas.clientWidth)) + 250,
+
+                    //Postion on the y axis is between 250 and the canvas width
                     Math.floor(-Math.random() * 400)
                 )
             );
@@ -212,6 +235,8 @@ class Consumables
                     notificationCenter,
                     keyboardManager,
                     objectManager,
+
+                    //The consumables velocity is increased every new level
                     consumablesVelocity
                 )
                 
@@ -225,6 +250,15 @@ class Consumables
         }
     }
 
+
+     /**
+     * Generates a spillage object which is based on the postion, scale and dimension of the pizza or beer that hit the floor.
+     * 
+     * @param {*} positionX 
+     * @param {*} positionY 
+     * @param {*} dimensionY 
+     * @param {*} scale 
+     */
     initializeSpillage(positionX, positionY, dimensionY, scale)
     {
     
@@ -239,8 +273,6 @@ class Consumables
             GameData.COMSUMABLES_ANIMATION_DATA
         );
     
-       
-
         transform = new Transform2D
         (
           
@@ -269,6 +301,10 @@ class Consumables
         this.objectManager.add(sprite);
 
 
+         /**
+         * Sets a timer of 3 seconds to remove the spillage sprite after it is created.
+         * 
+         */
         setTimeout(() => 
         {
             this.notificationCenter.notify

@@ -1,21 +1,20 @@
-
 <html lang="en">
     <head>
         
         <meta charset="UTF-8">
         <meta name = "viewport" content="width=device-width, initial-scale=1.0">
         <link rel = "icon" type="image/png" href="css/images/header.png">
-    <title>Uncle Tom's Terror</title>
+        <title>Uncle Tom's Terror</title>
 
-    <!-- Include Stylesheets -->
-    <link rel="stylesheet" href="css/uncle_toms_terror.css" />
+        <!-- Include Stylesheets -->
+        <link rel="stylesheet" href="css/uncle_toms_terror.css" />
 
-    <!-- Add JQuery Support -->
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-</head>
+        <!-- Add JQuery Support -->
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    </head>
+
 
 <body>
-
     <!-- Create Title -->
     <div id="title">
         <h1>Uncle Tom's Terror</h1>
@@ -40,171 +39,158 @@
             <!-- Control Menu -->
             <div id="control_menu" class="menu hidden">
                 
-            <div class = "container">
-                <p>
-                    These are the following controls for Uncle Tom's Terror.
-                    To exit the game at any time press hover with your mouse and CLICK the pause button icon in the top right hand side of the screen. 
-                  </p>
-                <span class = "subHeading">Move Right:</span><span class = "controls">Right Arrow Key</span>
-                <span class = "subHeading">Move Left:</span><span class = "controls">Left Arrow Key</span>
-                <span class = "subHeading">Jump Up:</span><span class = "controls">Up Arrow Key</span>
-                <li><a href="javascript:void(0)" class="button exitGame">Back to Main Menu</a></li>
-            </div>
-            </div>
-
-             <div id="audio_menu" class="menu hidden">
-
-
-
-                <div class = "container">
-<div >
-                  <label class = "audioHeading">Background Music:</label>
-                  <label class="switch" >
-                    <input id="isBackgroundAudioTurnedOn" a href="javascript:void(0);" class = "button switchNonDiegeticSounds" type="checkbox">
-                    <span class="slider round"></span></label>
+                  <div class = "container">
+                      <p>
+                          These are the following controls for Uncle Tom's Terror.
+                          To exit the game at any time press hover with your mouse and CLICK the pause button icon in the top right hand side of the screen. 
+                      </p>
+                      <span class = "subHeading">Move Right:</span><span class = "controls">Right Arrow Key</span>
+                      <span class = "subHeading">Move Left:</span><span class = "controls">Left Arrow Key</span>
+                      <span class = "subHeading">Jump Up:</span><span class = "controls">Up Arrow Key</span>
+                      <li><a href="javascript:void(0)" class="button exitGame">Back to Main Menu</a></li>
                   </div>
-<div>
-                    <label class = "audioHeading">In Game Sounds:</label>
-                    <label class="switch" >
-                      <input id="isOtherAudioTurnedOn" a href="javascript:void(0);" class = "button switchDiegeticSounds" type="checkbox">
-                      <span class="slider round"></span></label>
+            </div>
+
+            <!-- Audio Menu -->
+             <div id="audio_menu" class="menu hidden">
+                <div class = "container">
+                    <div>
+                      <label class = "audioHeading">Background Music:</label>
+                      <label class="switch" >
+                        <input id="isBackgroundAudioTurnedOn" a href="javascript:void(0);" class = "button switchNonDiegeticSounds" type="checkbox">
+                        <span class="slider round"></span></label>
                     </div>
 
-
-
-                    <li><a href="javascript:void(0)" class="button exitGame">Back to Main Menu</a></li>
-            
+                    <div>
+                      <label class = "audioHeading">In Game Sounds:</label>
+                      <label class="switch" >
+                        <input id="isOtherAudioTurnedOn" a href="javascript:void(0);" class = "button switchDiegeticSounds" type="checkbox">
+                        <span class="slider round"></span></label>
+                    </div>
+                    <li><a href="javascript:void(0)" class="button exitGame">Back to Main Menu</a></li>       
+                </div> 
             </div> 
-        </div> 
 
+            <!-- Game Over Menu -->
             <div id="game_over_menu" class="menu hidden">
-
-            <div class = "container">
-                <h2>YOU ARE SACKED!!!</h2>
-                <span class = "EndGameLabel">High Score:</span><span id = "highestWage">0</span><br>
-                <span class = "EndGameLabel">Your Score:</span><span id = "playersWage">0</span><br>
-                <li><a href="javascript:void(0)" class="button exitGame">Exit Game</a></li>
-            </div>
+              <div class = "container">
+                  <h2>YOU ARE SACKED!!!</h2>
+                  <span class = "EndGameLabel">High Score:</span><span id = "highestWage">0</span><br>
+                  <span class = "EndGameLabel">Your Score:</span><span id = "playersWage">0</span><br>
+                  <li><a href="javascript:void(0)" class="button exitGame">Exit Game</a></li>
+              </div>
             </div> 
             
+            <!-- Pause Menu -->
             <div id="pause_menu" class="menu hidden">
-                        <li><a href="javascript:void(0)" class="button unpauseGame">Back to Game </a></li>
-                        <li><a href="javascript:void(0)" class="button exitGame">Exit Game</a></li>           
-                
+                <li><a href="javascript:void(0)" class="button unpauseGame">Back to Game </a></li>
+                <li><a href="javascript:void(0)" class="button exitGame">Exit Game</a></li>                
             </div>
 
-
+             <!-- About Menu -->
             <div id="about_menu" class="menu hidden">
 
-<div id = "aboutContainer">  
-  <div>
-    <h3>Rules of the Game</h3> 
-    
-    <ul id="rules">
-     <li>The main objective of the game is to keep your job. This is done by keeping your wage above the threshold. </li>
-        <li>To increase your wage your wage you must complete orders.
-            This is done by catching each food and drink order as they fall down the screen, then bringing the order to the table.</li>
+              <div id = "aboutContainer">  
+                <div>
+                  <h3>Rules of the Game</h3> 
+                  
+                  <ul id="rules">
+                      <li>The main objective of the game is to keep your job. This is done by keeping your wage above €0. </li>
 
-        <li> For each order you bring out, your wage goes up, for each order you don’t bring out, your wage goes down. </li>
-       
-        <li> When an order is completed, a table will appear at the side of screen. The player must then navigate Wally to collide with the table. 
-            If Wally reaches the table, then the player’s wage will then be increased. 
-            However, if another food or drink item lands on Wally or if Wally slips on spillage, the sprite for Wally falling will be activated and the 
-            player’s wage will be reduced by €10.</li>
+                      <li>To increase your wage you must complete orders.
+                          This is done by catching pizza and beer as they fall down the screen, until the player's pizzas caught matches the order pizzas and player's beers caught matches the order beers</li>
+                    
+                      <li> When an order is completed, a table will appear at the side of screen. The player must then navigate Wally The Waiter to collide with the table. 
+                          If Wally reaches the table, then the player’s wage will be increased by €20. </li>
+                        
+                      <li> However, if another pizza or beer lands on Wally The Waiter before he reaches the table, Wally The Waiter will fall and the 
+                          player’s wage will be reduced by €10. The players pizzas and beers caught for the current order will be set back to 0.</li>
 
-        <li>If the player accidently catches more items, then are on the order while delivering an order,
-            then the falling sprite will be activated, and the players wage will go down.</li>
-       
-        <li>  When a player reaches the table then there next order will appear with more items to collect then the previous order.
-            The game is on a timer which last for 3 minutes. The game will end when the countdown hits 0 or if the player wage reaches 0.</li>
-      
-        <li>The highest score is measured by the highest wage at the end of the game.</li>
-      </ul>
-    </div>
+                      <li>If Wally The Waiter slips on spillage, Wally The Waiter will fall and the 
+                          player’s wage will be reduced by €10.</li>
 
+                      <li>Each level has a tagline day. For example, level 1 is called “Quiet January Afternoon”. In contrast level 11 is called “St Stephens Day”. 
+                            The taglines help the players identify with the difficultly of the current level they are at within the game.</li>
 
-    <h3>Characters In the Game</h3> 
+                      <li>For each order completed, the level will increase. The order size increases each level and the speed at which pizzas and beers falls increases.</li>
 
-    <div class="row">
-      <div class="column">
-        <h4>Wally</h4>
-        <img class = "charactersImages" src = "css/images/wally.png" alt = "Wally">
-        <span class = "characterLabel">Nickname:</span><span class = "characterText">The Lifter</span>
-        <span class = "characterLabel">Favourite Drink:</span><span class = "characterText">Smithwicks</span>
-    
-        <p class = "characterParagraph">Quack! Quack! Donald Duck is a iconic character from Disney and his mascot can be found in Disneyland Park. The Donald Duck mascot is extremely friendly and will gladly take 
-          photos with guests. Coming soon to our park is Daisy Duck who will soon steal Donald Duck's thunder. 
-        </p>
+                      <li>The wage starts at a flat rate of €50 at level 1. If the wage reaches €0 then the player will be sacked, and the game will be over.
+                            The wage from the previous level is carried over to the next level.</li>
+                    
+                      <li>The game is on a timer which last for 3 minutes. The game will end when the countdown hits 0 or if the player wage reaches €0.</li>
+                    
+                      <li>The highest score is measured by the highest wage at the end of the game.</li>
+                  </ul>
+                </div>
+
+                  <h3>Characters In the Game</h3> 
+                  <ul id="rules">
+                    <li>Different characters will appear with speech bubbles to give user feedback to the player when Wally The Waiter falls. The characters of Uncle Tom's Terror are all unique and all have a unique personlity. </li>
+                  </ul>
+                  <div class="row">
+                    <div class="column">
+                      <h4>Wally The Waiter</h4>
+                      <img class = "charactersImages" src = "css/images/wally.png" alt = "Wally">
+                      <span class = "characterLabel">Nickname:</span><span class = "characterText">The Lifter</span>
+                      <span class = "characterLabel">Favourite Drink:</span><span class = "characterText">Smithwicks</span>
+                  
+                      <p class = "characterParagraph">Wally The Waiter main aim is to keep his job for as long as he can, and you, the player, must insure this. He will do anything to keep his job!!!
+                      </p>
+                    </div>
+                    <div class = "column">
+                      <h4>Boss Man</h4>
+                      <img class = "charactersImages" src = "css/images/boss.png" alt = "Boss Man">
+                      <span class = "characterLabel">Nickname:</span><span class = "characterText">Jimmy</span>
+                      <span class = "characterLabel">Favourite Drink:</span><span class = "characterText">Carlsburg</span>
+                      <p class = "characterParagraph">Boss Man wants the best from Wallly The Waiter. He doesn't like slackers and he wants to see indigestion when Wally The Waiter takes a break.
+                      </p>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="column">
+                      <h4>Cathy The Cook</h4>
+                      <img class = "charactersImages" src = "css/images/cook.png" alt = "Cathy The Cook">
+                      <span class = "characterLabel">Nickname:</span><span class = "characterText">Chef</span>
+                      <span class = "characterLabel">Favourite Drink:</span><span class = "characterText">Martini</span>
+                  
+                      <p class = "characterParagraph">Cathy The Cook trained in Italy and cooks the higest quality pizza. She gets very angry if Wally The Waiter drops her pizzas.
+                      </p>
+                    </div>
+                    <div class = "column">
+                      <h4>The Legend</h4>
+                      <img class = "charactersImages" src = "css/images/the_legend.png" alt = "The Legend">
+                      <span class = "characterLabel">Nickname:</span><span class = "characterText">Tommy</span>
+                      <span class = "characterLabel">Favourite Drink:</span><span class = "characterText">Guinness</span>
+                      <p class = "characterParagraph">The Legend is a long time local of Uncle Toms Terror's. He expects the finesse pints and he hates being left with an empty glass!!!
+                      </p>
+                    </div>
+                  </div>
+                  <div class="row">
+                      <div class="column">
+                        <h4>Spud</h4>
+                        <img class = "charactersImages" src = "css/images/spud.png" alt = "Spud">
+                        <span class = "characterLabel">Nickname:</span><span class = "characterText">Sam</span>
+                        <span class = "characterLabel">Favourite Drink:</span><span class = "characterText">Heineken</span>
+                    
+                        <p class = "characterParagraph">Spud is a local who is fond of Wally The Waiter. He doesn't mind Wally the Waiter messing up an order as he sees him as a friend.
+                        </p>
+                      </div>
+                    </div>
+                  <li><a href="javascript:void(0)" class="button exitGame">Back to Main Menu</a></li>                
+            </div>
       </div>
-      <div class = "column">
-        <h4>Boss Man</h4>
-        <img class = "charactersImages" src = "css/images/boss.png" alt = "Boss Man">
-        <span class = "characterLabel">Nickname:</span><span class = "characterText">Jimmy</span>
-        <span class = "characterLabel">Favourite Drink:</span><span class = "characterText">Carlsburg</span>
-        <p class = "characterParagraph">Disney's fan favourite pet "Pluto" can be found lurking around in our main park. He is usually close in hand beside his owner, Snoopie. Be careful when taking a photo
-          with the Pluto mascot that he doesn't try to lick you!
-        </p>
-      </div>
-    </div>
-    <div class="row">
-      <div class="column">
-        <h4>Cathy The Cook</h4>
-        <img class = "charactersImages" src = "css/images/cook.png" alt = "Cathy The Cook">
-        <span class = "characterLabel">Nickname:</span><span class = "characterText">Chef</span>
-        <span class = "characterLabel">Favourite Drink:</span><span class = "characterText">Martini</span>
-    
-        <p class = "characterParagraph">The cowboy from the "Wild Wide West", Woody is a fan favourite from the Toy Story Films. His story was concluded recently "Toy Story 4". Woodie's mascot can be found in
-          Disneyland Studios near the RC Racer ride.
-        </p>
-      </div>
-      <div class = "column">
-        <h4>The Legend</h4>
-        <img class = "charactersImages" src = "css/images/the_legend.png" alt = "The Legend">
-        <span class = "characterLabel">Nickname:</span><span class = "characterText">Tommy</span>
-        <span class = "characterLabel">Favourite Drink:</span><span class = "characterText">Guinness</span>
-        <p class = "characterParagraph">Woodie's loyal companion "Buzz ligtyear" is an iconic character for his hilarious space man impression and the heart warming moments with him and Woodie.
-          Buzz lightyear can be found in Disneyland Park beside his ride "Buzz lightyear Laser Blast".
-        </p>
-      </div>
-    </div>
-    <div class="row">
-        <div class="column">
-          <h4>Spud</h4>
-          <img class = "charactersImages" src = "css/images/spud.png" alt = "Spud">
-          <span class = "characterLabel">Nickname:</span><span class = "characterText">Sam</span>
-          <span class = "characterLabel">Favourite Drink:</span><span class = "characterText">Heineken</span>
-      
-          <p class = "characterParagraph">The cowboy from the "Wild Wide West", Woody is a fan favourite from the Toy Story Films. His story was concluded recently "Toy Story 4". Woodie's mascot can be found in
-            Disneyland Studios near the RC Racer ride.
-          </p>
-        </div>
-      </div>
-    <li><a href="javascript:void(0)" class="button exitGame">Back to Main Menu</a></li>
-    
-</div>
-
-
-            <!-- Add More Menu's Here -->
-
-            <!-- 
-                Check out the initialize function of MyMenuManager to see how menu's are
-                hidden when the game starts.
-            -->
-        </div>
 
         <!-- Create Canvas -->
         <canvas id="main_canvas"width="1250" height="670"></canvas>
-    </div>
+  </div>
 
     
-
     <!-- Load Sprite Assets -->
     <img id="bar_background" class="sprite" src="assets/images/backgrounds/bar.png" />
     <img id="clock" class="sprite" src="assets/images/backgrounds/clock.png">
     <img id="order_decorator" class="sprite" src="assets/images/bar_props/order_decoration.png">
     <img id="speech_bubble_right_side" class="sprite" src="assets/images/characters/speech_bubble_right_side.png">
     <img id="speech_bubble_left_side" class="sprite" src="assets/images/characters/speech_bubble_left_side.png">
-
     <img id="snailbait_jungle_tileset" class="sprite" src="assets/images/platform/jungle-tileset.png" />
     <img id="waiter_sprite_sheet" class="sprite" src="assets/images/characters/waiter_sprite_sheet.png" />
     <img id="consumables_sprite_sheet" class="sprite" src="assets/images/bar_props/consumables_sprite_sheet.png" />

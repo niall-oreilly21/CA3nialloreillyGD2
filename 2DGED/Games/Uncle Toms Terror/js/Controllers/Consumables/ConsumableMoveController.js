@@ -1,24 +1,28 @@
 /**
- * Moves the parent sprite based on keyboard input and detect collisions against platforms, pickups etc.
+ * Moves the parent sprite based on keyboard input and detect collisions against platforms and the player
  * 
- * @author Niall McGuinness
+ * @author Niall O' Reilly based on Niall McGuinness
  * @version 1.0
  * @class ConsumableMoveController
  */
- class ConsumableMoveController {
 
- 
+class ConsumableMoveController 
+{
 
-    constructor(
+    constructor
+    (
         notificationCenter,
         keyboardManager,
         objectManager,
         velocity
-    ) {
+    ) 
+    
+    {
         this.notificationCenter = notificationCenter;
         this.keyboardManager = keyboardManager;
         this.objectManager = objectManager;
         this.velocity = velocity;
+        
         this.consumables = new Consumables
         (
             notificationCenter,
@@ -27,48 +31,41 @@
         );
     }
 
+
     update(gameTime, parent) 
-    {
-        
+    {  
         this.applyForces(gameTime, parent);
         this.checkCollisions(parent);
         this.applyInput(parent);
-
     }
 
-    applyForces(gameTime, parent) {
 
-        // Apply basic physic forces to the
-        // player sprite
-
+    applyForces(gameTime, parent) 
+    {
         parent.body.applyGravity(gameTime);
         parent.body.setVelocityY(this.velocity * gameTime.elapsedTimeInMs);
-        if (parent.body.onGround) {
+        
+        if (parent.body.onGround) 
+        {
             
             parent.body.applyFriction(gameTime);
         }
     }
 
 
-    checkCollisions(parent) {
-
-        // Assume that the play is not on the ground - i.e., 
-        // assume that they are falling. We will update this
-        // value in handlePlatformCollision function if the
-        // player is currently colliding with a platform that
-        // is below them (i.e., if they are on the ground)
+    checkCollisions(parent) 
+    {
         parent.body.onGround = false;
 
-       
-       this.handleOutOfBoundsCollision(parent);
+        this.handleOutOfBoundsCollision(parent);
         
         this.handlePlatformCollision(parent);
-       
+        
     }
+
 
     handleOutOfBoundsCollision(parent) 
     {
-        // If the bullet has left the top bounds of our canvas
         if (parent.transform.translation.x + 60  >= canvas.clientWidth) 
         {
             parent.transform.translation.x = canvas.clientWidth - 60;
@@ -77,23 +74,20 @@
 
         else if(parent.transform.translation.x <= 0)
         {
-           parent.transform.translation.x = 1;
-        }
-        
+            parent.transform.translation.x = 1;
+        }    
     }
 
-    handlePlatformCollision(parent) {
-        // Get a list of all the platform sprites that are stored
-        // within the object manager
+
+    handlePlatformCollision(parent) 
+    {
         const platforms = this.objectManager.get(ActorType.Platform);
 
-        // If platforms is null, exit the function
         if (platforms == null) return;
+        
+        for (let i = 0; i < platforms.length; i++) 
+        {
 
-        // Loop through the list of platform sprites        
-        for (let i = 0; i < platforms.length; i++) {
-
-            // Store a reference to the current pickup sprite
             const platform = platforms[i];
 
             let collisionLocationType = Collision.GetCollisionLocationType
@@ -102,12 +96,9 @@
                 platform
             );
 
-        
 
-            // If the player has landed on a platform
             if (collisionLocationType === CollisionLocationType.Bottom) 
             {
-                // Update variables to represent their new state
                 parent.body.onGround = true;
 
                 parent.body.setVelocityY(0);
@@ -122,54 +113,47 @@
                 (
                     new Notification
                     (
-                        NotificationType.Sprite,    // Type
-                        NotificationAction.RemoveFirst,  // Action
-                        [parent]                    // Arguments
+                        NotificationType.Sprite,    
+                        NotificationAction.RemoveFirst,  
+                        [parent]                    
                     )
                 );
-                this.consumables.initializeConsumables(); 
-            const puddles = this.objectManager.get(ActorType.Puddle);
 
-            if(puddles == null)
-            {
-                return this.consumables.initializeSpillage(positionX, positionY, dimensionY, scale);
-            }
+                //Creates a new cosnumable object when another cosumable object hits the ground
+                this.consumables.initializeConsumables();
+
+                const puddles = this.objectManager.get(ActorType.Puddle);
+
+                if(puddles == null)
+                {
+                    return this.consumables.initializeSpillage(positionX, positionY, dimensionY, scale);
+                }
             
-            if(puddles.length < 3)
-            {
-                this.consumables.initializeSpillage(positionX, positionY, dimensionY, scale);
-            }
-            
-            
-            
-                
+                if(puddles.length < 3)
+                {
+                    this.consumables.initializeSpillage(positionX, positionY, dimensionY, scale);
+                }
+   
             }
 
-            // // If the player has collided with a platform that is above
-            // // them
-            // if (collisionLocationType === CollisionLocationType.Top) {
-
-            //     // Update their velocity to move them downwards.
-            //     // This will create a bounce effect, where it will look 
-            //     // like the player is bouncing off the platform above
-            //     parent.body.setVelocityY(this.velocity);
-            // }
         }
     }
 
 
-
-    applyInput(parent) {
+    applyInput(parent) 
+    {
 
         // If the x velocity value is very small
-        if (Math.abs(parent.body.velocityX) <= Body.MIN_SPEED) {
+        if (Math.abs(parent.body.velocityX) <= Body.MIN_SPEED)
+        {
 
             // Then set the velocity to zero
             parent.body.setVelocityX(0);
         }
 
         // If the y velocity value is very small
-        if (Math.abs(parent.body.velocityY) <= Body.MIN_SPEED) {
+        if (Math.abs(parent.body.velocityY) <= Body.MIN_SPEED) 
+        {
 
             // Then set the velocity to zero
             parent.body.setVelocityY(0);
@@ -187,7 +171,8 @@
         // player sprite - if we removed the below code, then the 
         // player would never move.
 
-        parent.transform.translateBy(
+        parent.transform.translateBy
+        (
             new Vector2(
                 parent.body.velocityX,
                 parent.body.velocityY
@@ -195,21 +180,4 @@
         );
     }
 
-    equals(other) {
-
-        // TO DO...
-        throw "Not Yet Implemented";
-    }
-
-    toString() {
-
-        // TO DO...
-        throw "Not Yet Implemented";
-    }
-
-    clone() {
-
-        // TO DO...
-        throw "Not Yet Implemented";
-    }
 }

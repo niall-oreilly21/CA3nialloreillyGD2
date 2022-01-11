@@ -4,11 +4,8 @@ const canvas = document.getElementById("main_canvas");
 // Get a handle to our canvas 2D context
 const context = canvas.getContext("2d");
 
-/** CORE GAME LOOP CODE - DO NOT CHANGE */
-
 let gameTime;
 let notificationCenter;
-
 let cameraManager;
 let objectManager;
 let keyboardManager;
@@ -21,6 +18,8 @@ let seconds = 0;
 let minutes = 3;
 let intervalTimer;
 let intervalTime = 1000;
+
+//Timer is 3 minutes long
 let totalSeconds = 180;
 
 // Set to false to hide bounding boxes
@@ -121,8 +120,9 @@ function draw(gameTime)
     }
     
     context.font = FontType.Wage;
-
     context.fillStyle = Color.LightBlue;
+
+    //Updates and draws the timer to the canvas
     if(seconds > 9)
     {
     context.fillText(` ${minutes}:${seconds}  `, 400, 80)  
@@ -133,18 +133,21 @@ function draw(gameTime)
     }
 
     context.fillStyle = Color.Green;
+
+    //Updates and draws the wage to the canvas
     context.fillText(`\u20AC ${wage}`, 1000, 50)
 
     context.fillStyle = Color.Black;
     context.font = FontType.orderTally;
+
+    //Updates and draws the orders details to the canvas
     context.fillText(` ${waiterPizza} /`, 85, 300)
     context.fillText(` ${orderPizza} `, 125, 300)
     context.fillText(` ${waiterBeer} /`, 85, 540)
     context.fillText(` ${orderBeer} `, 125, 540)  
 
-  
-
 }
+
 
 function clearCanvas() 
 {
@@ -155,7 +158,6 @@ function clearCanvas()
     context.restore();
 }
 
-/** GAME SPECIFIC CODE BELOW - CHANGE AS NECESSARY */
 
 function initialize() 
 {
@@ -249,6 +251,7 @@ function registerForNotifications()
         handleResetGameNotification
     );
 }
+
 
 function handleResetGameNotification(notification) 
 {
@@ -388,14 +391,13 @@ function initializePlatforms()
 }
 
 
-
 function startIntervalTimer() 
 {
     
-    // Start a timer
-    // Store a handle to the timer that we create
+    // Store a handle to the timer 
     intervalTimer = setInterval(intervalFunction, intervalTime);
 }
+
 
 // Create a function that will be called when our interval timer expires
 function intervalFunction() 
@@ -404,8 +406,10 @@ function intervalFunction()
     minutes = Math.floor(totalSeconds / 60);
     seconds = totalSeconds % 60;
 
+    //If the timer ends 
     if(totalSeconds === 0)
     {
+        //Ifthe current wage is greter then the topWage, then change the topWage to the current wage
         if(wage > localStorage.topWage)
         {
             localStorage.topWage = wage;
@@ -416,12 +420,15 @@ function intervalFunction()
     }
 }
 
+
 function stopIntervalTimer() 
 {
     // Stop the interval timer
     clearInterval(intervalTimer);
 
-    notificationCenter.notify(
+    //Send a notification to show the game over screen
+    notificationCenter.notify
+    (
         new Notification
         (
             NotificationType.Menu,
@@ -432,10 +439,12 @@ function stopIntervalTimer()
     
 }
 
+//Stops and resets the timer
 function pauseTimer()
 {
     clearInterval(intervalTimer);
 }
+
 
 function initializePlayer() 
 {
@@ -507,10 +516,10 @@ function initializeBackground()
         (                   
             250,
             0
-        ),                   // Translation
-        0,                              // Rotation
-        Vector2.One,                    // Scale
-        Vector2.Zero,                   // Origin
+        ),                                                       // Translation
+        0,                                                      // Rotation
+        Vector2.One,                                            // Scale
+        Vector2.Zero,                                           // Origin
         new Vector2
         (                   
             canvas.clientWidth + 259 ,
@@ -521,21 +530,21 @@ function initializeBackground()
     artist = new SpriteArtist
     (
         context,                                                // 2D Context                   (Context)
-        1,                                                      // Alpha                        (Number)
-        GameData.BACKGROUND,                                  // Sprite sheet                 (Image)
+    1,                                                          // Alpha                        (Number)
+        GameData.BACKGROUND,                                    // Sprite sheet                 (Image)
         Vector2.Zero,                                           // Selection start point        (Vector2)
         new Vector2
-        (                                            // Selection area (             (Vector2)
-        canvas.clientWidth,
-        canvas.clientHeight                                // selection height
-        )                                                       // )
+        (                                                       
+            canvas.clientWidth,
+            canvas.clientHeight                                 
+        )                                                       
     );
 
     backgroundSprite = new Sprite
     (
         "Background",                                           // ID
         transform,                                              // Transform
-        ActorType.Background,                                   // ActorType    (Background, NPC, Player, Projectile)
+        ActorType.Background,                                   // ActorType    
         null,                                                   // CollisionType
         StatusType.Drawn,                                       // StatusType   (Off, Drawn, Updated)
         artist,                                                 // Artist (Set up above)
@@ -570,7 +579,7 @@ function initializeHUD()
     artist = new SpriteArtist(
         context,                                        // Context
         1,                                              // Alpha
-        GameData.UI,                                  // Spritesheet
+        GameData.UI,                                    // Spritesheet
         Vector2.Zero,                                   // Source Position
         new Vector2(32, 32),                            // Source Dimension
         true                                            // Fixed Position
@@ -593,9 +602,6 @@ function initializeHUD()
 }
 
 
-
-
-
 function initializeOnScreenOrder() 
 {
     initializeOrder();
@@ -605,6 +611,7 @@ function initializeOnScreenOrder()
     initializeOrderTypeText("Beer", 360);
 
 }
+
 
 function initializeOrder() 
 {
@@ -631,10 +638,10 @@ function initializeOrder()
     (
         context,                        // Context
         1,                              // Alpha
-        "Order",                  // Text
-        FontType.InformationLarge,     // Font Type
+        "Order",                        // Text
+        FontType.InformationLarge,      // Font Type
         Color.Black,                    // Color
-        TextAlignType.Center,             // Text Align
+        TextAlignType.Center,           // Text Align
         250,                            // Max Width
         true                            // Fixed Position
     );
@@ -651,56 +658,57 @@ function initializeOrder()
         1
     );
 
-        // Add sprite to object manager
-        objectManager.add(sprite);
-    }
+    // Add sprite to object manager
+    objectManager.add(sprite);
+}
 
 
-    function initializeImagesOrderDecoration(takeName, y)
-    {
-        let artist;
-        let transform;
-        let sprite;
+function initializeImagesOrderDecoration(takeName, y)
+{
+    
+    let artist;
+    let transform;
+    let sprite;
 
-        artist = new AnimatedSpriteArtist
+    artist = new AnimatedSpriteArtist
+    (
+        context,                                        // Context
+        1,
+
+        GameData.COMSUMABLES_ANIMATION_DATA            // Animation data
+    );
+
+    transform = new Transform2D
+    (
+        new Vector2
         (
-            context,                                        // Context
-            1,
-    
-            GameData.COMSUMABLES_ANIMATION_DATA            // Animation data
-        );
-    
-        transform = new Transform2D
-        (
-            new Vector2
-            (
-                80, y
-            ),                                              // Translation
-            0,                                              // Rotation
-            new Vector2(0.3, 0.3),                          // Scale
-            Vector2.Zero,                                   // Origin
-            artist.getBoundingBoxByTakeName(takeName),  // Dimensions
-            0
-        );
+            80, y
+        ),                                              // Translation
+        0,                                              // Rotation
+        new Vector2(0.3, 0.3),                          // Scale
+        Vector2.Zero,                                   // Origin
+        artist.getBoundingBoxByTakeName(takeName),      // Dimensions
+        0
+    );
 
-        sprite = new Sprite
-        (
-            "Consumable Decoration",
-            transform,
-            ActorType.Decorator,
-            CollisionType.NotCollidable,
-            StatusType.Updated | StatusType.Drawn,
-            artist,
-            1,          // Scroll speed multiplier
-            1           // Layer depth
-        );
-    
-            // Set sprite take
-            sprite.artist.setTake(takeName);
-    
-            // Add to object manager
-            objectManager.add(sprite);
-    }
+    sprite = new Sprite
+    (
+        "Consumable Decoration",
+        transform,
+        ActorType.Decorator,
+        CollisionType.NotCollidable,
+        StatusType.Updated | StatusType.Drawn,
+        artist,
+        1,          // Scroll speed multiplier
+        1           // Layer depth
+    );
+
+    // Set sprite take
+    sprite.artist.setTake(takeName);
+
+    // Add to object manager
+    objectManager.add(sprite);
+}
 
 
 function initializeOrderTypeText(text, y)
@@ -727,12 +735,12 @@ function initializeOrderTypeText(text, y)
     (
         context,                        // Context
         1,                              // Alpha
-        text,                  // Text
-        FontType.InformationOrder,     // Font Type
-        Color.Orange,                    // Color
-        TextAlignType.Center,             // Text Align
+        text,                           // Text
+        FontType.InformationOrder,      // Font Type
+        Color.Orange,                   // Color
+        TextAlignType.Center,           // Text Align
         250,                            // Max Width
-        false                            // Fixed Position
+        false                           // Fixed Position
     );
 
     sprite = new Sprite
@@ -764,14 +772,14 @@ function drawTimer()
         (                   
             300,
             0
-        ),                   // Translation
-        0,                              // Rotation
+        ),                   
+        0,                             
         new Vector2
         (
             0.5,
             0.5
-        ),                    // Scale
-        Vector2.Zero,                   // Origin
+        ),                    
+        Vector2.Zero,                   
         new Vector2
         (                   
             canvas.clientWidth,
@@ -783,20 +791,20 @@ function drawTimer()
     (
         context,                                                // 2D Context                   (Context)
         1,                                                      // Alpha                        (Number)
-        GameData.CLOCK,                                  // Sprite sheet                 (Image)
+        GameData.CLOCK,                                         // Sprite sheet                 (Image)
         Vector2.Zero,                                           // Selection start point        (Vector2)
         new Vector2
-        (                                            // Selection area (             (Vector2)
+        (                                            
         canvas.clientWidth,
-        canvas.clientHeight                                // selection height
-        )                                                       // )
+        canvas.clientHeight                               
+        )                                                      
     );
 
     sprite = new Sprite
     (
-        "Clock",                                           // ID
+        "Clock",                                                // ID
         transform,                                              // Transform
-        ActorType.HUD,                                   // ActorType    (Background, NPC, Player, Projectile)
+        ActorType.HUD,                                          // ActorType    
         null,                                                   // CollisionType
         StatusType.Drawn,                                       // StatusType   (Off, Drawn, Updated)
         artist,                                                 // Artist (Set up above)
@@ -807,6 +815,7 @@ function drawTimer()
     // Add to the object manager
     objectManager.add(sprite);
 }
+
 
 function drawOrderDecorator()
 {
@@ -820,14 +829,14 @@ function drawOrderDecorator()
         (                   
             0,
             80
-        ),                   // Translation
-        0,                              // Rotation
+        ),                   
+        0,                              
         new Vector2
         (
             0.43,
             1
-        ),                    // Scale
-        Vector2.Zero,                   // Origin
+        ),                   
+        Vector2.Zero,                   
         new Vector2
         (                   
             canvas.clientWidth,
@@ -839,23 +848,23 @@ function drawOrderDecorator()
     (
         context,                                                // 2D Context                   (Context)
         1,                                                      // Alpha                        (Number)
-        GameData.ORDER_DECORATOR,                                  // Sprite sheet                 (Image)
+        GameData.ORDER_DECORATOR,                               // Sprite sheet                 (Image)
         Vector2.Zero,                                           // Selection start point        (Vector2)
         new Vector2
-        (                                            // Selection area (             (Vector2)
+        (                                            
         canvas.clientWidth,
-        canvas.clientHeight                                // selection height
-        )                                                       // )
+        canvas.clientHeight                               
+        )                                                    
     );
 
     sprite = new Sprite
     (
-        "Order Decorator",                                           // ID
-        transform,                                              // Transform
-        ActorType.Decorator,                                   // ActorType    (Background, NPC, Player, Projectile)
-        null,                                                   // CollisionType
-        StatusType.Drawn,                                       // StatusType   (Off, Drawn, Updated)
-        artist,                                                 // Artist (Set up above)
+        "Order Decorator",                                       // ID
+        transform,                                               // Transform
+        ActorType.Decorator,                                     // ActorType    
+        null,                                                    // CollisionType
+        StatusType.Drawn,                                        // StatusType   (Off, Drawn, Updated)
+        artist,                                                  // Artist (Set up above)
         1,
         1
     );
@@ -871,6 +880,7 @@ function resetGame()
     handleResetGame();
 }
 
+
 function handleResetGame()
 {   
     level = 0;
@@ -880,7 +890,10 @@ function handleResetGame()
     wage = 100
 
     //https://developer.mozilla.org/en-US/docs/Web/API/Location/reload
+    //Reloads the web page
     window.location.reload();
+
+    //Sends a notification to show the main menu
     notificationCenter.notify(
         new Notification(
             NotificationType.Menu,
@@ -890,7 +903,6 @@ function handleResetGame()
     );
     
 }
-
 
 
 // Start the game once the page has loaded
