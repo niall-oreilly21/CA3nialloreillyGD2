@@ -133,7 +133,7 @@ function draw(gameTime)
     }
 
     context.fillStyle = Color.Green;
-    context.fillText(` \u20AC ${wage}`, 1000, 50)
+    context.fillText(`\u20AC ${wage}`, 1000, 50)
 
     context.fillStyle = Color.Black;
     context.font = FontType.orderTally;

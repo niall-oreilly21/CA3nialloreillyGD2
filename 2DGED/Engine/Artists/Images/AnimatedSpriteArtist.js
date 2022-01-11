@@ -317,6 +317,8 @@ class AnimatedSpriteArtist extends Artist {
             activeCamera.setContext(this.context);
         }
 
+       
+
         // Access the transform for the parent that this artist is attached to
         let transform = parent.transform;
 

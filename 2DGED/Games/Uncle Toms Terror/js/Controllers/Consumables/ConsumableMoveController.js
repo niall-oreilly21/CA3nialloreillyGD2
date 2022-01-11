@@ -29,9 +29,11 @@
 
     update(gameTime, parent) 
     {
+        
         this.applyForces(gameTime, parent);
         this.checkCollisions(parent);
         this.applyInput(parent);
+
     }
 
     applyForces(gameTime, parent) {

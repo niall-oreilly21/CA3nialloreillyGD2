@@ -546,7 +546,7 @@ class PlayerMoveController {
                                 (
                                 NotificationType.GameState,
                                 NotificationAction.Wage,
-                                [15]
+                                [20]
                                 )
                             );
 

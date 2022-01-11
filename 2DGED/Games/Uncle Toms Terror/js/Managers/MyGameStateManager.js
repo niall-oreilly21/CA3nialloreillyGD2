@@ -80,9 +80,6 @@ class MyGameStateManager extends GameStateManager {
 
         if(wage <= 0)
         {
-          
-            localStorage.playersWage = 0;
-
             notificationCenter.notify(
                 new Notification
                 (
