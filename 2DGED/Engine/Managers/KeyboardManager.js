@@ -7,6 +7,7 @@
  
  class KeyboardManager {
  
+    
     get id() {
         return this._id;
     }
@@ -20,7 +21,11 @@
 
         this.keyState = {};
  
+
+        this.moveDirection = 0 // 0 == no, 1 == left, 2 == right
+
         window.addEventListener("keydown", (event) => {
+
             this.keyState[event.code] = true;
         });
  
@@ -28,6 +33,7 @@
             delete this.keyState[event.code];
         });
     }
+
  
     /**
      * Returns true if the key corresponding to the code is pressed

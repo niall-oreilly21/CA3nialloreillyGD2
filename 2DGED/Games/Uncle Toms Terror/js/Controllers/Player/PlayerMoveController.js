@@ -13,6 +13,8 @@ class PlayerMoveController
     (
         notificationCenter,
         keyboardManager,
+        orientationManager,
+        touchScreenMananger,
         objectManager,
         moveKeys,
         runVelocity,
@@ -22,6 +24,8 @@ class PlayerMoveController
     {
         this.notificationCenter = notificationCenter;
         this.keyboardManager = keyboardManager;
+        this.orientationManager = orientationManager;
+        this.touchScreenMananger = touchScreenMananger;
         this.objectManager = objectManager;
         this.moveKeys = moveKeys;
         this.runVelocity = runVelocity;
@@ -73,7 +77,7 @@ class PlayerMoveController
 
     handleIdle(parent)
     {
-        if(!this.keyboardManager.isAnyKeyPressed())
+        if(!this.keyboardManager.isAnyKeyPressed() || this.orientationManager.isIdle())
         {
             if(parent.artist.isCurrentTakeName("Run Right") || parent.artist.isCurrentTakeName("Jump Right"))
             {
@@ -89,28 +93,34 @@ class PlayerMoveController
 
     handleMove(gameTime, parent) 
     {
+
+        console.log("Start" + parent.artist.currentFrameIndex);
+        console.log("End" + parent.artist.endFrameIndex);
         // If the current take is fall right or fall left then the player can't move
         if ((parent.artist.isCurrentTakeName("Fall Right")) || (parent.artist.isCurrentTakeName("Fall Left"))) return;
 
         // If the move left key is pressed
-        if (this.keyboardManager.isKeyDown(this.moveKeys[0])) 
+        if (this.keyboardManager.isKeyDown(this.moveKeys[0]) || (this.orientationManager.isLeft())) 
         {
             // Add velocity to begin moving player left
             parent.body.setVelocityX(-this.runVelocity * gameTime.elapsedTimeInMs);  
 
             // Update the player's animation
-            if (!this.keyboardManager.isKeyDown(this.moveKeys[2])) 
+            if (!this.keyboardManager.isKeyDown(this.moveKeys[2]) || (this.touchScreenMananger.touchPosition)) 
             {
-                parent.artist.setTake("Run Left");               
+                if (!parent.artist.isCurrentTakeName("Fall Left"))
+                {
+                    parent.artist.setTake("Run Left"); 
+                }              
             }
         }
     
         // If the move right key is pressed
-        else if (this.keyboardManager.isKeyDown(this.moveKeys[1])) 
+        else if (this.keyboardManager.isKeyDown(this.moveKeys[1]) || (this.orientationManager.isRight())) 
         {
             parent.body.setVelocityX(this.runVelocity * gameTime.elapsedTimeInMs);
 
-            if (!this.keyboardManager.isKeyDown(this.moveKeys[2])) 
+            if (!this.keyboardManager.isKeyDown(this.moveKeys[2]) || (this.touchScreenMananger.touchPosition)) 
             {
                 if (!parent.artist.isCurrentTakeName("Fall Right"))
                 {
@@ -136,7 +146,7 @@ class PlayerMoveController
         if(this.collidedWithPuddle) return;
         
         // If the jump key is pressed
-        if (this.keyboardManager.isKeyDown(this.moveKeys[2])) 
+        if (this.keyboardManager.isKeyDown(this.moveKeys[2]) || (this.touchScreenMananger.touchPosition)) 
         {
 
             // Update body variables
@@ -148,12 +158,12 @@ class PlayerMoveController
             parent.body.setVelocityY(this.jumpVelocity * gameTime.elapsedTimeInMs);
         
             // If the move right key is pressed
-            if (this.keyboardManager.isKeyDown(this.moveKeys[1]))
+            if (this.keyboardManager.isKeyDown(this.moveKeys[1]) || (this.orientationManager.isRight()))
             {
                 parent.artist.setTake("Jump Right");   
             }
             // If the move left key is pressed
-            else if(this.keyboardManager.isKeyDown(this.moveKeys[0]))
+            else if(this.keyboardManager.isKeyDown(this.moveKeys[0]) || (this.orientationManager.isLeft()))
             {
                 parent.artist.setTake("Jump Left");   
             }
@@ -184,6 +194,7 @@ class PlayerMoveController
         }
         
     }
+
 
     checkCollisions(parent) 
     {

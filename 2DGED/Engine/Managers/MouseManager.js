@@ -20,15 +20,18 @@ class MouseManager {
 
         this.clickPosition = null;
 
-        window.addEventListener("mousedown", (event) => {
+        window.addEventListener("mousedown", (event) => 
+        {
             this.clickPosition = new Vector2(
                 event.offsetX,
                 event.offsetY
             );
-        });
 
-        window.addEventListener("mouseup", (event) => {
+        },false);
+
+        window.addEventListener("mouseup", (event) => 
+        {
             this.clickPosition = null;
-        });
+        },false);
     }
 }

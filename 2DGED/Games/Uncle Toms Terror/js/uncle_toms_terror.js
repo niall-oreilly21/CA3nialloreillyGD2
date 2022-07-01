@@ -14,6 +14,8 @@ let soundManager;
 let gameStateManager;
 let menuManager;
 let uiManager;
+let orientationManager;
+let touchScreenManager;
 let seconds = 0;
 let minutes = 3;
 let intervalTimer;
@@ -231,13 +233,24 @@ function initializeManagers()
         keyboardManager
     );
 
+    touchScreenManager = new TouchScreenManager
+    (
+        "Touch Screen Manager"
+    ) 
+
     uiManager = new MyUIManager
     (
         "UI Manager",
         notificationCenter,
         objectManager,
-        mouseManager
+        mouseManager,
+        touchScreenManager
     )
+
+    orientationManager = new OrientationManager
+    (
+        "Orientation Manager"
+    ) 
     
 }
 
@@ -445,13 +458,13 @@ function pauseTimer()
     clearInterval(intervalTimer);
 }
 
-
+let sprite;
 function initializePlayer() 
 {
 
     let transform;
     let artist;
-    let sprite;
+    
 
     artist = new AnimatedSpriteArtist(
         context,                                                // Context
@@ -491,6 +504,8 @@ function initializePlayer()
         new PlayerMoveController(
             notificationCenter,
             keyboardManager,
+            orientationManager,
+            touchScreenManager,
             objectManager,
             GameData.WAITER_MOVE_KEYS,
             GameData.WAITER_WALK_VELOCITY,
@@ -907,3 +922,4 @@ function handleResetGame()
 
 // Start the game once the page has loaded
 window.addEventListener("load", start);
+
