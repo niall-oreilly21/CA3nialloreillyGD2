@@ -252,12 +252,12 @@ class SoundManager {
                     if(audioCue.theme === AudioType.Background)
                     {
                         //Set the volume to the Non Diegetic Volume stored in the local Storage
-                        audioObject.volume = localStorage.nonDiegeticVolume;
+                        audioObject.volume = parseFloat(localStorage.nonDiegeticVolume);
                     }
                     else
                     {
                         //Set the volume to the Diegetic Volume stored in the local Storage
-                        audioObject.volume = localStorage.diegeticSounds;
+                        audioObject.volume = parseFloat(localStorage.diegeticSounds);
                     }
                    
                     audioObject.playbackRate = audioCue.playbackRate;
