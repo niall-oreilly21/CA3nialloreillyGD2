@@ -93,9 +93,6 @@ class PlayerMoveController
 
     handleMove(gameTime, parent) 
     {
-
-        console.log("Start" + parent.artist.currentFrameIndex);
-        console.log("End" + parent.artist.endFrameIndex);
         // If the current take is fall right or fall left then the player can't move
         if ((parent.artist.isCurrentTakeName("Fall Right")) || (parent.artist.isCurrentTakeName("Fall Left"))) return;
 
